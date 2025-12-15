@@ -226,6 +226,8 @@ async function runPhabricatorReviews(geckoDir, userId) {
     return !title.match(/\bWIP\b/);
   });
 
+  const userProjects = await getUserProjects(geckoDir, userId);
+
   const others = data.filter((revision) => {
     if (userId === revision.fields.authorPHID) {
       return false;
@@ -236,7 +238,8 @@ async function runPhabricatorReviews(geckoDir, userId) {
     const reviewers = revision.attachments?.reviewers?.reviewers || [];
     return reviewers.some(
       (reviewer) =>
-        reviewer.reviewerPHID === userId &&
+        (reviewer.reviewerPHID === userId ||
+          userProjects.has(reviewer.reviewerPHID)) &&
         (reviewer.status === "added" || reviewer.status === "blocking")
     );
   });
@@ -313,4 +316,37 @@ function resolveArcBinary() {
   }
 
   return "arc";
+}
+
+/**
+ * Look up project PHIDs the user belongs to so we can match reviewer groups.
+ * @param {string} geckoDir
+ * @param {string} userId
+ * @returns {Promise<Set<string>>}
+ */
+async function getUserProjects(geckoDir, userId) {
+  const response = /** @type {Response<Cursor<{ phid: string }>>} */ (
+    await callConduit(
+      "project.search",
+      {
+        constraints: {
+          members: [userId],
+        },
+        limit: 100,
+      },
+      { cwd: geckoDir }
+    )
+  );
+
+  logPhabricatorResponse("project.search", response);
+
+  if (response.error || response.response === null) {
+    throw new Error(response.errorMessage);
+  }
+
+  const set = new Set();
+  for (const project of response.response.data) {
+    set.add(project.phid);
+  }
+  return set;
 }
