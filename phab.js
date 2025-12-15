@@ -196,6 +196,9 @@ async function runPhabricatorReviews(geckoDir, userId) {
       "differential.revision.search",
       {
         queryKey: "active",
+        attachments: {
+          reviewers: true,
+        },
       },
       { cwd: geckoDir }
     )
@@ -223,11 +226,20 @@ async function runPhabricatorReviews(geckoDir, userId) {
     return !title.match(/\bWIP\b/);
   });
 
-  const others = data.filter(
-    (revision) =>
-      userId !== revision.fields.authorPHID &&
-      revision.fields.status.value === "needs-review"
-  );
+  const others = data.filter((revision) => {
+    if (userId === revision.fields.authorPHID) {
+      return false;
+    }
+    if (revision.fields.status.value !== "needs-review") {
+      return false;
+    }
+    const reviewers = revision.attachments?.reviewers?.reviewers || [];
+    return reviewers.some(
+      (reviewer) =>
+        reviewer.reviewerPHID === userId &&
+        (reviewer.status === "added" || reviewer.status === "blocking")
+    );
+  });
 
   if (mine.length > 0) {
     printHeader("Mine");
