@@ -24,7 +24,7 @@ import { isIgnoredPhabricator } from "./store.mjs";
  */
 
 /**
- * @import {Revision} from "./types"
+ * @import {Revision} from "./types.d.ts"
  */
 
 /**

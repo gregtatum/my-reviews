@@ -8,12 +8,25 @@ export type Store = {
     // e.g. "D12345" or "Bug 12345"
     phabricator: string[];
   };
+  github: GithubConfig[];
+  phabricator: PhabricatorConfig[];
 };
 
 export type IgnoreTarget =
   | { type: "phabricator"; id: string }
   | { type: "bug"; id: string }
   | { type: "github"; owner: string; repo: string; number: string };
+
+export type GithubConfig = {
+  owner: string;
+  repo: string;
+  user: string;
+};
+
+export type PhabricatorConfig = {
+  geckoDir: string;
+  userId: string;
+};
 
 export type RevisionFields = {
   title: string;

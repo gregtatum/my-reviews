@@ -4,18 +4,8 @@ A small Node.js tool that prints your current review queue from GitHub and Phabr
 
 ## Example Usage
 
-```sh
-# List all current things in my review queue.
-revs() {
-  my-reviews phabricator "$HOME/dev/firefox" PHID-USER-XXXXXXXXXX
-  my-reviews github mozilla translations gregtatum
-}
 ```
-
-Then run:
-
-```sh
-➤ revs
+my-reviews                  # Fetches all saved configurations
 
 ======= Phabricator Mine =====================================================
 
@@ -56,22 +46,18 @@ npx my-reviews github mozilla translations nordzilla
 
 ## Usage
 
-The CLI exposes two subcommands, `phabricator` and `github`.
+Save configurations first, then run `my-reviews` to print everything in one go. Subcommands include `phabricator`, `github`, and `ignore`.
 
 ### Phabricator reviews
 
 ```sh
-my-reviews phabricator <path-to-firefox-repo> <phabricator-user-phid>
+my-reviews phabricator <path-to-firefox-repo>
 ```
 
-- The first argument must be the Firefox checkout.
-- The second argument is your Phabricator user PHID. Find this via `my-reviews phabricator-user <path-to-firefox-repo>`
+- The argument must be the Firefox checkout.
+- The command will detect your Phabricator user via `arc` and save it.
 
-Example:
-
-```sh
-my-reviews phabricator "$HOME/dev/firefox" "PHID-USER-XXXXXXXXXXX"
-```
+Once added, running `my-reviews` will fetch and print the current queue for all saved Phabricator configs.
 
 ### GitHub reviews
 
@@ -79,7 +65,7 @@ my-reviews phabricator "$HOME/dev/firefox" "PHID-USER-XXXXXXXXXXX"
 my-reviews github <org> <repo> <github-username>
 ```
 
-The command fetches open pull requests for the given repository, printing:
+The command saves the configuration and fetches open pull requests for the given repository when you run `my-reviews`, printing:
 - PRs where you are a requested reviewer and the review is still outstanding.
 - Your own open PRs (excluding drafts and WIPs) so you can monitor their status.
 

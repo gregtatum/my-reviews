@@ -2,32 +2,45 @@
 // @ts-check
 import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
-import { addIgnoredTarget } from "./store.mjs";
+import {
+  addGithubConfig,
+  addIgnoredTarget,
+  addPhabricatorConfig,
+  getSavedConfigs,
+} from "./store.mjs";
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
-  if (!command) {
-    printUsage();
-    process.exit(1);
-  }
 
   try {
     switch (command) {
-      case "phabricator": {
-        const [geckoDir, userId] = args;
-        await runPhabricatorReviews(geckoDir, userId);
+      case undefined: {
+        await runSavedConfigurations();
         break;
       }
-      case "phabricator-user": {
+      case "phabricator": {
         const [geckoDir] = args;
         const user = await getPhabricatorUser(geckoDir);
-        console.log(`Phabricator username: ${user.userName}`);
-        console.log(`Phabricator PHID: ${user.phid}`);
+        const { added } = addPhabricatorConfig(geckoDir, user.phid);
+        if (added) {
+          console.log(
+            `Saved Phabricator config for ${geckoDir} (user: ${user.userName}, PHID: ${user.phid}).`
+          );
+        } else {
+          console.log(
+            `Phabricator config already saved for ${geckoDir} (user: ${user.userName}, PHID: ${user.phid}).`
+          );
+        }
         break;
       }
       case "github": {
         const [org, repo, user] = args;
-        await runGithubReviews(org, repo, user);
+        const { added } = addGithubConfig(org, repo, user);
+        if (added) {
+          console.log(`Saved GitHub config for ${org}/${repo} (${user}).`);
+        } else {
+          console.log(`GitHub config already saved for ${org}/${repo} (${user}).`);
+        }
         break;
       }
       case "ignore": {
@@ -55,7 +68,7 @@ async function main() {
         break;
       }
       default:
-        console.error(`Unknown command: ${command}`);
+        console.error(`Unknown command: ${String(command)}`);
         printUsage();
         process.exit(1);
     }
@@ -71,8 +84,26 @@ async function main() {
 
 function printUsage() {
   console.log(
-    `Usage:\n  my-reviews phabricator <path-to-gecko> <phabricator-user-phid>\n  my-reviews phabricator-user <path-to-gecko>\n  my-reviews github <org> <repo> <github-username>\n  my-reviews ignore <phabricator-url-or-id|github-url-or-number>`
+    `Usage:\n  my-reviews                          # Run using saved configurations\n  my-reviews phabricator <gecko>          # Detect user via arc and save\n  my-reviews github <org> <repo> <user>   # Save a GitHub config\n  my-reviews ignore <phabricator-url-or-id|github-url-or-number>`
   );
+}
+
+async function runSavedConfigurations() {
+  const { github, phabricator } = getSavedConfigs();
+  if (phabricator.length === 0 && github.length === 0) {
+    console.log(
+      "No configurations saved. Add one with `my-reviews phabricator ...` or `my-reviews github ...`."
+    );
+    return;
+  }
+
+  for (const config of phabricator) {
+    await runPhabricatorReviews(config.geckoDir, config.userId);
+  }
+
+  for (const config of github) {
+    await runGithubReviews(config.owner, config.repo, config.user);
+  }
 }
 
 main();

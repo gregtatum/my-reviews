@@ -5,7 +5,7 @@ import * as path from "path";
 
 const storagePath = path.join(os.homedir(), ".my-reviews.json");
 /**
- * @import {Store, IgnoreTarget} from "./types"
+ * @import {Store, IgnoreTarget, GithubConfig, PhabricatorConfig} from "./types.d.ts"
  */
 
 /** @type {Store | null} */
@@ -28,7 +28,11 @@ function loadStore() {
     // Missing file or invalid JSON will fall through to default store.
   }
 
-  cachedStore = { ignored: { github: [], phabricator: [] } };
+  cachedStore = {
+    ignored: { github: [], phabricator: [] },
+    github: [],
+    phabricator: [],
+  };
   return cachedStore;
 }
 
@@ -64,12 +68,47 @@ function isValidStore(value) {
 function normalizeStore(store) {
   return {
     ignored: {
-      github: store.ignored.github.filter((item) => typeof item === "string"),
-      phabricator: store.ignored.phabricator.filter(
-        (item) => typeof item === "string"
-      ),
+      github: store.ignored.github.filter(isString),
+      phabricator: store.ignored.phabricator.filter(isString),
     },
+    github: (store.github || []).filter(isGithubConfig),
+    phabricator: (store.phabricator || []).filter(isPhabricatorConfig),
   };
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is string}
+ */
+function isString(value) {
+  return typeof value === "string";
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is GithubConfig}
+ */
+function isGithubConfig(value) {
+  return (
+    !!value &&
+    typeof value === "object" &&
+    typeof /** @type {any} */ (value).owner === "string" &&
+    typeof /** @type {any} */ (value).repo === "string" &&
+    typeof /** @type {any} */ (value).user === "string"
+  );
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is PhabricatorConfig}
+ */
+function isPhabricatorConfig(value) {
+  return (
+    !!value &&
+    typeof value === "object" &&
+    typeof /** @type {any} */ (value).geckoDir === "string" &&
+    typeof /** @type {any} */ (value).userId === "string"
+  );
 }
 
 /**
@@ -174,6 +213,65 @@ export function addIgnoredTarget(input) {
 
   const description = describeTarget(parsed);
   return { description, alreadyIgnored };
+}
+
+/**
+ * @param {string} owner
+ * @param {string} repo
+ * @param {string} user
+ * @returns {{ added: boolean; config: GithubConfig }}
+ */
+export function addGithubConfig(owner, repo, user) {
+  if (!owner || !repo || !user) {
+    throw new Error(
+      "GitHub configuration requires the owner, repo, and GitHub username."
+    );
+  }
+  const store = loadStore();
+  const normalized = { owner, repo, user };
+  const existing = store.github.some(
+    (item /** @type {GithubConfig} */) =>
+      item.owner === normalized.owner &&
+      item.repo === normalized.repo &&
+      item.user === normalized.user
+  );
+  if (!existing) {
+    store.github = [...store.github, normalized];
+    saveStore(store);
+  }
+  return { added: !existing, config: normalized };
+}
+
+/**
+ * @param {string} geckoDir
+ * @param {string} userId
+ * @returns {{ added: boolean; config: PhabricatorConfig }}
+ */
+export function addPhabricatorConfig(geckoDir, userId) {
+  if (!geckoDir || !userId) {
+    throw new Error(
+      "Phabricator configuration requires the path to Gecko and your Phabricator user PHID."
+    );
+  }
+  const store = loadStore();
+  const normalized = { geckoDir, userId };
+  const existing = store.phabricator.some(
+    (item /** @type {PhabricatorConfig} */) =>
+      item.geckoDir === geckoDir && item.userId === userId
+  );
+  if (!existing) {
+    store.phabricator = [...store.phabricator, normalized];
+    saveStore(store);
+  }
+  return { added: !existing, config: normalized };
+}
+
+/**
+ * @returns {Pick<Store, "github" | "phabricator">}
+ */
+export function getSavedConfigs() {
+  const store = loadStore();
+  return { github: store.github, phabricator: store.phabricator };
 }
 
 /**
