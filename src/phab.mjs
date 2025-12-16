@@ -74,13 +74,43 @@ function stringify(data) {
   return string.replace(`'`, `'"'"'`);
 }
 
+function isSnapshotMode() {
+  return (
+    process.env.MOZ_REVIEWS_USE_SNAPSHOTS === "1" ||
+    process.env.MOZ_REVIEWS_USE_SNAPSHOTS?.toLowerCase() === "true"
+  );
+}
+
+/**
+ * @param {string} endpoint
+ */
+function sanitizeEndpoint(endpoint) {
+  return endpoint.replace(/[^a-zA-Z0-9._-]/g, "-");
+}
+
 /**
  * @param {string} endpoint
  * @param {JsonValue} data
  * @param {import("child_process").ExecOptions} [options]
  * @returns {Promise<Response<any>>}
- */
+*/
 const callConduit = async function (endpoint, data, options = {}) {
+  const useSnapshots = isSnapshotMode();
+
+  if (useSnapshots) {
+    const dirname = path.dirname(fileURLToPath(import.meta.url));
+    const outputDir = path.resolve(dirname, "../tests/utils");
+    const filename = `phabricator-${sanitizeEndpoint(endpoint)}.json`;
+    const outputPath = path.join(outputDir, filename);
+    if (!fs.existsSync(outputPath)) {
+      throw new Error(
+        `Snapshot not found for endpoint "${endpoint}" at ${outputPath}`
+      );
+    }
+    const contents = fs.readFileSync(outputPath, "utf8");
+    return JSON.parse(contents);
+  }
+
   const arcBinary = resolveArcBinary();
   const quotedArc = JSON.stringify(arcBinary);
   const results = await run(
@@ -99,7 +129,7 @@ function logPhabricatorResponse(endpoint, response) {
   const shouldLog =
     process.env.MY_REVIEWS_LOG === "1" ||
     process.env.MY_REVIEWS_LOG?.toLowerCase() === "true";
-  const safeEndpoint = endpoint.replace(/[^a-zA-Z0-9._-]/g, "-");
+  const safeEndpoint = sanitizeEndpoint(endpoint);
 
   // Persist raw responses when testing flag is enabled.
   if (shouldPersist) {
@@ -328,6 +358,9 @@ export async function getPhabricatorUser(geckoDir) {
 }
 
 function ensureArcAvailable() {
+  if (isSnapshotMode()) {
+    return;
+  }
   const arcBinary = resolveArcBinary();
   const result = spawnSync(arcBinary, ["help"], { stdio: "ignore" });
   const spawnError = /** @type {NodeJS.ErrnoException | undefined} */ (
