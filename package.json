@@ -27,10 +27,7 @@
   ],
   "dependencies": {
     "@octokit/rest": "^22.0.1",
-    "cli-color": "^1.4.0",
-    "inquirer": "^13.1.0",
-    "open": "^7.3.0",
-    "url": "^0.11.0"
+    "cli-color": "^1.4.0"
   },
   "devDependencies": {
     "@types/cli-color": "^2.0.6",
