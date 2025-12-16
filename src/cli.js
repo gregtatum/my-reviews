@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 // @ts-check
-const {
-  runPhabricatorReviews,
-  runGithubReviews,
-  getPhabricatorUser,
-} = require('../index');
-const { addIgnoredTarget } = require('../ignore-store');
+const { runPhabricatorReviews, getPhabricatorUser } = require("./phab");
+const { runGithubReviews } = require("./github");
+
+const { addIgnoredTarget } = require("../ignore-store");
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
@@ -16,24 +14,24 @@ async function main() {
 
   try {
     switch (command) {
-      case 'phabricator': {
+      case "phabricator": {
         const [geckoDir, userId] = args;
         await runPhabricatorReviews(geckoDir, userId);
         break;
       }
-      case 'phabricator-user': {
+      case "phabricator-user": {
         const [geckoDir] = args;
         const user = await getPhabricatorUser(geckoDir);
         console.log(`Phabricator username: ${user.userName}`);
         console.log(`Phabricator PHID: ${user.phid}`);
         break;
       }
-      case 'github': {
+      case "github": {
         const [org, repo, user] = args;
         await runGithubReviews(org, repo, user);
         break;
       }
-      case 'ignore': {
+      case "ignore": {
         if (args.includes("--help") || args.includes("-h")) {
           console.log(
             "Usage: my-reviews ignore <Phabricator URL/ID | Bug number/URL | GitHub pull request URL or owner/repo#123>"

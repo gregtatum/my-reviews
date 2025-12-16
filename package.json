@@ -2,13 +2,13 @@
   "name": "my-reviews",
   "version": "0.1.2",
   "description": "Review queue helpers for GitHub and Phabricator.",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gregtatum/my-reviews.git"
   },
   "bin": {
-    "my-reviews": "./bin/my-reviews.js"
+    "my-reviews": "./src/cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,13 +23,7 @@
     "cli"
   ],
   "files": [
-    "bin/my-reviews.js",
-    "github.js",
-    "phab.js",
-    "notifications.js",
-    "open-pr.js",
-    "ignore-store.js",
-    "index.js"
+    "src"
   ],
   "dependencies": {
     "@octokit/rest": "^18.0.6",
