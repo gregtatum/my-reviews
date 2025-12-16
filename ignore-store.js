@@ -4,8 +4,9 @@ const os = require("os");
 const path = require("path");
 
 const storagePath = path.join(os.homedir(), ".my-reviews.json");
-
-/** @typedef {{ ignored: { github: string[]; phabricator: string[] } }} Store */
+/**
+ * @import {Store, IgnoreTarget} from "./types"
+ */
 
 /** @type {Store | null} */
 let cachedStore = null;
@@ -73,15 +74,7 @@ function normalizeStore(store) {
 
 /**
  * @param {string} input
- * @returns {{
- *  type: "phabricator";
- *  id: string;
- * } | {
- *  type: "github";
- *  owner: string;
- *  repo: string;
- *  number: string;
- * } | null}
+ * @returns {IgnoreTarget | null}
  */
 function parseIgnoreTarget(input) {
   const target = input.trim();
@@ -161,7 +154,7 @@ function addIgnoredTarget(input) {
 }
 
 /**
- * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string; repo: string; number: string }} target
+ * @param {IgnoreTarget} target
  */
 function getIgnoreEntry(target) {
   if (target.type === "phabricator") {
@@ -177,7 +170,7 @@ function getIgnoreEntry(target) {
 }
 
 /**
- * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string; repo: string; number: string }} target
+ * @param {IgnoreTarget} target
  */
 function describeTarget(target) {
   if (target.type === "phabricator") {

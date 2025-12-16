@@ -17,6 +17,7 @@
     "phab.js",
     "github.js",
     "ignore-store.js",
-    "bin/**/*.js"
+    "bin/**/*.js",
+    "types.d.ts"
   ]
 }
