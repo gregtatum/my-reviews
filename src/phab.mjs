@@ -95,16 +95,31 @@ const callConduit = async function (endpoint, data, options = {}) {
  * @param {Response<any>} response
  */
 function logPhabricatorResponse(endpoint, response) {
-  // Hard-coded swi|tch to log phabricator calls.
-  if (true) {
-    return;
+  const shouldPersist = process.env.MY_REVIEWS_PERSIST === "phabricator";
+  const shouldLog =
+    process.env.MY_REVIEWS_LOG === "1" ||
+    process.env.MY_REVIEWS_LOG?.toLowerCase() === "true";
+  const safeEndpoint = endpoint.replace(/[^a-zA-Z0-9._-]/g, "-");
+
+  // Persist raw responses when testing flag is enabled.
+  if (shouldPersist) {
+    const dirname = path.dirname(fileURLToPath(import.meta.url));
+    const outputDir = path.resolve(dirname, "../tests/utils");
+    fs.mkdirSync(outputDir, { recursive: true });
+    const filename = `phabricator-${safeEndpoint}.json`;
+    const outputPath = path.join(outputDir, filename);
+    const serialized = JSON.stringify(response, null, 2);
+    fs.writeFileSync(outputPath, serialized);
   }
-  const pretty = inspect(response, {
-    depth: null,
-    maxArrayLength: null,
-    breakLength: 120,
-  });
-  console.log(`${endpoint} response`, pretty);
+
+  if (shouldPersist || shouldLog) {
+    const pretty = inspect(response, {
+      depth: null,
+      maxArrayLength: null,
+      breakLength: 120,
+    });
+    console.log(`${endpoint} response`, pretty);
+  }
 }
 
 /**

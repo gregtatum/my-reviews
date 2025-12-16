@@ -1,0 +1,84 @@
+{
+  "error": null,
+  "errorMessage": null,
+  "response": {
+    "data": [
+      {
+        "id": 235,
+        "type": "PROJ",
+        "phid": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+        "fields": {
+          "name": "ai-ondevice-reviewers",
+          "slug": "ai-ondevice-reviewers",
+          "subtype": "default",
+          "milestone": null,
+          "depth": 0,
+          "parent": null,
+          "icon": {
+            "key": "group",
+            "name": "Group",
+            "icon": "fa-users"
+          },
+          "color": {
+            "key": "green",
+            "name": "Green"
+          },
+          "spacePHID": null,
+          "dateCreated": 1763520285,
+          "dateModified": 1763574331,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PLCY-eqkcsm6v4mqt6w4iovx4",
+            "join": "no-one"
+          },
+          "description": "AI On Device Reviewers"
+        },
+        "attachments": []
+      },
+      {
+        "id": 192,
+        "type": "PROJ",
+        "phid": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+        "fields": {
+          "name": "translations-reviewers",
+          "slug": "translations-reviewers",
+          "subtype": "default",
+          "milestone": null,
+          "depth": 0,
+          "parent": null,
+          "icon": {
+            "key": "group",
+            "name": "Group",
+            "icon": "fa-users"
+          },
+          "color": {
+            "key": "green",
+            "name": "Green"
+          },
+          "spacePHID": null,
+          "dateCreated": 1698160831,
+          "dateModified": 1717081854,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PLCY-6j5bpkyk354wnmgdjpej",
+            "join": "no-one"
+          },
+          "description": "Translations Reviewers Group"
+        },
+        "attachments": []
+      }
+    ],
+    "maps": {
+      "slugMap": []
+    },
+    "query": {
+      "queryKey": null
+    },
+    "cursor": {
+      "limit": 100,
+      "after": null,
+      "before": null,
+      "order": null
+    }
+  }
+}

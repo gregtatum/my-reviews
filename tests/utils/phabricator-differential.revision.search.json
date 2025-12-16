@@ -1,0 +1,4347 @@
+{
+  "error": null,
+  "errorMessage": null,
+  "response": {
+    "data": [
+      {
+        "id": 276302,
+        "type": "DREV",
+        "phid": "PHID-DREV-fpbklusaftsiac25iaey",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-fpbklusaftsiac25iaey": []
+          },
+          "title": "Bug 2004843 - Implement get_page_content tool",
+          "uri": "https://phabricator.services.mozilla.com/D276302",
+          "authorPHID": "PHID-USER-s67lruoaw3kqp7y5e4gr",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-c5ud44xuchpptvyyisz2",
+          "diffID": "1173405",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765574470,
+          "dateModified": 1765904746,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2004843",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xprvpioan4mze2r2x6hw",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276138,
+        "type": "DREV",
+        "phid": "PHID-DREV-xbo5qz335zpe5dufkemf",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ],
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-johioexyx6xpqs7dbbet": []
+          },
+          "title": "Bug 1992232 - Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276138",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-etjixw5jfckha7omwwm3",
+          "diffID": "1174565",
+          "summary": "\nThis commit implements the logic for clicking the target-section copy\nbutton on the about:translations page. Invoking the copy button will\ncopy the translated text to the clipboard, and visually show a \"copied\"\nstate on the button for a duration of time before resetting.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765511862,
+          "dateModified": 1765918367,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-nv4zrwvd4nxdokl2exzp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276137,
+        "type": "DREV",
+        "phid": "PHID-DREV-urinf6qyycjfmx4qx6cm",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ],
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-johioexyx6xpqs7dbbet": []
+          },
+          "title": "Bug 1992232 - Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276137",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-cjeseztfgnwjeyxs3464",
+          "diffID": "1174564",
+          "summary": "\nThis commit introduces the logic for when the target-section copy button\nshould be enabled or disabled on the about:translations page.\n\nAt this point the button has no functionality when clicked.\nThis will be added in the next commit.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765511856,
+          "dateModified": 1765918375,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276113,
+        "type": "DREV",
+        "phid": "PHID-DREV-fadm4xvo3qdkj6n55ca6",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ],
+            "PHID-DREV-johioexyx6xpqs7dbbet": []
+          },
+          "title": "Bug 1992232 - Part 4/6: Add Target Section Copy Button r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276113",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-2y5j5t25yg7juelahqlp",
+          "diffID": "1174563",
+          "summary": "\nThis commit adds the actions row and copy button to the target section\nof the about:translations page. This introduces the new UI elements only,\nensuring that the pre-existing logic is consistent, especially resizing.\n\nAt this point the button is always disabled and has no functionality.\nSubsequent commits will add new functionality and tests.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765498869,
+          "dateModified": 1765918323,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-nv4zrwvd4nxdokl2exzp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276112,
+        "type": "DREV",
+        "phid": "PHID-DREV-cgh5sik6wooiohohahkp",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-johioexyx6xpqs7dbbet": [],
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ]
+          },
+          "title": "Bug 1992232 - Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276112",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-yotov27wjuryn3xeiw5o",
+          "diffID": "1174562",
+          "summary": "\nThis commit reworks the resizing logic for the about:translations page\nto be with respect to the source and target section, rather than only\nthe text areas within those sections.\n\nCurrently, there is only a text area, but the next commit will introduce\nan actions row and copy button to the target section.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765498865,
+          "dateModified": 1765917959,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276111,
+        "type": "DREV",
+        "phid": "PHID-DREV-54gwpsukazuo7qv4ehnl",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-johioexyx6xpqs7dbbet": [],
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ]
+          },
+          "title": "Bug 1992232 - Part 2/6: Sort about:translations Elements r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276111",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-3mtpv4ufiniyui7b3mbv",
+          "diffID": "1174561",
+          "summary": "\nThis commit is a minor code reorganization to sort things alphabetically.\nIt just feels more systematic and easier to be consistent as we add more elements.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765498860,
+          "dateModified": 1765918355,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 276110,
+        "type": "DREV",
+        "phid": "PHID-DREV-johioexyx6xpqs7dbbet",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-johioexyx6xpqs7dbbet": [],
+            "PHID-DREV-54gwpsukazuo7qv4ehnl": [
+              "PHID-DREV-johioexyx6xpqs7dbbet"
+            ],
+            "PHID-DREV-cgh5sik6wooiohohahkp": [
+              "PHID-DREV-54gwpsukazuo7qv4ehnl"
+            ],
+            "PHID-DREV-fadm4xvo3qdkj6n55ca6": [
+              "PHID-DREV-cgh5sik6wooiohohahkp"
+            ],
+            "PHID-DREV-urinf6qyycjfmx4qx6cm": [
+              "PHID-DREV-fadm4xvo3qdkj6n55ca6"
+            ],
+            "PHID-DREV-xbo5qz335zpe5dufkemf": [
+              "PHID-DREV-urinf6qyycjfmx4qx6cm"
+            ]
+          },
+          "title": "Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D276110",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-hzdmwdodgyexx4gde27d",
+          "diffID": "1174560",
+          "summary": "\nThis patch refactors the event handling of the about:translations page\nto use more targeted, per-event functions, rather than a single function\nwith a lot of case logic. The functionality is unchanged.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1765498856,
+          "dateModified": 1765918053,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992232",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 275244,
+        "type": "DREV",
+        "phid": "PHID-DREV-pnh2ci3bjdclh5ok2inz",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-pnh2ci3bjdclh5ok2inz": []
+          },
+          "title": "Bug 2004403 - Implement ON Device ML Storage Manager.",
+          "uri": "https://phabricator.services.mozilla.com/D275244",
+          "authorPHID": "PHID-USER-m5fagme7wcxodzl3sz5s",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-zzjlrnenquyyx4v6j625",
+          "diffID": "1167905",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764950460,
+          "dateModified": 1765232266,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2004403",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274831,
+        "type": "DREV",
+        "phid": "PHID-DREV-vejuuxhrk3wdi4wxvaoh",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 19: Improve Language-Download States r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274831",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-wouu7vuynnan5aqmx5d5",
+          "diffID": "1174113",
+          "summary": "\nThis commit improves the logic around the various states\nof downloaded languages, from the download-failed message\nto the delete-downloaded-language confirmation.\n\nThis change ensures that only one confirmation state can\nbe shown at a time, opening another closes the previous,\nand that any confirmation or failure states are cleaned\nup on reload.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764710891,
+          "dateModified": 1765894653,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274830,
+        "type": "DREV",
+        "phid": "PHID-DREV-b72pmp5pw6rrjd2rtev6",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 18: Move moz-selects to header slot r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274830",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-ajxuqvisjyqfltgpdo66",
+          "diffID": "1174112",
+          "summary": "\nThis commit moves the `moz-select` elements to the\nheader slot withing the Translations subpage, instead\nof the actions slot. The arrow key navigation and tab\nindex focus was not working in the actions slot.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764710886,
+          "dateModified": 1765894882,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274829,
+        "type": "DREV",
+        "phid": "PHID-DREV-ftgqsyya4k7dmgrlfzua",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 17: Update Ghost Button Usage r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274829",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-gt7qkyu77a6kbhk6smax",
+          "diffID": "1174111",
+          "summary": "\nThis commit updates the usage of ghost icon buttons in the Translations Settings\nsubpage to only be used in the case of showing a loading spinner, a warning icon,\nor an error icon. If the button is intended to be clicked, whether enabled or disabled,\nit will be shown as a non-ghost button.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764710882,
+          "dateModified": 1765895080,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274828,
+        "type": "DREV",
+        "phid": "PHID-DREV-ky2mjcwg4kea73ctferr",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 16: Use Button Pattern for NTL r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274828",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-lofc3vswnlxlpi2bxec3",
+          "diffID": "1174110",
+          "summary": "\nThis commit updates the Never Translate Languages\nsection of the Translations settings the moz-select\nwith button pattern, similar to the download section.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764710877,
+          "dateModified": 1765895089,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274827,
+        "type": "DREV",
+        "phid": "PHID-DREV-474phm7gofgvt2ykggoo",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 15: Use Button Pattern for ATL r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274827",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-xr7n7xf2psxenu36q7r7",
+          "diffID": "1174109",
+          "summary": "\nThis commit updates the Always Translate Languages\nsection of the Translations settings the moz-select\nwith button pattern, similar to the download section.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764710872,
+          "dateModified": 1765894441,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-nv4zrwvd4nxdokl2exzp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-kosuuayhb7rglolarpxi"
+              },
+              {
+                "reviewerPHID": "PHID-USER-kosuuayhb7rglolarpxi",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-kosuuayhb7rglolarpxi"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274680,
+        "type": "DREV",
+        "phid": "PHID-DREV-5boe5kq4dcrrn34cpbur",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-5boe5kq4dcrrn34cpbur": [
+              "PHID-DREV-aj6bnorzpugrfbsoioys"
+            ],
+            "PHID-DREV-aj6bnorzpugrfbsoioys": []
+          },
+          "title": "Bug 2003214 - Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D274680",
+          "authorPHID": "PHID-USER-ugdpy6gq5b5soiynos6n",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-6z5zdvgg7r2gu2qbvha5",
+          "diffID": "1171785",
+          "summary": "\nImplements console-based security audit logging for policy decisions with:\n- Hash.sys.mjs: HMAC-SHA256 hashing with session-scoped throwaway key\n  for privacy-preserving logs (per Security Team feedback)\n- SecurityLogger.sys.mjs: Console logging with sanitized NDJSON output\n- Sensitive fields (URLs, args) hashed before logging\n- All policy decisions logged (allow, deny, pref switch bypass, errors)\n- Timestamp auto-generated in log() function",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764642406,
+          "dateModified": 1765504401,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2003214",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274571,
+        "type": "DREV",
+        "phid": "PHID-DREV-5np2l3xiebepqax66wq5",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-5np2l3xiebepqax66wq5": []
+          },
+          "title": "Bug 2002158 - Avoid throwing exceptions when a crash dump id is missing during tests r=jmaher",
+          "uri": "https://phabricator.services.mozilla.com/D274571",
+          "authorPHID": "PHID-USER-ebebpbp2fnufsd3f2mah",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-7foqi4suk7tiwe5fw635",
+          "diffID": "1165738",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764586219,
+          "dateModified": 1765883231,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002158",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-arjysec4yk5uvikldh4p",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ylrjjugid56tj3jy4vlz"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-ylrjjugid56tj3jy4vlz",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ylrjjugid56tj3jy4vlz"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-mefa72mp4kzwenywt7gj",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274523,
+        "type": "DREV",
+        "phid": "PHID-DREV-aj6bnorzpugrfbsoioys",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-aj6bnorzpugrfbsoioys": [],
+            "PHID-DREV-5boe5kq4dcrrn34cpbur": [
+              "PHID-DREV-aj6bnorzpugrfbsoioys"
+            ]
+          },
+          "title": "Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D274523",
+          "authorPHID": "PHID-USER-ugdpy6gq5b5soiynos6n",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-cgili24wbj6fxkengs67",
+          "diffID": "1171717",
+          "summary": "\nImplements a policy-based security layer for AI Window to protect against\nprompt injection attacks. The security layer validates tool execution requests\nagainst a URL ledger that tracks user-authorized URLs.\n\nKey components:\n- SecurityOrchestrator: Central coordinator with evaluation flow documentation\n- PolicyEvaluator: JSON policy evaluation with \"first deny wins\" strategy\n- ConditionEvaluator: Safe condition evaluation for policy rules\n- SecurityLogger: Console-based audit logging (stub for now)\n- SecurityUtils: URL normalization, eTLD validation, ledger management\n- DecisionTypes: Type definitions and helpers for allow/deny decisions",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764539451,
+          "dateModified": 1765817990,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2003190",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-nygia4xzc2ekrzb3xp3i",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-nygia4xzc2ekrzb3xp3i"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274231,
+        "type": "DREV",
+        "phid": "PHID-DREV-3wbp3jcsazqvr467gyao",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": []
+          },
+          "title": "Bug 2002127 - Part 14: Implement Translations Settings Tests r=hjones!,#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D274231",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-hib3qmlnw6qcvdo3bnp7",
+          "diffID": "1174108",
+          "summary": "\nThis commit implements automated testing for the redesigned Translations\nsettings and subpage, compatible with the settings redesign initiative.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764207170,
+          "dateModified": 1765894742,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 274217,
+        "type": "DREV",
+        "phid": "PHID-DREV-mya4vjmki2tysxeqq7wh",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-mya4vjmki2tysxeqq7wh": [
+              "PHID-DREV-ot3nd4ojjjuup3kmh22r"
+            ],
+            "PHID-DREV-ot3nd4ojjjuup3kmh22r": [],
+            "PHID-DREV-gi6xnftaqt6nluko4unm": [
+              "PHID-DREV-mya4vjmki2tysxeqq7wh"
+            ],
+            "PHID-DREV-3yyqnp2ztbjnyklhjp2t": [
+              "PHID-DREV-gi6xnftaqt6nluko4unm"
+            ],
+            "PHID-DREV-nfwwic5dbacosgikx2co": [
+              "PHID-DREV-3yyqnp2ztbjnyklhjp2t"
+            ],
+            "PHID-DREV-o27vvpu2kyk3pi2r3vb5": [
+              "PHID-DREV-nfwwic5dbacosgikx2co"
+            ],
+            "PHID-DREV-avhmgafflm6bv7qmaxk7": [
+              "PHID-DREV-o27vvpu2kyk3pi2r3vb5"
+            ],
+            "PHID-DREV-m4huoyiivkcdyr6juibe": [
+              "PHID-DREV-avhmgafflm6bv7qmaxk7"
+            ],
+            "PHID-DREV-olav7eiya35iu7bt7q2q": [
+              "PHID-DREV-m4huoyiivkcdyr6juibe"
+            ],
+            "PHID-DREV-5wsmlkntz3t4lctjri6o": [
+              "PHID-DREV-olav7eiya35iu7bt7q2q"
+            ],
+            "PHID-DREV-54zmtrlze5oyklvt4mjt": [
+              "PHID-DREV-5wsmlkntz3t4lctjri6o"
+            ],
+            "PHID-DREV-j2yr3spjxrlpd4aua6ix": [
+              "PHID-DREV-54zmtrlze5oyklvt4mjt"
+            ],
+            "PHID-DREV-2bdu37x5mfopjqqv23bh": [
+              "PHID-DREV-j2yr3spjxrlpd4aua6ix"
+            ],
+            "PHID-DREV-3wbp3jcsazqvr467gyao": [
+              "PHID-DREV-2bdu37x5mfopjqqv23bh"
+            ],
+            "PHID-DREV-474phm7gofgvt2ykggoo": [
+              "PHID-DREV-3wbp3jcsazqvr467gyao"
+            ],
+            "PHID-DREV-ky2mjcwg4kea73ctferr": [
+              "PHID-DREV-474phm7gofgvt2ykggoo"
+            ],
+            "PHID-DREV-ftgqsyya4k7dmgrlfzua": [
+              "PHID-DREV-ky2mjcwg4kea73ctferr"
+            ],
+            "PHID-DREV-b72pmp5pw6rrjd2rtev6": [
+              "PHID-DREV-ftgqsyya4k7dmgrlfzua"
+            ],
+            "PHID-DREV-vejuuxhrk3wdi4wxvaoh": [
+              "PHID-DREV-b72pmp5pw6rrjd2rtev6"
+            ],
+            "PHID-DREV-mfkmfhdoen7dummoes32": [
+              "PHID-DREV-vejuuxhrk3wdi4wxvaoh"
+            ]
+          },
+          "title": "Bug 2002127 - Part 02: Remove unused browser.translations.newSettingsUI code r=hjones!",
+          "uri": "https://phabricator.services.mozilla.com/D274217",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-2qznn5tjtujvg22qkf76",
+          "diffID": "1174095",
+          "summary": "\nThis commit removes all code related to the Translations Settings UI\nrework that predated the larger initiative to rework all of about:settings.\n\nThis work was completed, but never shipped. It lives on, in spirit, within\nthe following patch stack.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1764207112,
+          "dateModified": 1765894306,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "2002127",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-sqzi3myw3ybsofxmewmp"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-2vbpac3ze6gc3hai4ts6",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-2unm6j7c36hylplkvkb6"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-sqzi3myw3ybsofxmewmp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-sqzi3myw3ybsofxmewmp"
+              },
+              {
+                "reviewerPHID": "PHID-USER-a4fd6usoyx75n6ewpcff",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-a4fd6usoyx75n6ewpcff"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271447,
+        "type": "DREV",
+        "phid": "PHID-DREV-lmrsu2h4l3itk27ntvum",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-lmrsu2h4l3itk27ntvum": []
+          },
+          "title": "Bug 1996967 - Add capability for loadTestPage to take inline HTML. r=nordzilla",
+          "uri": "https://phabricator.services.mozilla.com/D271447",
+          "authorPHID": "PHID-USER-uz7w665ij4iul7vn4z6m",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-q5sdz6kqm2mjjbesmhki",
+          "diffID": "1162032",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762364704,
+          "dateModified": 1764028766,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1996967",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271264,
+        "type": "DREV",
+        "phid": "PHID-DREV-pluqjdbgsmv3duxkj6ew",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-pluqjdbgsmv3duxkj6ew": [
+              "PHID-DREV-5hqna6cwspukwgwphaen"
+            ],
+            "PHID-DREV-5hqna6cwspukwgwphaen": [
+              "PHID-DREV-so6ujotwxbcsqkgpqdzs"
+            ],
+            "PHID-DREV-so6ujotwxbcsqkgpqdzs": [
+              "PHID-DREV-5bmzplpdop25cpxd6zo6"
+            ],
+            "PHID-DREV-5bmzplpdop25cpxd6zo6": []
+          },
+          "title": "Bug 1998228 - Type check StaticEmbeddingsPipeline.mjs",
+          "uri": "https://phabricator.services.mozilla.com/D271264",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-aefrb3juovaa3y4jjxdf",
+          "diffID": "1166562",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762278525,
+          "dateModified": 1764804010,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1998228",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              },
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271263,
+        "type": "DREV",
+        "phid": "PHID-DREV-5hqna6cwspukwgwphaen",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-5hqna6cwspukwgwphaen": [
+              "PHID-DREV-so6ujotwxbcsqkgpqdzs"
+            ],
+            "PHID-DREV-so6ujotwxbcsqkgpqdzs": [
+              "PHID-DREV-5bmzplpdop25cpxd6zo6"
+            ],
+            "PHID-DREV-pluqjdbgsmv3duxkj6ew": [
+              "PHID-DREV-5hqna6cwspukwgwphaen"
+            ],
+            "PHID-DREV-5bmzplpdop25cpxd6zo6": []
+          },
+          "title": "Bug 1998228 - Type check MLEngineParent.sys.mjs",
+          "uri": "https://phabricator.services.mozilla.com/D271263",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-kcg3stmylhjgzs3l6laz",
+          "diffID": "1166561",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762278520,
+          "dateModified": 1764850431,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1998228",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-lnsgtfhc7nksaozrdpjb"
+              },
+              {
+                "reviewerPHID": "PHID-USER-lnsgtfhc7nksaozrdpjb",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-lnsgtfhc7nksaozrdpjb"
+              },
+              {
+                "reviewerPHID": "PHID-USER-2unm6j7c36hylplkvkb6",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-2unm6j7c36hylplkvkb6"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271262,
+        "type": "DREV",
+        "phid": "PHID-DREV-so6ujotwxbcsqkgpqdzs",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-so6ujotwxbcsqkgpqdzs": [
+              "PHID-DREV-5bmzplpdop25cpxd6zo6"
+            ],
+            "PHID-DREV-5bmzplpdop25cpxd6zo6": [],
+            "PHID-DREV-5hqna6cwspukwgwphaen": [
+              "PHID-DREV-so6ujotwxbcsqkgpqdzs"
+            ],
+            "PHID-DREV-pluqjdbgsmv3duxkj6ew": [
+              "PHID-DREV-5hqna6cwspukwgwphaen"
+            ]
+          },
+          "title": "Bug 1998228 - Type check MLEngineChild.sys.mjs",
+          "uri": "https://phabricator.services.mozilla.com/D271262",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-bepxejrhuk5cj2uhe47t",
+          "diffID": "1166560",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762278516,
+          "dateModified": 1764804099,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1998228",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              },
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271261,
+        "type": "DREV",
+        "phid": "PHID-DREV-5bmzplpdop25cpxd6zo6",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-5bmzplpdop25cpxd6zo6": [],
+            "PHID-DREV-so6ujotwxbcsqkgpqdzs": [
+              "PHID-DREV-5bmzplpdop25cpxd6zo6"
+            ],
+            "PHID-DREV-5hqna6cwspukwgwphaen": [
+              "PHID-DREV-so6ujotwxbcsqkgpqdzs"
+            ],
+            "PHID-DREV-pluqjdbgsmv3duxkj6ew": [
+              "PHID-DREV-5hqna6cwspukwgwphaen"
+            ]
+          },
+          "title": "Bug 1998228 - Add toolkit/components/ml/tsconfig.json for some initial type checking",
+          "uri": "https://phabricator.services.mozilla.com/D271261",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-poarpwrhq6pqx66xscjr",
+          "diffID": "1166559",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762278512,
+          "dateModified": 1764869465,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1998228",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-ddmnu3u2doc6nrizsosb",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              },
+              {
+                "reviewerPHID": "PHID-USER-2unm6j7c36hylplkvkb6",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-2unm6j7c36hylplkvkb6"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              },
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 271145,
+        "type": "DREV",
+        "phid": "PHID-DREV-nthxbwhpgwwdfp6spqrd",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ],
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": []
+          },
+          "title": "Bug 1991133 - Split up Translations actor tests r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D271145",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-darenumo6lkwdug3chpi",
+          "diffID": "1158477",
+          "summary": "\nThis patch splits up some of the Translations actor tests\nbecause they were occasionally hitting the default timeout.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1762202558,
+          "dateModified": 1764336097,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270622,
+        "type": "DREV",
+        "phid": "PHID-DREV-m4nw65pxbojfwt4ufb5p",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ],
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": []
+          },
+          "title": "Bug 1991133 - Add Translations record pruning telemetry r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D270622",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-grtkx7aia7vy3aqebp3v",
+          "diffID": "1158471",
+          "summary": "\nThis patch introduces a telemetry event whenever outdated,\npreviously downloaded records are pruned, so that we can\nget a good sense of how much data we are cleaning up on\nuser's devices when we release a new record versions.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1761776658,
+          "dateModified": 1763503716,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270621,
+        "type": "DREV",
+        "phid": "PHID-DREV-oqm67zquh4gdodgx5djd",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ],
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": []
+          },
+          "title": "Bug 1991133 - Prune outdated Translations attachments r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D270621",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-jrqqdgjnvyvxyz4swyg3",
+          "diffID": "1158470",
+          "summary": "\nThis patch introduces new logic on Remote Settings sync\nthat will prune any previously downloaded record attachments\nthat are no longer the most-current version for that record.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1761776653,
+          "dateModified": 1763503760,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270620,
+        "type": "DREV",
+        "phid": "PHID-DREV-krtmn4qcdiez7yxklz2j",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": [],
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ]
+          },
+          "title": "Bug 1991133 - Rework #bergamotWasmRecord r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D270620",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-eyryhkvtauran6mxybkg",
+          "diffID": "1158469",
+          "summary": "\nThis patch reworks the way #bergamotWasmRecord is used\nto instead unify onto a #getBergamotWasmRecord() promise\nwith internal caching.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1761776649,
+          "dateModified": 1763505423,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270619,
+        "type": "DREV",
+        "phid": "PHID-DREV-fzzgkbi6rfeih4z53tle",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": [],
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ]
+          },
+          "title": "Bug 1991133 - Misc. improvements to Translations types r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D270619",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-h52tmjr6izowhgci36tn",
+          "diffID": "1158468",
+          "summary": "\nThis patch contains some small miscelllaneous improvments\nto our Translations typescript definitions, including\ntypes that were previously incorrect, and also defining\ntypes more accurately for our Remote Settings usage.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1761776645,
+          "dateModified": 1763504557,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270618,
+        "type": "DREV",
+        "phid": "PHID-DREV-jbpppfrwp52rc2ylvegk",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-jbpppfrwp52rc2ylvegk": [],
+            "PHID-DREV-fzzgkbi6rfeih4z53tle": [
+              "PHID-DREV-jbpppfrwp52rc2ylvegk"
+            ],
+            "PHID-DREV-krtmn4qcdiez7yxklz2j": [
+              "PHID-DREV-fzzgkbi6rfeih4z53tle"
+            ],
+            "PHID-DREV-oqm67zquh4gdodgx5djd": [
+              "PHID-DREV-krtmn4qcdiez7yxklz2j"
+            ],
+            "PHID-DREV-m4nw65pxbojfwt4ufb5p": [
+              "PHID-DREV-oqm67zquh4gdodgx5djd"
+            ],
+            "PHID-DREV-nthxbwhpgwwdfp6spqrd": [
+              "PHID-DREV-m4nw65pxbojfwt4ufb5p"
+            ]
+          },
+          "title": "Bug 1991133 - Misc. improvements to Translations tests r=#translations-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D270618",
+          "authorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-j5t2hpxnltogpuafwoqv",
+          "diffID": "1158467",
+          "summary": "\nThis patch makes a few misceallaneous improvements to our\nTranslations testing infrastructure, mainly around our mocked\nRemote Settings clients.\n\nThe overall intent is to have the mocked clients behave more\nlike the real Remote Settings clients, allowing the code logic\nto have only a single branch, eventually rmoving in-logic\nworkarounds that utilize things such as `Cu.isInAutomation`.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1761776640,
+          "dateModified": 1763504581,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1991133",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 270422,
+        "type": "DREV",
+        "phid": "PHID-DREV-dartrn7ffk5a4giwj5wh",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-dartrn7ffk5a4giwj5wh": []
+          },
+          "title": "WIP: Bug 1996991 - Migrate DOMExtractor to C++",
+          "uri": "https://phabricator.services.mozilla.com/D270422",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "changes-planned",
+            "name": "Changes Planned",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-yzcw34oxe4jhy6qpzxhl",
+          "diffID": "1146305",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": true,
+          "holdAsDraft": false,
+          "dateCreated": 1761689880,
+          "dateModified": 1763824385,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1996991",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": []
+          }
+        }
+      },
+      {
+        "id": 268413,
+        "type": "DREV",
+        "phid": "PHID-DREV-ds7phyo52nozhzsbt7ef",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": []
+          },
+          "title": "Bug 1940906 - Fetch the function we need for speech recognition from the mozinference library. r?atossou",
+          "uri": "https://phabricator.services.mozilla.com/D268413",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-qn3vnqgizicjjf7u7pr4",
+          "diffID": "1174406",
+          "summary": "\nWe could imagine renaming this LlamaRuntimeLinker but I didn't bother.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760368836,
+          "dateModified": 1765911095,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-m5fagme7wcxodzl3sz5s",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-m5fagme7wcxodzl3sz5s"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-m5fagme7wcxodzl3sz5s"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 268411,
+        "type": "DREV",
+        "phid": "PHID-DREV-u2xp3pmiwjwhbi66lz4u",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": []
+          },
+          "title": "Bug 1940906 - Allow getting a Blob of a model file in the HWInference process, cross-process, without copies. r?#ipc-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D268411",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-jisgiwo2rffqjxlmqg5b",
+          "diffID": "1174405",
+          "summary": "\nThis is be later used when initializing the speech recognition backend.\nThe files range from a hundreds megabyte to multiple gigabytes\n(depending on the quality and how many languages they can handle), so we\nreally need to avoid a copy here.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760368820,
+          "dateModified": 1765911094,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-afjkbj7gygn5ovkd2wj5",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 268410,
+        "type": "DREV",
+        "phid": "PHID-DREV-t7w5o2uiudn36suurbo6",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": [],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ]
+          },
+          "title": "Bug 1940906 - Implement the backend for downloading a model file, using ModelHub. r?#ipc-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D268410",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-y22fwqm6qp3gpx2x3vvi",
+          "diffID": "1174403",
+          "summary": "\nThis is very similar to the previous patch (available()), but leverages\nthe ModelHub to download a model, with progress callback. The download\nprogress isn't relayed to content (intentionnaly, for fingerprinting\nreasons), but a completion callback is (error or success).\n\nAgain, this starts in the content process, uses a transient\nPSpeechRecognition actor to reach the HWInference process, that asks the\nmain process (on its main thread) to download a model (or resolve the\npromise immediately if already downloaded -- ModelHub implements a\ncache).",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760368812,
+          "dateModified": 1765911094,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-afjkbj7gygn5ovkd2wj5",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 268409,
+        "type": "DREV",
+        "phid": "PHID-DREV-mkoaxsb3ys2petik6cww",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": [],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ]
+          },
+          "title": "Bug 1940906 - Introduce PSPeechRecognition, implement SpeechRecognition.available(). r?#ipc-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D268409",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-mxgn47j4e7lshn7fcwkx",
+          "diffID": "1174401",
+          "summary": "\nSpeechRecognition.available() allows knowing if a particular language is\nsupported. This patch starts in the content process, instantiate a\nSpeechRecognition actor, sending a request to the HWInference process,\nthat then asks the parent process, at which point the ModelHub can be\nqueried (on the main thread).",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760368804,
+          "dateModified": 1765911093,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-afjkbj7gygn5ovkd2wj5",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 268408,
+        "type": "DREV",
+        "phid": "PHID-DREV-smwvluoxajbcu3yobnem",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": [],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ]
+          },
+          "title": "Bug 1940906 - Add an XPCOM interface to ModelHub.sys.mjs, add available() to ModelHub. r?tarek,#xpcom-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D268408",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-2yqaxvcakzwwgfil3q5n",
+          "diffID": "1174402",
+          "summary": "\nThis allows calling into ModelHub from native code. This also adds a\ncouple testing facilities, and a little bit of formatting fixes.\n\nThe testing facilities allow almost end-to-end testing of some\nWeb Speech API feature, testing all the IPC, but sidestepping the very\nlast part about having an _actual_ model.\n\nOnly the facilities SpeechRecognition needs are exposed via this small\nXPCOM component: check availability, download a mode, with progress\ncallbacks, and getting an fd for a model file stored in ModelHub.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760368794,
+          "dateModified": 1765911093,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-ugo2az3njkayonlub7qr",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              },
+              {
+                "reviewerPHID": "PHID-USER-geresfpgziqivp6chwbj",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-geresfpgziqivp6chwbj"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ugo2az3njkayonlub7qr"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 268403,
+        "type": "DREV",
+        "phid": "PHID-DREV-6qp3fkdwi43vr7ltsz4y",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-6qp3fkdwi43vr7ltsz4y": [
+              "PHID-DREV-qxleswcamjd4dck7cnb2"
+            ],
+            "PHID-DREV-qxleswcamjd4dck7cnb2": [
+              "PHID-DREV-afnqjjbwtoq6y2hg5v4x"
+            ],
+            "PHID-DREV-x7lhvbwf5lb2q7pbs3jk": [
+              "PHID-DREV-6qp3fkdwi43vr7ltsz4y"
+            ],
+            "PHID-DREV-afnqjjbwtoq6y2hg5v4x": [
+              "PHID-DREV-tl3tjje6l44m3q4vvuqt"
+            ],
+            "PHID-DREV-wdlmb7fwxcwmkoimncba": [
+              "PHID-DREV-x7lhvbwf5lb2q7pbs3jk"
+            ],
+            "PHID-DREV-tl3tjje6l44m3q4vvuqt": [
+              "PHID-DREV-zhitdrcglrq2jpfjtspq"
+            ],
+            "PHID-DREV-smwvluoxajbcu3yobnem": [
+              "PHID-DREV-wdlmb7fwxcwmkoimncba",
+              "PHID-DREV-t4ztcp7umpqllobw73rw"
+            ],
+            "PHID-DREV-zhitdrcglrq2jpfjtspq": [
+              "PHID-DREV-nuqob4wf3gfet3nekz3b"
+            ],
+            "PHID-DREV-t4ztcp7umpqllobw73rw": [],
+            "PHID-DREV-mkoaxsb3ys2petik6cww": [
+              "PHID-DREV-smwvluoxajbcu3yobnem"
+            ],
+            "PHID-DREV-nuqob4wf3gfet3nekz3b": [],
+            "PHID-DREV-t7w5o2uiudn36suurbo6": [
+              "PHID-DREV-mkoaxsb3ys2petik6cww"
+            ],
+            "PHID-DREV-u2xp3pmiwjwhbi66lz4u": [
+              "PHID-DREV-t7w5o2uiudn36suurbo6"
+            ],
+            "PHID-DREV-ds7phyo52nozhzsbt7ef": [
+              "PHID-DREV-u2xp3pmiwjwhbi66lz4u"
+            ],
+            "PHID-DREV-xfhzh7kgwlujferdzkvs": [
+              "PHID-DREV-ds7phyo52nozhzsbt7ef"
+            ],
+            "PHID-DREV-obpdcghuscw6oxzbjz4s": [
+              "PHID-DREV-xfhzh7kgwlujferdzkvs"
+            ],
+            "PHID-DREV-zazitzb3hfkgwzdbm2gi": [
+              "PHID-DREV-obpdcghuscw6oxzbjz4s"
+            ],
+            "PHID-DREV-gyyerogc6uc23pwzj356": [
+              "PHID-DREV-zazitzb3hfkgwzdbm2gi"
+            ],
+            "PHID-DREV-nu6xgue6abxnjxm4as7s": [
+              "PHID-DREV-gyyerogc6uc23pwzj356"
+            ],
+            "PHID-DREV-72mbyygtu5umm4jd6tui": [
+              "PHID-DREV-nu6xgue6abxnjxm4as7s"
+            ],
+            "PHID-DREV-ta5decs6a4vhow6rkocg": [
+              "PHID-DREV-72mbyygtu5umm4jd6tui"
+            ],
+            "PHID-DREV-lfjk75nmjs6ugx4o37sk": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-5c3atuvuqkplgq2rifpg": [
+              "PHID-DREV-ta5decs6a4vhow6rkocg"
+            ],
+            "PHID-DREV-sooernqunubd6jpxduj7": [
+              "PHID-DREV-lfjk75nmjs6ugx4o37sk"
+            ],
+            "PHID-DREV-6cpsgufy4oxvid3otw54": [
+              "PHID-DREV-5c3atuvuqkplgq2rifpg"
+            ]
+          },
+          "title": "Bug 1940906 - Introduce the HWInference utility process. r?#ipc-reviewers,gerard-majax",
+          "uri": "https://phabricator.services.mozilla.com/D268403",
+          "authorPHID": "PHID-USER-rip425pakj57je44bgzq",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-zl6ykshejyvvd57v7wug",
+          "diffID": "1173379",
+          "summary": "\nThe HWInference process is a new type of process, that is created from a\ncontent process (e.g. to implement a Web API), but can also talk to the\nmain process (e.g. to interact with ModelHub and acquire ML models).\n\nIt doesn't run script. It has a dedicated sandbox policy (in a\nsubsequent patch), that is roughly similar to the GPU process policy,\nwith everything related to graphics rendering removed (connection to the\ndisplay server, access to fonts, misc system calls and privileges,\netc.), as it is just for hardware accelerated computations.\n\nThis patch only contains the scaffolding, and the first actor\n(PSpeechRecognition) will be introduced in another patch.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1760367214,
+          "dateModified": 1765911091,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940906",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-bhni6gbnomq3qghiacya",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-bhni6gbnomq3qghiacya"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-afjkbj7gygn5ovkd2wj5",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-nv4zrwvd4nxdokl2exzp",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-52tll3zmlcopd5aoarnv"
+              },
+              {
+                "reviewerPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-52tll3zmlcopd5aoarnv",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-52tll3zmlcopd5aoarnv"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 267883,
+        "type": "DREV",
+        "phid": "PHID-DREV-6rb5aogdvl3fyvv7xihl",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-6rb5aogdvl3fyvv7xihl": []
+          },
+          "title": "WIP: Bug 1992257 - WIP Use onnx for the vector math in static embeddings",
+          "uri": "https://phabricator.services.mozilla.com/D267883",
+          "authorPHID": "PHID-USER-hch2p624jejt4kddoqow",
+          "status": {
+            "value": "changes-planned",
+            "name": "Changes Planned",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-qm5gb2dpskria7tqt7uu",
+          "diffID": "1135431",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": true,
+          "holdAsDraft": false,
+          "dateCreated": 1759872778,
+          "dateModified": 1759874729,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1992257",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": []
+          }
+        }
+      },
+      {
+        "id": 263429,
+        "type": "DREV",
+        "phid": "PHID-DREV-j2r7f4xokhcs44kqxawd",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-j2r7f4xokhcs44kqxawd": []
+          },
+          "title": "WIP: Bug 1751335 - Adding right-click select on text in macOS",
+          "uri": "https://phabricator.services.mozilla.com/D263429",
+          "authorPHID": "PHID-USER-aff3o2f4awiarms2frmr",
+          "status": {
+            "value": "changes-planned",
+            "name": "Changes Planned",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-4hjch2oyaxdx7vyw7f7j",
+          "diffID": "1162618",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1756830432,
+          "dateModified": 1764605173,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1751335",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-fvn6k7ttmglwtkmvc7ur",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-fvn6k7ttmglwtkmvc7ur"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-pez226ik3xukhdo7atsz",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 254523,
+        "type": "DREV",
+        "phid": "PHID-DREV-gjltch2xspp7gtpdcuax",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-gjltch2xspp7gtpdcuax": [
+              "PHID-DREV-fz4bdhoktxncxjgonihz"
+            ],
+            "PHID-DREV-fz4bdhoktxncxjgonihz": [],
+            "PHID-DREV-qiulibwywk4zu3o3vqrw": [
+              "PHID-DREV-fz4bdhoktxncxjgonihz"
+            ]
+          },
+          "title": "Bug 1973225 - rustc: upgrade self_cell r?#platform-i18n-reviewers",
+          "uri": "https://phabricator.services.mozilla.com/D254523",
+          "authorPHID": "PHID-USER-xsug3d47ikapt73uamb6",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-qssjyt2lh2iah7yxtjrl",
+          "diffID": "1066713",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1750434409,
+          "dateModified": 1751698310,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1973225",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xqqhpmwofkgglvwqiim7",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-seibtfxoxtxgsqpazm43",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              },
+              {
+                "reviewerPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-dgf7bi3p7yaq7rusttk4"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 246955,
+        "type": "DREV",
+        "phid": "PHID-DREV-7p5o7pknv2jqvcntxhmh",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-7p5o7pknv2jqvcntxhmh": []
+          },
+          "title": "Bug 1963092 - Only enable Link Preview in areas other than the EU - r=Mardak",
+          "uri": "https://phabricator.services.mozilla.com/D246955",
+          "authorPHID": "PHID-USER-dkwa7taw2tgc5mnaxi53",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-kwzirtcikesfhynck4l2",
+          "diffID": "1021883",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1745854701,
+          "dateModified": 1761853962,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1963092",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-5tyh6lu2ycegxsjx6542",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-ddmnu3u2doc6nrizsosb",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 244620,
+        "type": "DREV",
+        "phid": "PHID-DREV-es36yd5yuvzc53jizexc",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-es36yd5yuvzc53jizexc": [
+              "PHID-DREV-xco2ndzurzw5aharvkcc"
+            ],
+            "PHID-DREV-xco2ndzurzw5aharvkcc": []
+          },
+          "title": "Bug 1948995 - Add browser test for translation feature on moz-extension URL r=nordzilla!",
+          "uri": "https://phabricator.services.mozilla.com/D244620",
+          "authorPHID": "PHID-USER-s4qhbmocpznijoe3urv3",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-r547obccgsr4phyo2zp6",
+          "diffID": "1011833",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1744038680,
+          "dateModified": 1744225621,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1948995",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 243087,
+        "type": "DREV",
+        "phid": "PHID-DREV-npmliz3icxzmmcu4gmrl",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-npmliz3icxzmmcu4gmrl": []
+          },
+          "title": "Bug 1917908 - [Translations] Improve responsive layout for translations UI on small screens. r=nordzilla",
+          "uri": "https://phabricator.services.mozilla.com/D243087",
+          "authorPHID": "PHID-USER-x5tba5rnvop4mkyyc7lx",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-nne4djvmykztfpf64put",
+          "diffID": "1005973",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1742982707,
+          "dateModified": 1745923173,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1917908",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 243061,
+        "type": "DREV",
+        "phid": "PHID-DREV-msk7usl677s25keowbp4",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-msk7usl677s25keowbp4": []
+          },
+          "title": "Bug 1917908 - Improve responsive layout for translations UI on small screens. r=nordzilla",
+          "uri": "https://phabricator.services.mozilla.com/D243061",
+          "authorPHID": "PHID-USER-x5tba5rnvop4mkyyc7lx",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-obbjq5bd2t7hfiftp5yk",
+          "diffID": "1005884",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1742970657,
+          "dateModified": 1745923173,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1917908",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 243059,
+        "type": "DREV",
+        "phid": "PHID-DREV-ibsop533ayfmuvgxljit",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-ibsop533ayfmuvgxljit": []
+          },
+          "title": "Bug 1917908 - Improve responsive layout for translations UI on small screens. r=nordzilla",
+          "uri": "https://phabricator.services.mozilla.com/D243059",
+          "authorPHID": "PHID-USER-x5tba5rnvop4mkyyc7lx",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-sm3xtp4mkybwv2wo7eug",
+          "diffID": "1005876",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1742966908,
+          "dateModified": 1745923172,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1917908",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 236660,
+        "type": "DREV",
+        "phid": "PHID-DREV-lki4mp5p6fzyjr2562ts",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-lki4mp5p6fzyjr2562ts": []
+          },
+          "title": "Bug 1907149 - Remove full page translations Nimbus configurations r=gregtatum",
+          "uri": "https://phabricator.services.mozilla.com/D236660",
+          "authorPHID": "PHID-USER-htz7kec5gdrv7kn7fybm",
+          "status": {
+            "value": "accepted",
+            "name": "Accepted",
+            "closed": false,
+            "color.ansi": "green"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-jc5npqscizcysqpiqt3a",
+          "diffID": "978760",
+          "summary": "\nThese features have been fully released, so we should clean up.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1738641276,
+          "dateModified": 1740560169,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1907149",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 233555,
+        "type": "DREV",
+        "phid": "PHID-DREV-pvtyyyzdyymovxak6uto",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-pvtyyyzdyymovxak6uto": []
+          },
+          "title": "Bug 1940538 - Add fetchWithRespect POC for Link Preview r=Mardak",
+          "uri": "https://phabricator.services.mozilla.com/D233555",
+          "authorPHID": "PHID-USER-dkwa7taw2tgc5mnaxi53",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-nzzdswyt7jd2je7oog4h",
+          "diffID": "966389",
+          "summary": "\n- add a new feature flag for browser.ml.feature.linkPreview.fetchWithRespect (default:true)\n- when set to True, Link Preview should fetch with custom UA and respect robots.txt\n- robots.txt parsing will be a placeholder for now",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1736363661,
+          "dateModified": 1761853934,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1940538",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-5tyh6lu2ycegxsjx6542",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-ddmnu3u2doc6nrizsosb",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 231150,
+        "type": "DREV",
+        "phid": "PHID-DREV-efaqia5jgsprbvra43gf",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-efaqia5jgsprbvra43gf": [
+              "PHID-DREV-cfq6chxy3tzds44gaard"
+            ],
+            "PHID-DREV-cfq6chxy3tzds44gaard": []
+          },
+          "title": "Bug XXXXX - Local Summarizer(llama.cpp): Demo - r?rhadi,atossou Add UI element sourcing from browser element to - render summary in a bullet list - change to div and flex based UI",
+          "uri": "https://phabricator.services.mozilla.com/D231150",
+          "authorPHID": "PHID-USER-dkwa7taw2tgc5mnaxi53",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-o5a6cgxzjeie2zq7th25",
+          "diffID": "955097",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1733341162,
+          "dateModified": 1761853794,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": null,
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-7jyixdsmu5ixuy2zedco",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-m5fagme7wcxodzl3sz5s",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-ddmnu3u2doc6nrizsosb",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 194505,
+        "type": "DREV",
+        "phid": "PHID-DREV-fx3ohsojsdsmws4nm7dt",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-fx3ohsojsdsmws4nm7dt": []
+          },
+          "title": "Bug 1849922 - Show correct icon for settings in translation panel if detected language is not yet supported. r=gregtatum,nordzilla!",
+          "uri": "https://phabricator.services.mozilla.com/D194505",
+          "authorPHID": "PHID-USER-amibjgpoejiokkqbiyv3",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-aficdzceb5i4mh5ecqxj",
+          "diffID": "790394",
+          "summary": "\nPreviously, a wrong icon was being displayed instead of the settings icon. This revision ensures the correct icon is displayed for translation panels of unsupported languages.",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1700744175,
+          "dateModified": 1725280090,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1849922",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 193901,
+        "type": "DREV",
+        "phid": "PHID-DREV-ljlav7rq5xjqmo6kip4x",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-ljlav7rq5xjqmo6kip4x": []
+          },
+          "title": "Bug 1815793 - [browser about: Translations] Included an empty list checker for the available translated language and gives a response back to the user. r=gregtatum,nordzilla!",
+          "uri": "https://phabricator.services.mozilla.com/D193901",
+          "authorPHID": "PHID-USER-izyuaiimnrvukuolkwg7",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-z2iwrkw2nzktqvzlqxw7",
+          "diffID": "787967",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1700219264,
+          "dateModified": 1745919868,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1815793",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-nv4zrwvd4nxdokl2exzp",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-kosuuayhb7rglolarpxi"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-USER-kosuuayhb7rglolarpxi",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-kosuuayhb7rglolarpxi"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 190860,
+        "type": "DREV",
+        "phid": "PHID-DREV-zmy6gjldw3w2hzqribnd",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-zmy6gjldw3w2hzqribnd": []
+          },
+          "title": "Bug 1815793 - [browser about: Translations] Included an empty list checker for the available translated language and gives a response back to the user. r=nordzilla,gregtatum!",
+          "uri": "https://phabricator.services.mozilla.com/D190860",
+          "authorPHID": "PHID-USER-amibjgpoejiokkqbiyv3",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-5d6n5sqx5wnmwfechbi2",
+          "diffID": "775102",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1697144491,
+          "dateModified": 1745919867,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1815793",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 190531,
+        "type": "DREV",
+        "phid": "PHID-DREV-rcbsfqftlpbqdezlu2zt",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-rcbsfqftlpbqdezlu2zt": [],
+            "PHID-DREV-ijki5yhyklrgk6ygthqg": [
+              "PHID-DREV-rcbsfqftlpbqdezlu2zt"
+            ]
+          },
+          "title": "Bug 1855787: Updated TranslationsPanel tests",
+          "uri": "https://phabricator.services.mozilla.com/D190531",
+          "authorPHID": "PHID-USER-ffuqs3lbviommlfannmc",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-jzeqshnqkkelzjkh36rp",
+          "diffID": "780875",
+          "summary": "\nThis commit refines the tests related to the translation panel's first\nrun experience. It addresses the issues reported in Bug 1855787.\nAdditionally, it introduces a new preference named \"browser.translations.firstTranslationRequested\" and\nupdates the code accordingly. The creation of this preference was previously addressed in a separate commit.\n\nThe following files were modified:\n\n- browser/components/translations/content/translationsPanel.js\n- browser/components/translations/tests/browser/browser_translations_panel_firstrun.js\n- browser/components/translations/tests/browser/browser_translations_panel_firstrun_revisit.js\n- browser/components/translations/tests/browser/browser_translations_telemetry_firstrun_auto_translate.js\n- browser/components/translations/tests/browser/browser_translations_telemetry_firstrun_basics.js\n- browser/components/translations/tests/browser/browser_translations_telemetry_firstrun_translation_failure.js\n- browser/components/translations/tests/browser/browser_translations_telemetry_firstrun_unsupported_lang.js\n- browser/components/translations/tests/browser/head.js",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1696915516,
+          "dateModified": 1745921146,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1855787",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-mq7y7r6dbls7vxputx7b"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 190424,
+        "type": "DREV",
+        "phid": "PHID-DREV-exw6sxlhnyzmy7hiz67z",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-exw6sxlhnyzmy7hiz67z": []
+          },
+          "title": "Bug 1855839 add an observer to the TranslationInstance in the getLanguageList function to make sure the translations are up to date in the language settings r=Gijs",
+          "uri": "https://phabricator.services.mozilla.com/D190424",
+          "authorPHID": "PHID-USER-q2dcggp4vllrwy3yihwv",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-bxh5cliaewwoagdivyrk",
+          "diffID": "784686",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1696829132,
+          "dateModified": 1746018666,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1855839",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-x7i5cbb7p2oc6pht3g32",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-mq7y7r6dbls7vxputx7b",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 190031,
+        "type": "DREV",
+        "phid": "PHID-DREV-clkpxhunzikz7emul3d5",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-clkpxhunzikz7emul3d5": []
+          },
+          "title": "Bug 1814195  - Add telemetry to about translations r?gregtatum",
+          "uri": "https://phabricator.services.mozilla.com/D190031",
+          "authorPHID": "PHID-USER-eyq3a3yirr4yo5rb2q52",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-nauqxmakpkbhjq3ok43r",
+          "diffID": "771235",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1696420260,
+          "dateModified": 1728252851,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1814195",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 180335,
+        "type": "DREV",
+        "phid": "PHID-DREV-oa5c2lz4d6fafh4fxjxz",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-oa5c2lz4d6fafh4fxjxz": []
+          },
+          "title": "Bug 1833332 - Enable stylelint linter against use of px/pt for CSS font-size and line-height. r=gijs,#desktop-theme-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D180335",
+          "authorPHID": "PHID-USER-sjb23lkvqglp6kixwyq2",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-74yb223speynvquus2vi",
+          "diffID": "730742",
+          "summary": "This patch enables stylelint to discourage the use of “px” / “pt” units for `font-size` and `line-height`. The goal is to provide an aid for keeping our `font-size` and `line-height` sizings consistent in Firefox moving forward. \n\nFollow-up tasks will be filed for the affected modules and the owning teams can decide whether or not to remove `/* stylelint-disable-next-line declaration-property-unit-allowed-list */` from their stylesheets. \n",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1686238157,
+          "dateModified": 1707383429,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1833332",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-g4znrn3nvsnu5do5lpax",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-h44m7p3obyvtzlsak2vi"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-x7i5cbb7p2oc6pht3g32",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-soplcsvp5g6wu5kols7p",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-4uh2usj2m2ac4rnjiqlj",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hkitahbkppitqpq54yj3"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-bnmhzaaxzppqakslpab4",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-g6ajbgluibulold55j4g"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-kzy5dkupsi2xko4vi36z",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-hkitahbkppitqpq54yj3",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hkitahbkppitqpq54yj3"
+              },
+              {
+                "reviewerPHID": "PHID-USER-h44m7p3obyvtzlsak2vi",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-h44m7p3obyvtzlsak2vi"
+              },
+              {
+                "reviewerPHID": "PHID-USER-g6ajbgluibulold55j4g",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-g6ajbgluibulold55j4g"
+              },
+              {
+                "reviewerPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-7kwqcpqrdv7xuk47hcvc"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-m3yy47g3xppf3djz6l6c",
+                "status": "blocking",
+                "isBlocking": true,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 125577,
+        "type": "DREV",
+        "phid": "PHID-DREV-liy57imcmx4iqnkv2adv",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-liy57imcmx4iqnkv2adv": [
+              "PHID-DREV-m7auqitqfhgxpgdqbj46"
+            ],
+            "PHID-DREV-m7auqitqfhgxpgdqbj46": [
+              "PHID-DREV-d3rd46xl5pdjvy73epei"
+            ],
+            "PHID-DREV-v4flpcnpe42ui4dygqzi": [
+              "PHID-DREV-liy57imcmx4iqnkv2adv"
+            ],
+            "PHID-DREV-d3rd46xl5pdjvy73epei": [
+              "PHID-DREV-v4b5bt5q2z4h6lgrpfk3"
+            ],
+            "PHID-DREV-55y2rf5fm73o5ev5kg7g": [
+              "PHID-DREV-v4flpcnpe42ui4dygqzi"
+            ],
+            "PHID-DREV-v4b5bt5q2z4h6lgrpfk3": [
+              "PHID-DREV-og7hk5w6jnnlpyotczr4"
+            ],
+            "PHID-DREV-b6t3u3xsuivmbe36vxnz": [
+              "PHID-DREV-55y2rf5fm73o5ev5kg7g"
+            ],
+            "PHID-DREV-og7hk5w6jnnlpyotczr4": [
+              "PHID-DREV-jo2au6gnbb5mrnvnneaa"
+            ],
+            "PHID-DREV-tnvre2424kizok7szxip": [
+              "PHID-DREV-b6t3u3xsuivmbe36vxnz"
+            ],
+            "PHID-DREV-jo2au6gnbb5mrnvnneaa": [
+              "PHID-DREV-q4toaqfwhka4m4hz25zd"
+            ],
+            "PHID-DREV-hei6m65cslmu22bxddjd": [
+              "PHID-DREV-tnvre2424kizok7szxip"
+            ],
+            "PHID-DREV-q4toaqfwhka4m4hz25zd": [
+              "PHID-DREV-ikbvizjgw3ho7uoazfni"
+            ],
+            "PHID-DREV-jzcjqnqcxrrrghfz6mi6": [
+              "PHID-DREV-hei6m65cslmu22bxddjd"
+            ],
+            "PHID-DREV-ikbvizjgw3ho7uoazfni": [
+              "PHID-DREV-2n7qbok4hfootoc7vyg5"
+            ],
+            "PHID-DREV-v32sszwf32fzo7jrt7n2": [
+              "PHID-DREV-jzcjqnqcxrrrghfz6mi6"
+            ],
+            "PHID-DREV-2n7qbok4hfootoc7vyg5": [
+              "PHID-DREV-qfuanhsrvdbgabvtjgjf"
+            ],
+            "PHID-DREV-7jdoml7kxtkrsnkewzlo": [
+              "PHID-DREV-v32sszwf32fzo7jrt7n2"
+            ],
+            "PHID-DREV-qfuanhsrvdbgabvtjgjf": [
+              "PHID-DREV-rzhllxflx7unexvk2gvc"
+            ],
+            "PHID-DREV-rzhllxflx7unexvk2gvc": [
+              "PHID-DREV-4dk4axgcpdqanxcmtleh"
+            ],
+            "PHID-DREV-4dk4axgcpdqanxcmtleh": [
+              "PHID-DREV-waed3bfratw2a4plcdhz"
+            ],
+            "PHID-DREV-waed3bfratw2a4plcdhz": [
+              "PHID-DREV-tqoirecq3hvz3zgq6xet"
+            ],
+            "PHID-DREV-tqoirecq3hvz3zgq6xet": [
+              "PHID-DREV-jbcb5vh6vtbzih46zq7r"
+            ],
+            "PHID-DREV-jbcb5vh6vtbzih46zq7r": [
+              "PHID-DREV-dovyfffg6w5o6gkb3wlx"
+            ],
+            "PHID-DREV-dovyfffg6w5o6gkb3wlx": []
+          },
+          "title": "Bug 1693576 - Part 8: Add a new TextLayout class to the unified Intl API. r=#platform-i18n-reviewers!",
+          "uri": "https://phabricator.services.mozilla.com/D125577",
+          "authorPHID": "PHID-USER-jnkwwpwrtjrvq34xsacb",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-a6ezvdkzs47iudbxq4oo",
+          "diffID": "482009",
+          "summary": "\nCurrently only provides a single method to retrieve the character orientation.\n\nThe default constructor was deleted because all methods are `static`.\n\nDepends on D125576",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1631639687,
+          "dateModified": 1764221190,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1693576",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xqqhpmwofkgglvwqiim7",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              },
+              {
+                "reviewerPHID": "PHID-USER-hch2p624jejt4kddoqow",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-hch2p624jejt4kddoqow"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 124598,
+        "type": "DREV",
+        "phid": "PHID-DREV-nzzm6ex65rijlhd4vggz",
+        "fields": {
+          "stackGraph": {
+            "PHID-DREV-nzzm6ex65rijlhd4vggz": []
+          },
+          "title": "Bug 1729248: Use ICU module to convert TimeZones.",
+          "uri": "https://phabricator.services.mozilla.com/D124598",
+          "authorPHID": "PHID-USER-s6dndcbf3g4mbn73dt5s",
+          "status": {
+            "value": "needs-revision",
+            "name": "Needs Revision",
+            "closed": false,
+            "color.ansi": "red"
+          },
+          "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
+          "diffPHID": "PHID-DIFF-h2chd5v2ynem6k5blhou",
+          "diffID": "498561",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1630908567,
+          "dateModified": 1658773335,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1729248",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-USER-aaptg3a34v3lr4kblwu6",
+                "status": "accepted",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-aaptg3a34v3lr4kblwu6"
+              },
+              {
+                "reviewerPHID": "PHID-PROJ-xqqhpmwofkgglvwqiim7",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ifhr2qt2fovv7fu5dkhb"
+              },
+              {
+                "reviewerPHID": "PHID-USER-ifhr2qt2fovv7fu5dkhb",
+                "status": "rejected",
+                "isBlocking": false,
+                "actorPHID": "PHID-USER-ifhr2qt2fovv7fu5dkhb"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "maps": [],
+    "query": {
+      "queryKey": "active"
+    },
+    "cursor": {
+      "limit": 100,
+      "after": null,
+      "before": null,
+      "order": null
+    }
+  }
+}
