@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @ts-check
+import { fileURLToPath } from "url";
 import color from "cli-color";
 import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
@@ -14,8 +15,8 @@ import {
   getSavedConfigs,
 } from "./store.mjs";
 
-async function main() {
-  const [command, ...args] = process.argv.slice(2);
+export async function main(argv = process.argv) {
+  const [command, ...args] = argv.slice(2);
 
   if (command === "--help" || command === "-h" || command === "help") {
     printHelp(true /* showHeader */);
@@ -258,4 +259,6 @@ function parseDeleteArgs(args) {
   return { isDelete, args: filtered };
 }
 
-main();
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  main();
+}
