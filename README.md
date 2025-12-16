@@ -91,7 +91,7 @@ my-reviews github mozilla translations gregtatum
 
 ### Ignoring reviews
 
-Add Phabricator or GitHub reviews to a persistent ignore list stored at `~/.my-reviews`:
+Add Phabricator or GitHub reviews to a persistent ignore list stored at `~/.my-reviews.json`:
 
 ```sh
 # Phabricator

@@ -17,7 +17,6 @@
     "phab.js",
     "github.js",
     "ignore-store.js",
-    "bin/**/*.js",
-    "node-localstorage.d.ts"
+    "bin/**/*.js"
   ]
 }

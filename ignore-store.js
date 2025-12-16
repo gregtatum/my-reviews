@@ -1,43 +1,74 @@
 // @ts-check
+const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { LocalStorage } = require("node-localstorage");
 
-const storageDir = path.join(os.homedir(), ".my-reviews");
-const storage = new LocalStorage(storageDir);
-const IGNORED_KEY = "ignored-items";
+const storagePath = path.join(os.homedir(), ".my-reviews.json");
 
-/** @type {Set<string> | null} */
-let cachedIgnored = null;
+/** @typedef {{ ignored: { github: string[]; phabricator: string[] } }} Store */
 
-function getIgnoredSet() {
-  if (cachedIgnored) {
-    return cachedIgnored;
+/** @type {Store | null} */
+let cachedStore = null;
+
+/** @returns {Store} */
+function loadStore() {
+  if (cachedStore) {
+    return cachedStore;
   }
-  const raw = storage.getItem(IGNORED_KEY);
-  if (!raw) {
-    cachedIgnored = new Set();
-    return cachedIgnored;
-  }
+
   try {
+    const raw = fs.readFileSync(storagePath, "utf8");
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      cachedIgnored = new Set(parsed.filter((item) => typeof item === "string"));
-      return cachedIgnored;
+    if (isValidStore(parsed)) {
+      cachedStore = normalizeStore(parsed);
+      return cachedStore;
     }
   } catch (error) {
-    // Ignore invalid JSON and reset the cache below.
+    // Missing file or invalid JSON will fall through to default store.
   }
-  cachedIgnored = new Set();
-  return cachedIgnored;
+
+  cachedStore = { ignored: { github: [], phabricator: [] } };
+  return cachedStore;
 }
 
 /**
- * @param {Set<string>} set
+ * @param {Store} store
  */
-function persistIgnored(set) {
-  cachedIgnored = set;
-  storage.setItem(IGNORED_KEY, JSON.stringify(Array.from(set)));
+function saveStore(store) {
+  cachedStore = store;
+  const content = JSON.stringify(store, null, 2);
+  fs.writeFileSync(storagePath, `${content}\n`, "utf8");
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is Store}
+ */
+function isValidStore(value) {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+  const ignored = /** @type {any} */ (value).ignored;
+  return (
+    ignored &&
+    Array.isArray(ignored.github) &&
+    Array.isArray(ignored.phabricator)
+  );
+}
+
+/**
+ * @param {Store} store
+ * @returns {Store}
+ */
+function normalizeStore(store) {
+  return {
+    ignored: {
+      github: store.ignored.github.filter((item) => typeof item === "string"),
+      phabricator: store.ignored.phabricator.filter(
+        (item) => typeof item === "string"
+      ),
+    },
+  };
 }
 
 /**
@@ -47,8 +78,8 @@ function persistIgnored(set) {
  *  id: string;
  * } | {
  *  type: "github";
- *  owner: string | null;
- *  repo: string | null;
+ *  owner: string;
+ *  repo: string;
  *  number: string;
  * } | null}
  */
@@ -58,7 +89,9 @@ function parseIgnoreTarget(input) {
     return null;
   }
 
-  const phabUrlMatch = target.match(/phabricator\.services\.mozilla\.com\/D(\d+)/i);
+  const phabUrlMatch = target.match(
+    /phabricator\.services\.mozilla\.com\/D(\d+)/i
+  );
   if (phabUrlMatch) {
     return { type: "phabricator", id: phabUrlMatch[1] };
   }
@@ -84,7 +117,9 @@ function parseIgnoreTarget(input) {
  * @returns {boolean}
  */
 function isIgnoredPhabricator(phabricatorId) {
-  return getIgnoredSet().has(`phabricator:${phabricatorId}`);
+  const store = loadStore();
+  const key = `D${String(phabricatorId).replace(/^D/i, "")}`;
+  return store.ignored.phabricator.includes(key);
 }
 
 /**
@@ -94,8 +129,9 @@ function isIgnoredPhabricator(phabricatorId) {
  * @returns {boolean}
  */
 function isIgnoredGithub(owner, repo, pullNumber) {
-  const prNumber = String(pullNumber);
-  return getIgnoredSet().has(`github:${owner}/${repo}#${prNumber}`);
+  const store = loadStore();
+  const key = `${owner}/${repo}#${pullNumber}`;
+  return store.ignored.github.includes(key);
 }
 
 /**
@@ -106,38 +142,42 @@ function addIgnoredTarget(input) {
   const parsed = parseIgnoreTarget(input);
   if (!parsed) {
     throw new Error(
-      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123) or a GitHub pull request URL or number."
+      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123) or a GitHub pull request URL."
     );
   }
 
-  const ignored = getIgnoredSet();
-  const keys = getIgnoreKeys(parsed);
-  let alreadyIgnored = true;
-  for (const key of keys) {
-    if (!ignored.has(key)) {
-      ignored.add(key);
-      alreadyIgnored = false;
-    }
+  const store = loadStore();
+  const { key, bucket } = getIgnoreEntry(parsed);
+  const existing = new Set(store.ignored[bucket]);
+  const alreadyIgnored = existing.has(key);
+  if (!alreadyIgnored) {
+    existing.add(key);
+    store.ignored[bucket] = Array.from(existing);
+    saveStore(store);
   }
-  persistIgnored(ignored);
 
   const description = describeTarget(parsed);
   return { description, alreadyIgnored };
 }
 
 /**
- * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string | null; repo: string | null; number: string }} target
- * @returns {string[]}
+ * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string; repo: string; number: string }} target
  */
-function getIgnoreKeys(target) {
+function getIgnoreEntry(target) {
   if (target.type === "phabricator") {
-    return [`phabricator:${target.id}`];
+    return {
+      bucket: /** @type {const} */ ("phabricator"),
+      key: `D${target.id}`,
+    };
   }
-  return [`github:${target.owner}/${target.repo}#${target.number}`];
+  return {
+    bucket: /** @type {const} */ ("github"),
+    key: `${target.owner}/${target.repo}#${target.number}`,
+  };
 }
 
 /**
- * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string | null; repo: string | null; number: string }} target
+ * @param {{ type: "phabricator"; id: string } | { type: "github"; owner: string; repo: string; number: string }} target
  */
 function describeTarget(target) {
   if (target.type === "phabricator") {
