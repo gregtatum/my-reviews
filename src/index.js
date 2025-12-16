@@ -1,5 +1,6 @@
-const { runPhabricatorReviews, getPhabricatorUser } = require('./phab');
-const { runGithubReviews } = require('./github');
+// @ts-check
+const { runPhabricatorReviews, getPhabricatorUser } = require("./phab");
+const { runGithubReviews } = require("./github");
 
 module.exports = {
   runPhabricatorReviews,

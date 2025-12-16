@@ -13,11 +13,7 @@
     "types": ["node"]
   },
   "include": [
-    "src/index.js",
-    "src/phab.js",
-    "src/github.js",
-    "src/store.js",
-    "src/bin/**/*.js",
-    "src/types.d.ts"
+    "src/**/*.js",
+    "src/**/*.d.ts"
   ]
 }

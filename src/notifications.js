@@ -1,19 +1,22 @@
-const inquirer = require('inquirer')
+// @ts-check
+const inquirer = require("inquirer");
 const { Octokit } = require("@octokit/rest");
-const color = require('cli-color')
-const open = require('open');
-const fetch = require('node-fetch')
+const color = require("cli-color");
+const open = require("open");
+const fetch = require("node-fetch");
 
 if (!process.env.GITHUP_NOTIFICATIONS_ACCESS_TOKEN) {
-  throw new Error([
-    "This script needs a personal access token",
-    "Set the environment variable GITHUP_NOTIFICATIONS_ACCESS_TOKEN",
-    "This token can be generated at https://github.com/settings/tokens/new",
-    "It only requires the \"notifications\" scope added to it."
-  ].join('\n'));
+  throw new Error(
+    [
+      "This script needs a personal access token",
+      "Set the environment variable GITHUP_NOTIFICATIONS_ACCESS_TOKEN",
+      "This token can be generated at https://github.com/settings/tokens/new",
+      'It only requires the "notifications" scope added to it.',
+    ].join("\n")
+  );
 }
 const octokit = new Octokit({
-  auth: process.env.GITHUP_NOTIFICATIONS_ACCESS_TOKEN
+  auth: process.env.GITHUP_NOTIFICATIONS_ACCESS_TOKEN,
 });
 
 let currentCommand = "Open notification";
@@ -45,7 +48,6 @@ let currentCommand = "Open notification";
  * @prop {string} body string
  * @prop {any} closed_by null,
  */
-
 
 /**
  * @typedef {Object} Repository
@@ -94,27 +96,29 @@ async function run() {
   const resultCount = 20;
 
   /** @type {NotificationResponse} */
-  const response = await octokit.activity.listNotificationsForAuthenticatedUser({
-    // Only show unread notifications.
-    all: false,
-    per_page: resultCount,
-  });
+  const response = await octokit.activity.listNotificationsForAuthenticatedUser(
+    {
+      // Only show unread notifications.
+      all: false,
+      per_page: resultCount,
+    }
+  );
 
   let defaultChoice;
   const allNotifications = response.data;
-  const commands = [
-    "Open notification",
-    "Mark as read",
-  ];
+  const commands = ["Open notification", "Mark as read"];
 
   console.clear();
-  listenToKeyboard()
-  printShortcuts()
+  listenToKeyboard();
+  printShortcuts();
 
   const statusPerNotification = await lookupStatuses(allNotifications);
-  const choiceToNotification = buildChoices(allNotifications, statusPerNotification);
+  const choiceToNotification = buildChoices(
+    allNotifications,
+    statusPerNotification
+  );
 
-  while(choiceToNotification.size) {
+  while (choiceToNotification.size) {
     const notificationList = [...choiceToNotification.keys()].sort();
 
     const choices = [
@@ -129,45 +133,49 @@ async function run() {
     let message;
     switch (currentCommand) {
       case "Open notification":
-        message = "Open a notification"
+        message = "Open a notification";
         break;
       case "Mark as read":
-        message = "Mark a notification as read"
+        message = "Mark a notification as read";
         break;
       default:
-        throw new Error("Unknown command")
+        throw new Error("Unknown command");
     }
 
-    const { choice } = await inquirer.prompt([{
-      message,
-      name: 'choice',
-      type: 'list',
-      choices,
-      default: defaultChoice,
-      pageSize: choices.length
-    }])
+    const { choice } = await inquirer.prompt([
+      {
+        message,
+        name: "choice",
+        type: "list",
+        choices,
+        default: defaultChoice,
+        pageSize: choices.length,
+      },
+    ]);
     switch (choice) {
       case "Open notification":
       case "Mark as read":
-        currentCommand = choice
+        currentCommand = choice;
         break;
       default: {
         // Take this notification out of consideration.
         const notification = choiceToNotification.get(choice);
         if (!notification) {
-          throw new Error("Could not find the notification from the choice")
+          throw new Error("Could not find the notification from the choice");
         }
         choiceToNotification.delete(choice);
 
         // Set a default for the next question
-        defaultChoice = choices[
-          Math.max(firstChoiceIndex, choices.indexOf(choice) + 1)
-        ];
+        defaultChoice =
+          choices[Math.max(firstChoiceIndex, choices.indexOf(choice) + 1)];
 
         // Handle the current command:
         switch (currentCommand) {
           case "Open notification": {
-            const response = await fetch(notification.subject.latest_comment_url || notification.subject.url);
+            const response = await fetch(
+              notification.subject.latest_comment_url ||
+                notification.subject.url
+            );
             const { html_url } = await response.json();
             await open(html_url);
             break;
@@ -179,7 +187,7 @@ async function run() {
             break;
           }
           default:
-            throw new Error("Unknown command")
+            throw new Error("Unknown command");
         }
       }
     }
@@ -190,31 +198,31 @@ async function lookupStatuses(notifications) {
   const statusPerNotification = new Map();
   for (const notification of notifications) {
     // The issue or PR id is not included in the JSON, but it is in the URL.
-    const parts = notification.subject.url.split('/');
+    const parts = notification.subject.url.split("/");
     const repo = notification.repository;
-    const id = parts[parts.length -1];
+    const id = parts[parts.length - 1];
     try {
       console.log(`Look up ${repo.owner.login}/${repo.name}#${id}`);
-      if (notification.subject.type === 'Issue') {
+      if (notification.subject.type === "Issue") {
         const response = await octokit.issues.get({
           owner: repo.owner.login,
           repo: repo.name,
-          issue_number: id
+          issue_number: id,
         });
         /** @type {Issue} */
         const issue = response.data;
         statusPerNotification.set(notification, issue.state);
-      } else if (notification.subject.type === 'PullRequest') {
+      } else if (notification.subject.type === "PullRequest") {
         const { data: pr } = await octokit.pulls.get({
           owner: repo.owner.login,
           repo: repo.name,
-          pull_number: id
+          pull_number: id,
         });
         statusPerNotification.set(notification, pr.state);
       }
-    } catch(error) {
+    } catch (error) {
       console.error(error);
-      process.exit(0)
+      process.exit(0);
     }
   }
   return statusPerNotification;
@@ -226,26 +234,23 @@ function buildChoices(notifications, statusPerNotification) {
   // Turn the notifications into formatted choices.
   for (const notification of notifications) {
     let { type, title } = notification.subject;
-    if (type === 'PullRequest') {
-      type = 'PR';
+    if (type === "PullRequest") {
+      type = "PR";
     }
     const repo = notification.repository.full_name;
     const status = statusPerNotification.get(notification);
     const gray = color.xterm(8);
     const orange = color.xterm(166);
-    const choiceParts = [
-      gray(repo),
-      color.yellow(type)
-    ];
+    const choiceParts = [gray(repo), color.yellow(type)];
     if (status) {
       choiceParts.push(orange(status));
     }
-    if (notification.reason === 'mention') {
-      choiceParts.push(color.magenta('@me'));
+    if (notification.reason === "mention") {
+      choiceParts.push(color.magenta("@me"));
     }
     choiceParts.push(title);
 
-    const choice = choiceParts.join(' ');
+    const choice = choiceParts.join(" ");
     choiceToNotification.set(choice, notification);
   }
   return choiceToNotification;
@@ -270,16 +275,16 @@ function printShortcuts() {
 }
 const ui = new inquirer.ui.BottomBar();
 
-function onKeyChange (key) {
+function onKeyChange(key) {
   switch (key) {
     case "a":
     case "o":
       currentCommand = "Open notification";
-      ui.updateBottomBar('Set to open notifications.');
+      ui.updateBottomBar("Set to open notifications.");
       break;
     case "r":
       currentCommand = "Mark as read";
-      ui.updateBottomBar('Set to mark notifications as read.');
+      ui.updateBottomBar("Set to mark notifications as read.");
       break;
     case "q":
     case "\u0003":
@@ -287,8 +292,7 @@ function onKeyChange (key) {
   }
 }
 
-
-run().catch(error => {
+run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
