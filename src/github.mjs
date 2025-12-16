@@ -1,6 +1,10 @@
 // @ts-check
 import { Octokit } from "@octokit/rest";
 import color from "cli-color";
+import * as fs from "fs";
+import * as path from "path";
+import { fileURLToPath } from "url";
+import { inspect } from "util";
 import { isIgnoredGithub } from "./store.mjs";
 
 /** @typedef {import("@octokit/rest").RestEndpointMethodTypes["pulls"]["list"]["response"]} PullsResponse */
@@ -28,6 +32,7 @@ export async function runGithubReviews(owner, repo, me) {
     owner,
     repo,
   });
+  logGithubResponse("pulls.list", response);
   const openPrs = response.data.filter(
     ({ title }) =>
       !title.includes("[wip]") &&
@@ -93,6 +98,7 @@ async function printPR(owner, repo, pr) {
     repo,
     pull_number: pr.number,
   });
+  logGithubResponse(`pulls.listReviews.${pr.number}`, reviewResponse);
 
   for (const review of reviewResponse.data) {
     let state = review.state;
@@ -128,4 +134,38 @@ function printHeader(owner, repo, text) {
       `\n======= ${text} (${owner}/${repo}) =====================================================`
     )
   );
+}
+
+function logGithubResponse(endpoint, response) {
+  const shouldPersist = process.env.MY_REVIEWS_PERSIST === "github";
+  const shouldLog =
+    process.env.MY_REVIEWS_LOG === "1" ||
+    process.env.MY_REVIEWS_LOG?.toLowerCase() === "true";
+  const safeEndpoint = sanitizeEndpoint(endpoint);
+
+  if (shouldPersist) {
+    const dirname = path.dirname(fileURLToPath(import.meta.url));
+    const outputDir = path.resolve(dirname, "../tests/utils");
+    fs.mkdirSync(outputDir, { recursive: true });
+    const filename = `github-${safeEndpoint}.json`;
+    const outputPath = path.join(outputDir, filename);
+    const serialized = JSON.stringify(response, null, 2);
+    fs.writeFileSync(outputPath, serialized);
+  }
+
+  if (shouldPersist || shouldLog) {
+    const pretty = inspect(response, {
+      depth: null,
+      maxArrayLength: null,
+      breakLength: 120,
+    });
+    console.log(`${endpoint} response`, pretty);
+  }
+}
+
+/**
+ * @param {string} endpoint
+ */
+function sanitizeEndpoint(endpoint) {
+  return endpoint.replace(/[^a-zA-Z0-9._-]/g, "-");
 }
