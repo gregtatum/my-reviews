@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 
-const storagePath = path.join(os.homedir(), ".my-reviews.json");
+let storagePath = resolveStoragePath();
 /**
  * @import {Store, IgnoreTarget, GithubConfig, PhabricatorConfig} from "./types.d.ts"
  */
@@ -82,6 +82,23 @@ function normalizeStore(store) {
  */
 function isString(value) {
   return typeof value === "string";
+}
+
+/**
+ * Override the default storage path (used for tests).
+ * @param {string} newPath
+ */
+export function setStorePath(newPath) {
+  storagePath = path.resolve(newPath);
+  cachedStore = null;
+}
+
+function resolveStoragePath() {
+  const override = process.env.MY_REVIEWS_STORE_PATH;
+  if (override) {
+    return path.resolve(override);
+  }
+  return path.join(os.homedir(), ".my-reviews.json");
 }
 
 /**
