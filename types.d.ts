@@ -5,13 +5,14 @@ export type Store = {
   ignored: {
     // e.g. "owner/repo#123"
     github: string[];
-    // e.g. "D12345"
+    // e.g. "D12345" or "Bug 12345"
     phabricator: string[];
   };
 };
 
 export type IgnoreTarget =
   | { type: "phabricator"; id: string }
+  | { type: "bug"; id: string }
   | { type: "github"; owner: string; repo: string; number: string };
 
 export type RevisionFields = {

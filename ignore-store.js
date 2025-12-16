@@ -94,6 +94,16 @@ function parseIgnoreTarget(input) {
     return { type: "phabricator", id: phabIdMatch[1] };
   }
 
+  const bugzillaUrlMatch = target.match(/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(\d+)/i);
+  if (bugzillaUrlMatch) {
+    return { type: "bug", id: bugzillaUrlMatch[1] };
+  }
+
+  const bugPrefixMatch = target.match(/^bug\s+(\d+)/i);
+  if (bugPrefixMatch) {
+    return { type: "bug", id: bugPrefixMatch[1] };
+  }
+
   const githubUrlMatch = target.match(
     /github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/i
   );
@@ -107,12 +117,17 @@ function parseIgnoreTarget(input) {
 
 /**
  * @param {string} phabricatorId
+ * @param {string | undefined} bugId
  * @returns {boolean}
  */
-function isIgnoredPhabricator(phabricatorId) {
+function isIgnoredPhabricator(phabricatorId, bugId) {
   const store = loadStore();
   const key = `D${String(phabricatorId).replace(/^D/i, "")}`;
-  return store.ignored.phabricator.includes(key);
+  const bugKey = bugId ? `Bug ${bugId}` : null;
+  return (
+    store.ignored.phabricator.includes(key) ||
+    (!!bugKey && store.ignored.phabricator.includes(bugKey))
+  );
 }
 
 /**
@@ -135,7 +150,7 @@ function addIgnoredTarget(input) {
   const parsed = parseIgnoreTarget(input);
   if (!parsed) {
     throw new Error(
-      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123) or a GitHub pull request URL."
+      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123), Bug number or URL (e.g. Bug 123), or a GitHub pull request URL."
     );
   }
 
@@ -163,6 +178,12 @@ function getIgnoreEntry(target) {
       key: `D${target.id}`,
     };
   }
+  if (target.type === "bug") {
+    return {
+      bucket: /** @type {const} */ ("phabricator"),
+      key: `Bug ${target.id}`,
+    };
+  }
   return {
     bucket: /** @type {const} */ ("github"),
     key: `${target.owner}/${target.repo}#${target.number}`,
@@ -175,6 +196,9 @@ function getIgnoreEntry(target) {
 function describeTarget(target) {
   if (target.type === "phabricator") {
     return `Phabricator D${target.id}`;
+  }
+  if (target.type === "bug") {
+    return `Bug ${target.id}`;
   }
   return `GitHub ${target.owner}/${target.repo}#${target.number}`;
 }

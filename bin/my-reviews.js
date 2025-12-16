@@ -34,10 +34,10 @@ async function main() {
         break;
       }
       case 'ignore': {
-        const [target] = args;
+        const target = args.join(" ").trim();
         if (!target) {
           throw new Error(
-            "The ignore command expects a Phabricator URL/ID or GitHub pull request URL/number."
+            "The ignore command expects a Phabricator URL/ID, Bug number/URL, or GitHub pull request URL."
           );
         }
         const { description, alreadyIgnored } = addIgnoredTarget(target);

@@ -215,9 +215,10 @@ async function runPhabricatorReviews(geckoDir, userId) {
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);
   }
-  const data = response.response.data.filter(
-    (revision) => !isIgnoredPhabricator(String(revision.id))
-  );
+  const data = response.response.data.filter((revision) => {
+    const bugId = getBugId(revision);
+    return !isIgnoredPhabricator(String(revision.id), bugId);
+  });
 
   data.sort((a, b) => {
     const bugA = Number(getBugId(a) || 0);
