@@ -95,6 +95,8 @@ my-reviews ignore https://github.com/mozilla/translations/pull/123
 my-reviews ignore mozilla/translations#123
 # remove an ignore entry
 my-reviews ignore -d mozilla/translations#123
+# list ignored entries
+my-reviews ignore-list
 ```
 
 ## Development

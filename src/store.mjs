@@ -350,6 +350,17 @@ export function getSavedConfigs() {
 }
 
 /**
+ * @returns {{ github: string[]; phabricator: string[] }}
+ */
+export function getIgnoredEntries() {
+  const store = loadStore();
+  return {
+    github: [...store.ignored.github],
+    phabricator: [...store.ignored.phabricator],
+  };
+}
+
+/**
  * @param {IgnoreTarget} target
  */
 function getIgnoreEntry(target) {

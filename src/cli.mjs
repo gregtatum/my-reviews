@@ -10,6 +10,7 @@ import {
   removeGithubConfig,
   removeIgnoredTarget,
   removePhabricatorConfig,
+  getIgnoredEntries,
   getSavedConfigs,
 } from "./store.mjs";
 
@@ -120,6 +121,10 @@ async function main() {
         }
         break;
       }
+      case "ignore-list": {
+        printIgnoreList();
+        break;
+      }
       default:
         console.error(`Unknown command: ${String(command)}`);
         printHelp(false /* showHeader */);
@@ -170,10 +175,12 @@ function printHelp(showHeader) {
     color.red("    my-reviews ignore ") +
       color.blue("<target>") +
       "\n" +
-      color.red("    my-reviews ignore ") +
+    color.red("    my-reviews ignore ") +
       color.blue("<target>") +
       color.red(" --delete\n")
   );
+  console.log(color.green("- List ignored entries."));
+  console.log(color.red("    my-reviews ignore-list\n"));
   console.log(color.yellow("Examples:"));
 
   console.log("  my-reviews");
@@ -210,6 +217,27 @@ async function runSavedConfigurations() {
 
   for (const config of github) {
     await runGithubReviews(config.owner, config.repo, config.user);
+  }
+}
+
+function printIgnoreList() {
+  const ignored = getIgnoredEntries();
+  console.log(color.cyan("\nIgnored entries:"));
+  if (ignored.phabricator.length === 0 && ignored.github.length === 0) {
+    console.log(color.blackBright("  (none)"));
+    return;
+  }
+  if (ignored.phabricator.length > 0) {
+    console.log(color.yellow("  Phabricator:"));
+    for (const item of ignored.phabricator) {
+      console.log(`    ${color.green(item)}`);
+    }
+  }
+  if (ignored.github.length > 0) {
+    console.log(color.magenta("  GitHub:"));
+    for (const item of ignored.github) {
+      console.log(`    ${color.green(item)}`);
+    }
   }
 }
 
