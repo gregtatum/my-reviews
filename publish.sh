@@ -10,6 +10,12 @@ if [[ "$BUMP_TYPE" != "patch" && "$BUMP_TYPE" != "minor" && "$BUMP_TYPE" != "maj
   exit 1
 fi
 
+# Require npm auth up front to avoid partial publishes.
+if ! npm whoami >/dev/null 2>&1; then
+  echo "Error: not authenticated with npm. Run 'npm login' (or set //registry.npmjs.org/:_authToken) and retry." >&2
+  exit 1
+fi
+
 npm run ts
 npm run test
 
