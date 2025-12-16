@@ -126,7 +126,16 @@ my-reviews ignore-list
 
 ## Development
 
-- `npm run ts` runs TypeScript against the JSDoc annotations (`phab.js`, `github.js`, and the CLI) to ensure structural typing stays sound.
+- `npm run ts` runs TypeScript against the JSDoc annotations.
+- Persist or log API responses when working on fixtures:
+  - `MY_REVIEWS_PERSIST=phabricator` or `MY_REVIEWS_PERSIST=github` writes raw responses to `tests/utils/*-<endpoint>.json`.
+  - `MY_REVIEWS_LOG=1` logs responses to stdout.
+- Update Jest snapshots after fixture or output changes with:
+  ```sh
+  npm test -- -u
+  # or to target a single suite:
+  npm test -- --runTestsByPath tests/cli.test.mjs -u
+  ```
 
 ## Publishing
 
