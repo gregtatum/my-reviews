@@ -5,6 +5,7 @@ const {
   runGithubReviews,
   getPhabricatorUser,
 } = require('../index');
+const { addIgnoredTarget } = require('../ignore-store');
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
@@ -32,6 +33,21 @@ async function main() {
         await runGithubReviews(org, repo, user);
         break;
       }
+      case 'ignore': {
+        const [target] = args;
+        if (!target) {
+          throw new Error(
+            "The ignore command expects a Phabricator URL/ID or GitHub pull request URL/number."
+          );
+        }
+        const { description, alreadyIgnored } = addIgnoredTarget(target);
+        if (alreadyIgnored) {
+          console.log(`${description} is already ignored.`);
+        } else {
+          console.log(`Ignoring ${description}.`);
+        }
+        break;
+      }
       default:
         console.error(`Unknown command: ${command}`);
         printUsage();
@@ -49,7 +65,7 @@ async function main() {
 
 function printUsage() {
   console.log(
-    `Usage:\n  my-reviews phabricator <path-to-gecko> <phabricator-user-phid>\n  my-reviews phabricator-user <path-to-gecko>\n  my-reviews github <org> <repo> <github-username>`
+    `Usage:\n  my-reviews phabricator <path-to-gecko> <phabricator-user-phid>\n  my-reviews phabricator-user <path-to-gecko>\n  my-reviews github <org> <repo> <github-username>\n  my-reviews ignore <phabricator-url-or-id|github-url-or-number>`
   );
 }
 

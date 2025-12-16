@@ -1,6 +1,7 @@
 // @ts-check
 const { Octokit } = require("@octokit/rest");
 const color = require("cli-color");
+const { isIgnoredGithub } = require("./ignore-store");
 
 /** @typedef {import("@octokit/rest").RestEndpointMethodTypes["pulls"]["list"]["response"]} PullsResponse */
 /** @typedef {PullsResponse["data"][number]} PullRequest */
@@ -32,12 +33,15 @@ async function runGithubReviews(owner, repo, me) {
     !title.includes("[deploy-preview]") && !title.includes("(deploy-preview)") &&
     !title.includes("[deploy preview]") && !title.includes("(deploy preview)")
   );
+  const visiblePrs = openPrs.filter(
+    (pr) => !isIgnoredGithub(owner, repo, pr.number)
+  );
 
   /** @type {PullRequest[]} */
   const prsToHandle = []
   /** @type {PullRequest[]} */
   const myPrs = []
-  for (const pr of openPrs) {
+  for (const pr of visiblePrs) {
     if (pr.user && pr.user.login === me && !pr.draft) {
       myPrs.push(pr);
     }

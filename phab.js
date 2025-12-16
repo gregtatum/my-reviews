@@ -3,6 +3,8 @@ const { exec, spawnSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const color = require("cli-color");
+const { inspect } = require("util");
+const { isIgnoredPhabricator } = require("./ignore-store");
 
 /** @typedef {unknown} JsonValue */
 
@@ -31,6 +33,7 @@ const color = require("cli-color");
  * @typedef {Object} Revision
  * @property {number} id
  * @property {RevisionFields} fields
+ * @property {{ reviewers?: { reviewers?: { reviewerPHID: string; status: string }[] } }} [attachments]
  */
 
 /**
@@ -95,6 +98,19 @@ const callConduit = async function (endpoint, data, options = {}) {
   );
   return JSON.parse(results);
 };
+
+/**
+ * @param {string} endpoint
+ * @param {Response<any>} response
+ */
+function logPhabricatorResponse(endpoint, response) {
+  const pretty = inspect(response, {
+    depth: null,
+    maxArrayLength: null,
+    breakLength: 120,
+  });
+  console.log(`!!! ${endpoint} response`, pretty);
+}
 
 /**
  * @param {Revision} revision
@@ -204,10 +220,14 @@ async function runPhabricatorReviews(geckoDir, userId) {
     )
   );
 
+  logPhabricatorResponse("differential.revision.search", response);
+
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);
   }
-  const { data } = response.response;
+  const data = response.response.data.filter(
+    (revision) => !isIgnoredPhabricator(String(revision.id))
+  );
 
   data.sort((a, b) => {
     const bugA = Number(getBugId(a) || 0);
@@ -235,7 +255,10 @@ async function runPhabricatorReviews(geckoDir, userId) {
     if (revision.fields.status.value !== "needs-review") {
       return false;
     }
-    const reviewers = revision.attachments?.reviewers?.reviewers || [];
+    const reviewers =
+      /** @type {{ reviewerPHID: string; status: string }[]} */ (
+        revision.attachments?.reviewers?.reviewers || []
+      );
     return reviewers.some(
       (reviewer) =>
         (reviewer.reviewerPHID === userId ||
@@ -279,6 +302,8 @@ async function getPhabricatorUser(geckoDir) {
       }
     )
   );
+
+  logPhabricatorResponse("user.whoami", response);
 
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);

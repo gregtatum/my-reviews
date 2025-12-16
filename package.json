@@ -28,6 +28,7 @@
     "phab.js",
     "notifications.js",
     "open-pr.js",
+    "ignore-store.js",
     "index.js"
   ],
   "dependencies": {
@@ -35,6 +36,7 @@
     "cli-color": "^1.4.0",
     "inquirer": "^7.3.3",
     "node-fetch": "^2.6.1",
+    "node-localstorage": "^3.0.5",
     "open": "^7.3.0",
     "url": "^0.11.0"
   },

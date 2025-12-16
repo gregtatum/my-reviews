@@ -89,6 +89,20 @@ Example:
 my-reviews github mozilla translations gregtatum
 ```
 
+### Ignoring reviews
+
+Add Phabricator or GitHub reviews to a persistent ignore list stored at `~/.my-reviews`:
+
+```sh
+# Phabricator
+my-reviews ignore https://phabricator.services.mozilla.com/D271264
+my-reviews ignore D271264
+
+# GitHub
+my-reviews ignore https://github.com/mozilla/translations/pull/123
+my-reviews ignore 123
+```
+
 ## Development
 
 - `npm run typecheck` runs TypeScript against the JSDoc annotations (`phab.js`, `github.js`, and the CLI) to ensure structural typing stays sound.
