@@ -1,7 +1,7 @@
 // @ts-check
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
 
 const storagePath = path.join(os.homedir(), ".my-reviews.json");
 /**
@@ -128,7 +128,7 @@ function parseIgnoreTarget(input) {
  * @param {string | undefined} bugId
  * @returns {boolean}
  */
-function isIgnoredPhabricator(phabricatorId, bugId) {
+export function isIgnoredPhabricator(phabricatorId, bugId) {
   const store = loadStore();
   const key = `D${String(phabricatorId).replace(/^D/i, "")}`;
   const bugKey = bugId ? `Bug ${bugId}` : null;
@@ -144,7 +144,7 @@ function isIgnoredPhabricator(phabricatorId, bugId) {
  * @param {number} pullNumber
  * @returns {boolean}
  */
-function isIgnoredGithub(owner, repo, pullNumber) {
+export function isIgnoredGithub(owner, repo, pullNumber) {
   const store = loadStore();
   const key = `${owner}/${repo}#${pullNumber}`;
   return store.ignored.github.includes(key);
@@ -154,7 +154,7 @@ function isIgnoredGithub(owner, repo, pullNumber) {
  * @param {string} input
  * @returns {{ description: string; alreadyIgnored: boolean }}
  */
-function addIgnoredTarget(input) {
+export function addIgnoredTarget(input) {
   const parsed = parseIgnoreTarget(input);
   if (!parsed) {
     throw new Error(
@@ -210,9 +210,3 @@ function describeTarget(target) {
   }
   return `GitHub ${target.owner}/${target.repo}#${target.number}`;
 }
-
-module.exports = {
-  addIgnoredTarget,
-  isIgnoredGithub,
-  isIgnoredPhabricator,
-};

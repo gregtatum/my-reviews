@@ -1,10 +1,11 @@
 // @ts-check
-const { exec, spawnSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const color = require("cli-color");
-const { inspect } = require("util");
-const { isIgnoredPhabricator } = require("./store");
+import { exec, spawnSync } from "child_process";
+import * as fs from "fs";
+import * as path from "path";
+import color from "cli-color";
+import { inspect } from "util";
+import { fileURLToPath } from "url";
+import { isIgnoredPhabricator } from "./store.mjs";
 
 /** @typedef {unknown} JsonValue */
 
@@ -186,7 +187,7 @@ function printHeader(text) {
  * @param {string} userId
  * @returns {Promise<{ mine: Revision[]; others: Revision[] }>}
  */
-async function runPhabricatorReviews(geckoDir, userId) {
+export async function runPhabricatorReviews(geckoDir, userId) {
   if (!geckoDir) {
     throw new Error(
       "The first argument must be the path to the gecko directory where arcanist is configured."
@@ -283,7 +284,7 @@ async function runPhabricatorReviews(geckoDir, userId) {
  * @param {string} geckoDir
  * @returns {Promise<{ phid: string; userName: string }>}
  */
-async function getPhabricatorUser(geckoDir) {
+export async function getPhabricatorUser(geckoDir) {
   if (!geckoDir) {
     throw new Error(
       "The first argument must be the path to the gecko directory where arcanist is configured."
@@ -311,8 +312,6 @@ async function getPhabricatorUser(geckoDir) {
   return response.response;
 }
 
-module.exports = { runPhabricatorReviews, getPhabricatorUser };
-
 function ensureArcAvailable() {
   const arcBinary = resolveArcBinary();
   const result = spawnSync(arcBinary, ["help"], { stdio: "ignore" });
@@ -334,7 +333,8 @@ function resolveArcBinary() {
     return process.env.MY_REVIEWS_ARC_PATH;
   }
 
-  const localArc = path.join(__dirname, "arcanist", "bin", "arc");
+  const dirname = path.dirname(fileURLToPath(import.meta.url));
+  const localArc = path.join(dirname, "arcanist", "bin", "arc");
   if (fs.existsSync(localArc)) {
     return localArc;
   }

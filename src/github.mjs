@@ -1,7 +1,7 @@
 // @ts-check
-const { Octokit } = require("@octokit/rest");
-const color = require("cli-color");
-const { isIgnoredGithub } = require("./store");
+import { Octokit } from "@octokit/rest";
+import color from "cli-color";
+import { isIgnoredGithub } from "./store.mjs";
 
 /** @typedef {import("@octokit/rest").RestEndpointMethodTypes["pulls"]["list"]["response"]} PullsResponse */
 /** @typedef {PullsResponse["data"][number]} PullRequest */
@@ -17,7 +17,7 @@ const octokit = new Octokit();
  * @param {string} me
  * @returns {Promise<{ prsToHandle: PullRequest[]; myPrs: PullRequest[] }>}
  */
-async function runGithubReviews(owner, repo, me) {
+export async function runGithubReviews(owner, repo, me) {
   if (!owner || !repo || !me) {
     throw new Error(
       "GitHub reviews requires the owner, repo, and user passed as arguments."
@@ -129,5 +129,3 @@ function printHeader(owner, repo, text) {
     )
   );
 }
-
-module.exports = { runGithubReviews };

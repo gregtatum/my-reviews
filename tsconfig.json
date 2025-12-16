@@ -15,5 +15,5 @@
   "include": [
     "src/**/*.js",
     "src/**/*.d.ts"
-  ]
+, "src/github.mjs", "src/cli.mjs", "src/phab.mjs", "src/index.mjs", "src/store.mjs"  ]
 }

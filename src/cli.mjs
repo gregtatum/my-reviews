@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 // @ts-check
-const { runPhabricatorReviews, getPhabricatorUser } = require("./phab");
-const { runGithubReviews } = require("./github");
-
-const { addIgnoredTarget } = require("./store");
+import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
+import { runGithubReviews } from "./github.mjs";
+import { addIgnoredTarget } from "./store.mjs";
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
