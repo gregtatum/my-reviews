@@ -1,7 +1,7 @@
 // @ts-check
 const { Octokit } = require("@octokit/rest");
 const color = require("cli-color");
-const { isIgnoredGithub } = require("./ignore-store");
+const { isIgnoredGithub } = require("./store");
 
 /** @typedef {import("@octokit/rest").RestEndpointMethodTypes["pulls"]["list"]["response"]} PullsResponse */
 /** @typedef {PullsResponse["data"][number]} PullRequest */
@@ -26,21 +26,25 @@ async function runGithubReviews(owner, repo, me) {
 
   const response /* :PullsResponse */ = await octokit.pulls.list({
     owner,
-    repo
+    repo,
   });
-  const openPrs = response.data.filter(({title}) =>
-    !title.includes("[wip]") && !title.includes("(wip)") &&
-    !title.includes("[deploy-preview]") && !title.includes("(deploy-preview)") &&
-    !title.includes("[deploy preview]") && !title.includes("(deploy preview)")
+  const openPrs = response.data.filter(
+    ({ title }) =>
+      !title.includes("[wip]") &&
+      !title.includes("(wip)") &&
+      !title.includes("[deploy-preview]") &&
+      !title.includes("(deploy-preview)") &&
+      !title.includes("[deploy preview]") &&
+      !title.includes("(deploy preview)")
   );
   const visiblePrs = openPrs.filter(
     (pr) => !isIgnoredGithub(owner, repo, pr.number)
   );
 
   /** @type {PullRequest[]} */
-  const prsToHandle = []
+  const prsToHandle = [];
   /** @type {PullRequest[]} */
-  const myPrs = []
+  const myPrs = [];
   for (const pr of visiblePrs) {
     if (pr.user && pr.user.login === me && !pr.draft) {
       myPrs.push(pr);
@@ -48,7 +52,7 @@ async function runGithubReviews(owner, repo, me) {
     for (const reviewer of pr.requested_reviewers ?? []) {
       if (reviewer.login === me) {
         prsToHandle.push(pr);
-        break;;
+        break;
       }
     }
   }
@@ -76,50 +80,54 @@ async function runGithubReviews(owner, repo, me) {
  * @param {PullRequest} pr
  */
 async function printPR(owner, repo, pr) {
-  console.log('')
+  console.log("");
   const gray = color.xterm(8);
-  console.log(color.yellow(`PR #${pr.number}: `) +  color.whiteBright(pr.title))
-  console.log(gray('     url: ') + color.blue.underline(pr.html_url))
-  const author = pr.user ? pr.user.login : 'unknown';
-  console.log(gray('  author: ') + author);
-  console.log(gray('  branch: ') + pr.head.ref);
+  console.log(color.yellow(`PR #${pr.number}: `) + color.whiteBright(pr.title));
+  console.log(gray("     url: ") + color.blue.underline(pr.html_url));
+  const author = pr.user ? pr.user.login : "unknown";
+  console.log(gray("  author: ") + author);
+  console.log(gray("  branch: ") + pr.head.ref);
 
   const reviewResponse = await octokit.pulls.listReviews({
     owner,
     repo,
-    pull_number: pr.number
-  })
+    pull_number: pr.number,
+  });
 
   for (const review of reviewResponse.data) {
     let state = review.state;
     switch (review.state) {
-      case 'APPROVED':
+      case "APPROVED":
         state = color.green(state);
         break;
-      case 'COMMENTED':
+      case "COMMENTED":
         // state = color.cyan(state);
         // Skip comments, they aren't really useful.
-        continue
+        continue;
       default:
     }
-    const reviewerName = review.user ? review.user.login : 'unknown';
-    console.log(gray('reviewer: ') + state + ' ' + reviewerName);
+    const reviewerName = review.user ? review.user.login : "unknown";
+    console.log(gray("reviewer: ") + state + " " + reviewerName);
   }
 
   // Print out the requested reviewers.
   for (const reviewer of pr.requested_reviewers ?? []) {
-    console.log(gray('reviewer: ') + color.magenta("REQUESTED ") + reviewer.login);
+    console.log(
+      gray("reviewer: ") + color.magenta("REQUESTED ") + reviewer.login
+    );
   }
-
-
 }
 /**
  * @param {string} owner
  * @param {string} repo
  * @param {string} text
  */
-function printHeader (owner, repo, text) {
-  console.log(color.cyan(`\n======= ${text} (${owner}/${repo}) =====================================================`));
+function printHeader(owner, repo, text) {
+  console.log(
+    color.cyan(
+      `\n======= ${text} (${owner}/${repo}) =====================================================`
+    )
+  );
 }
 
 module.exports = { runGithubReviews };

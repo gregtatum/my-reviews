@@ -94,7 +94,9 @@ function parseIgnoreTarget(input) {
     return { type: "phabricator", id: phabIdMatch[1] };
   }
 
-  const bugzillaUrlMatch = target.match(/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(\d+)/i);
+  const bugzillaUrlMatch = target.match(
+    /bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(\d+)/i
+  );
   if (bugzillaUrlMatch) {
     return { type: "bug", id: bugzillaUrlMatch[1] };
   }

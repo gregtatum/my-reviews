@@ -16,7 +16,7 @@
     "src/index.js",
     "src/phab.js",
     "src/github.js",
-    "src/ignore-store.js",
+    "src/store.js",
     "src/bin/**/*.js",
     "src/types.d.ts"
   ]

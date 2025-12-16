@@ -3,7 +3,7 @@
 const { runPhabricatorReviews, getPhabricatorUser } = require("./phab");
 const { runGithubReviews } = require("./github");
 
-const { addIgnoredTarget } = require("../ignore-store");
+const { addIgnoredTarget } = require("./store");
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);

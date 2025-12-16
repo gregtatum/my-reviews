@@ -26,9 +26,9 @@
     "src"
   ],
   "dependencies": {
-    "@octokit/rest": "^18.0.6",
+    "@octokit/rest": "^22.0.1",
     "cli-color": "^1.4.0",
-    "inquirer": "^7.3.3",
+    "inquirer": "^13.1.0",
     "open": "^7.3.0",
     "url": "^0.11.0"
   },

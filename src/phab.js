@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const color = require("cli-color");
 const { inspect } = require("util");
-const { isIgnoredPhabricator } = require("./ignore-store");
+const { isIgnoredPhabricator } = require("./store");
 
 /** @typedef {unknown} JsonValue */
 
@@ -94,6 +94,10 @@ const callConduit = async function (endpoint, data, options = {}) {
  * @param {Response<any>} response
  */
 function logPhabricatorResponse(endpoint, response) {
+  // Hard-coded swi|tch to log phabricator calls.
+  if (true) {
+    return;
+  }
   const pretty = inspect(response, {
     depth: null,
     maxArrayLength: null,
@@ -215,17 +219,21 @@ async function runPhabricatorReviews(geckoDir, userId) {
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);
   }
+
+  // Filter out the ignored Phabricator reviews.
   const data = response.response.data.filter((revision) => {
     const bugId = getBugId(revision);
     return !isIgnoredPhabricator(String(revision.id), bugId);
   });
 
+  // Sort them by Bug IDs so that diffs will be correctly grouped.
   data.sort((a, b) => {
     const bugA = Number(getBugId(a) || 0);
     const bugB = Number(getBugId(b) || 0);
     return bugA - bugB;
   });
 
+  // Get any reviews that aren't marked as WIP that are "mine".
   const mine = data.filter((revision) => {
     const { title, authorPHID } = revision.fields;
     if (userId !== authorPHID) {
@@ -236,6 +244,11 @@ async function runPhabricatorReviews(geckoDir, userId) {
     }
     return !title.match(/\bWIP\b/);
   });
+
+  if (mine.length > 0) {
+    printHeader("Mine");
+    printRevisionList(mine);
+  }
 
   const userProjects = await getUserProjects(geckoDir, userId);
 
@@ -257,11 +270,6 @@ async function runPhabricatorReviews(geckoDir, userId) {
         (reviewer.status === "added" || reviewer.status === "blocking")
     );
   });
-
-  if (mine.length > 0) {
-    printHeader("Mine");
-    printRevisionList(mine);
-  }
 
   if (others.length > 0) {
     printHeader("Others");
@@ -354,9 +362,7 @@ async function getUserProjects(geckoDir, userId) {
     )
   );
 
-  if (false) {
-    logPhabricatorResponse("project.search", response);
-  }
+  logPhabricatorResponse("project.search", response);
 
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);
