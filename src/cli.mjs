@@ -14,7 +14,7 @@ async function main() {
   const [command, ...args] = process.argv.slice(2);
 
   if (command === "--help" || command === "-h" || command === "help") {
-    printHelp({ showHeader: true });
+    printHelp(true /* showHeader */);
     return;
   }
 
@@ -128,6 +128,20 @@ async function runSavedConfigurations() {
     console.log("No configurations saved.");
     printHelp(false /* showHeader */);
     return;
+  }
+
+  console.log(color.cyan("\nChecking:"));
+  for (const config of phabricator) {
+    const label = "Phabricator";
+    const repoPath = color.green(config.geckoDir);
+    const user = color.blackBright(`(${config.userId})`);
+    console.log(`${label} ${repoPath} ${user}`);
+  }
+  for (const config of github) {
+    const label = "GitHub     ";
+    const repo = color.green(`${config.owner}/${config.repo}`);
+    const user = color.blackBright(`(${config.user})`);
+    console.log(`${label} ${repo} ${user}`);
   }
 
   for (const config of phabricator) {
