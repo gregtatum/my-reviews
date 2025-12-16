@@ -36,15 +36,17 @@ async function main() {
       case 'ignore': {
         if (args.includes("--help") || args.includes("-h")) {
           console.log(
-            "Usage: my-reviews ignore <Phabricator URL/ID | Bug number/URL | GitHub pull request URL>"
+            "Usage: my-reviews ignore <Phabricator URL/ID | Bug number/URL | GitHub pull request URL or owner/repo#123>"
           );
-          console.log('Examples: "D123", "Bug 12345", "https://github.com/org/repo/pull/123"');
+          console.log(
+            'Examples: "D123", "Bug 12345", "https://github.com/org/repo/pull/123", "mozilla/translations#123"'
+          );
           return;
         }
         const target = args.join(" ").trim();
         if (!target) {
           throw new Error(
-            "The ignore command expects a Phabricator URL/ID, Bug number/URL, or GitHub pull request URL."
+            "The ignore command expects a Phabricator URL/ID, Bug number/URL, or GitHub pull request URL or owner/repo#123."
           );
         }
         const { description, alreadyIgnored } = addIgnoredTarget(target);

@@ -112,6 +112,12 @@ function parseIgnoreTarget(input) {
     return { type: "github", owner, repo, number };
   }
 
+  const githubShortMatch = target.match(/^([\w.-]+)\/([\w.-]+)#(\d+)$/i);
+  if (githubShortMatch) {
+    const [, owner, repo, number] = githubShortMatch;
+    return { type: "github", owner, repo, number };
+  }
+
   return null;
 }
 
@@ -150,7 +156,7 @@ function addIgnoredTarget(input) {
   const parsed = parseIgnoreTarget(input);
   if (!parsed) {
     throw new Error(
-      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123), Bug number or URL (e.g. Bug 123), or a GitHub pull request URL."
+      "Could not understand what to ignore. Pass a Phabricator URL or ID (e.g. D123), Bug number or URL (e.g. Bug 123), or a GitHub pull request URL or owner/repo#123."
     );
   }
 

@@ -97,11 +97,12 @@ Add Phabricator or GitHub reviews to a persistent ignore list stored at `~/.my-r
 # Phabricator
 my-reviews ignore https://phabricator.services.mozilla.com/D271264
 my-reviews ignore D271264
-my-reviews ignore "Bug 1998228"
+my-reviews ignore Bug 1998228
 my-reviews ignore https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
 
 # GitHub
 my-reviews ignore https://github.com/mozilla/translations/pull/123
+my-reviews ignore mozilla/translations#123
 ```
 
 ## Development
