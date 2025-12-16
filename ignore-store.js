@@ -68,20 +68,12 @@ function parseIgnoreTarget(input) {
     return { type: "phabricator", id: phabIdMatch[1] };
   }
 
-  const githubUrlMatch = target.match(/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/i);
+  const githubUrlMatch = target.match(
+    /github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/i
+  );
   if (githubUrlMatch) {
     const [, owner, repo, number] = githubUrlMatch;
     return { type: "github", owner, repo, number };
-  }
-
-  const githubNumberMatch = target.match(/^#?(\d+)$/);
-  if (githubNumberMatch) {
-    return {
-      type: "github",
-      owner: null,
-      repo: null,
-      number: githubNumberMatch[1],
-    };
   }
 
   return null;
@@ -103,11 +95,7 @@ function isIgnoredPhabricator(phabricatorId) {
  */
 function isIgnoredGithub(owner, repo, pullNumber) {
   const prNumber = String(pullNumber);
-  const ignored = getIgnoredSet();
-  return (
-    ignored.has(`github:${owner}/${repo}#${prNumber}`) ||
-    ignored.has(`github:${prNumber}`)
-  );
+  return getIgnoredSet().has(`github:${owner}/${repo}#${prNumber}`);
 }
 
 /**
@@ -145,10 +133,7 @@ function getIgnoreKeys(target) {
   if (target.type === "phabricator") {
     return [`phabricator:${target.id}`];
   }
-  if (target.owner && target.repo) {
-    return [`github:${target.owner}/${target.repo}#${target.number}`];
-  }
-  return [`github:${target.number}`];
+  return [`github:${target.owner}/${target.repo}#${target.number}`];
 }
 
 /**
@@ -158,10 +143,7 @@ function describeTarget(target) {
   if (target.type === "phabricator") {
     return `Phabricator D${target.id}`;
   }
-  if (target.owner && target.repo) {
-    return `GitHub ${target.owner}/${target.repo}#${target.number}`;
-  }
-  return `GitHub PR #${target.number}`;
+  return `GitHub ${target.owner}/${target.repo}#${target.number}`;
 }
 
 module.exports = {

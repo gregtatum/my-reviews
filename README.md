@@ -100,7 +100,6 @@ my-reviews ignore D271264
 
 # GitHub
 my-reviews ignore https://github.com/mozilla/translations/pull/123
-my-reviews ignore 123
 ```
 
 ## Development
