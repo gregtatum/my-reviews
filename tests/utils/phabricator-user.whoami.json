@@ -1,0 +1,17 @@
+{
+  "error": null,
+  "errorMessage": null,
+  "response": {
+    "phid": "PHID-USER-hch2p624jejt4kddoqow",
+    "userName": "gregtatum",
+    "realName": "Greg Tatum",
+    "image": "https://mozphab-phabhost-cdn.devsvcprod.mozaws.net/file/data/5mbmk5m7xfxhc7mkchch/PHID-FILE-fh3sxlnx7cvpgtpjddoq/profile",
+    "uri": "https://phabricator.services.mozilla.com/p/gregtatum/",
+    "roles": [
+      "verified",
+      "approved",
+      "activated"
+    ],
+    "primaryEmail": "gtatum@mozilla.com"
+  }
+}
