@@ -52,6 +52,8 @@ Save configurations first, then run `my-reviews` to print everything in one go. 
 
 ```sh
 my-reviews phabricator <path-to-firefox-repo>
+# remove a saved config
+my-reviews phabricator -d <path-to-firefox-repo>
 ```
 
 - The argument must be the Firefox checkout.
@@ -63,6 +65,8 @@ Once added, running `my-reviews` will fetch and print the current queue for all 
 
 ```sh
 my-reviews github <org> <repo> <github-username>
+# remove a saved config
+my-reviews github -d <org> <repo> <github-username>
 ```
 
 The command saves the configuration and fetches open pull requests for the given repository when you run `my-reviews`, printing:
@@ -89,6 +93,8 @@ my-reviews ignore https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
 # GitHub
 my-reviews ignore https://github.com/mozilla/translations/pull/123
 my-reviews ignore mozilla/translations#123
+# remove an ignore entry
+my-reviews ignore -d mozilla/translations#123
 ```
 
 ## Development

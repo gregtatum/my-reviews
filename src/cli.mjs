@@ -7,6 +7,9 @@ import {
   addGithubConfig,
   addIgnoredTarget,
   addPhabricatorConfig,
+  removeGithubConfig,
+  removeIgnoredTarget,
+  removePhabricatorConfig,
   getSavedConfigs,
 } from "./store.mjs";
 
@@ -25,7 +28,21 @@ async function main() {
         break;
       }
       case "phabricator": {
-        const [geckoDir] = args;
+        const { isDelete, args: filteredArgs } = parseDeleteArgs(args);
+        const [geckoDir] = filteredArgs;
+        if (isDelete) {
+          const { removed } = removePhabricatorConfig(geckoDir);
+          if (removed) {
+            console.log(
+              `Removed Phabricator config for ${color.green(geckoDir)}.`
+            );
+          } else {
+            console.log(
+              `No saved Phabricator config found for ${color.green(geckoDir)}.`
+            );
+          }
+          break;
+        }
         const user = await getPhabricatorUser(geckoDir);
         const { added } = addPhabricatorConfig(geckoDir, user.phid);
         if (added) {
@@ -40,14 +57,32 @@ async function main() {
         break;
       }
       case "github": {
-        const [org, repo, user] = args;
-        const { added } = addGithubConfig(org, repo, user);
-        if (added) {
-          console.log(`Saved GitHub config for ${org}/${repo} (${user}).`);
+        const { isDelete, args: filteredArgs } = parseDeleteArgs(args);
+        const [org, repo, user] = filteredArgs;
+        if (isDelete) {
+          const { removed } = removeGithubConfig(org, repo, user);
+          if (removed) {
+            console.log(
+              `Removed GitHub config for ${color.green(
+                `${org}/${repo}`
+              )} (${user}).`
+            );
+          } else {
+            console.log(
+              `No saved GitHub config found for ${color.green(
+                `${org}/${repo}`
+              )} (${user}).`
+            );
+          }
         } else {
-          console.log(
-            `GitHub config already saved for ${org}/${repo} (${user}).`
-          );
+          const { added } = addGithubConfig(org, repo, user);
+          if (added) {
+            console.log(`Saved GitHub config for ${org}/${repo} (${user}).`);
+          } else {
+            console.log(
+              `GitHub config already saved for ${org}/${repo} (${user}).`
+            );
+          }
         }
         break;
       }
@@ -61,17 +96,27 @@ async function main() {
           );
           return;
         }
-        const target = args.join(" ").trim();
+        const { isDelete, args: filteredArgs } = parseDeleteArgs(args);
+        const target = filteredArgs.join(" ").trim();
         if (!target) {
           throw new Error(
             "The ignore command expects a Phabricator URL/ID, Bug number/URL, or GitHub pull request URL or owner/repo#123."
           );
         }
-        const { description, alreadyIgnored } = addIgnoredTarget(target);
-        if (alreadyIgnored) {
-          console.log(`${description} is already ignored.`);
+        if (isDelete) {
+          const { description, removed } = removeIgnoredTarget(target);
+          if (removed) {
+            console.log(`Unignored ${description}.`);
+          } else {
+            console.log(`${description} was not in the ignore list.`);
+          }
         } else {
-          console.log(`Ignoring ${description}.`);
+          const { description, alreadyIgnored } = addIgnoredTarget(target);
+          if (alreadyIgnored) {
+            console.log(`${description} is already ignored.`);
+          } else {
+            console.log(`Ignoring ${description}.`);
+          }
         }
         break;
       }
@@ -102,18 +147,33 @@ function printHelp(showHeader) {
   console.log(color.yellow("Usage:"));
   console.log(color.green("- Run all saved configs."));
   console.log(color.red("    my-reviews\n"));
-  console.log(color.green("- Add your Firefox Phabricator user."));
+  console.log(color.green("- Add or delete your Firefox Phabricator user."));
   console.log(
     color.red("    my-reviews phabricator ") +
-      color.blue("<path_to_firefox_repo>\n")
+      color.blue("<path_to_firefox_repo>") +
+      "\n" +
+      color.red("    my-reviews phabricator ") +
+      color.blue("<path_to_firefox_repo>") +
+      color.red(" --delete\n")
   );
-  console.log(color.green("- Add your GitHub repo."));
+  console.log(color.green("- Add or delete your GitHub repo."));
   console.log(
-    color.red("    my-reviews github ") + color.blue("<org> <repo> <user>\n")
+    color.red("    my-reviews github ") +
+      color.blue("<org> <repo> <user>") +
+      "\n" +
+      color.red("    my-reviews github ") +
+      color.blue("<org> <repo> <user>") +
+      color.red(" --delete\n")
   );
   console.log(color.green("- Ignore a Phabricator diff/bug or GitHub PR."));
-  console.log(color.red("    my-reviews ignore ") + color.blue("<target>\n"));
-  console.log("");
+  console.log(
+    color.red("    my-reviews ignore ") +
+      color.blue("<target>") +
+      "\n" +
+      color.red("    my-reviews ignore ") +
+      color.blue("<target>") +
+      color.red(" --delete\n")
+  );
   console.log(color.yellow("Examples:"));
 
   console.log("  my-reviews");
@@ -151,6 +211,23 @@ async function runSavedConfigurations() {
   for (const config of github) {
     await runGithubReviews(config.owner, config.repo, config.user);
   }
+}
+
+/**
+ * @param {string[]} args
+ * @returns {{ isDelete: boolean; args: string[] }}
+ */
+function parseDeleteArgs(args) {
+  const filtered = [];
+  let isDelete = false;
+  for (const arg of args) {
+    if (arg === "-d" || arg === "--delete") {
+      isDelete = true;
+      continue;
+    }
+    filtered.push(arg);
+  }
+  return { isDelete, args: filtered };
 }
 
 main();

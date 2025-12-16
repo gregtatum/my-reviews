@@ -216,6 +216,31 @@ export function addIgnoredTarget(input) {
 }
 
 /**
+ * @param {string} input
+ * @returns {{ description: string; removed: boolean }}
+ */
+export function removeIgnoredTarget(input) {
+  const parsed = parseIgnoreTarget(input);
+  if (!parsed) {
+    throw new Error(
+      "Could not understand what to delete. Pass a Phabricator URL or ID (e.g. D123), Bug number or URL (e.g. Bug 123), or a GitHub pull request URL or owner/repo#123."
+    );
+  }
+
+  const store = loadStore();
+  const { key, bucket } = getIgnoreEntry(parsed);
+  const before = store.ignored[bucket].length;
+  store.ignored[bucket] = store.ignored[bucket].filter((item) => item !== key);
+  const removed = store.ignored[bucket].length !== before;
+  if (removed) {
+    saveStore(store);
+  }
+
+  const description = describeTarget(parsed);
+  return { description, removed };
+}
+
+/**
  * @param {string} owner
  * @param {string} repo
  * @param {string} user
@@ -243,6 +268,34 @@ export function addGithubConfig(owner, repo, user) {
 }
 
 /**
+ * @param {string} owner
+ * @param {string} repo
+ * @param {string} user
+ * @returns {{ removed: boolean; config: GithubConfig }}
+ */
+export function removeGithubConfig(owner, repo, user) {
+  if (!owner || !repo || !user) {
+    throw new Error(
+      "GitHub configuration delete requires the owner, repo, and GitHub username."
+    );
+  }
+  const store = loadStore();
+  const normalized = { owner, repo, user };
+  const before = store.github.length;
+  store.github = store.github.filter(
+    (item /** @type {GithubConfig} */) =>
+      item.owner !== normalized.owner ||
+      item.repo !== normalized.repo ||
+      item.user !== normalized.user
+  );
+  const removed = store.github.length !== before;
+  if (removed) {
+    saveStore(store);
+  }
+  return { removed, config: normalized };
+}
+
+/**
  * @param {string} geckoDir
  * @param {string} userId
  * @returns {{ added: boolean; config: PhabricatorConfig }}
@@ -264,6 +317,28 @@ export function addPhabricatorConfig(geckoDir, userId) {
     saveStore(store);
   }
   return { added: !existing, config: normalized };
+}
+
+/**
+ * @param {string} geckoDir
+ * @returns {{ removed: boolean; geckoDir: string }}
+ */
+export function removePhabricatorConfig(geckoDir) {
+  if (!geckoDir) {
+    throw new Error(
+      "Phabricator configuration delete requires the path to Gecko that was saved."
+    );
+  }
+  const store = loadStore();
+  const before = store.phabricator.length;
+  store.phabricator = store.phabricator.filter(
+    (item /** @type {PhabricatorConfig} */) => item.geckoDir !== geckoDir
+  );
+  const removed = store.phabricator.length !== before;
+  if (removed) {
+    saveStore(store);
+  }
+  return { removed, geckoDir };
 }
 
 /**
