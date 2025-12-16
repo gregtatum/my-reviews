@@ -99,7 +99,7 @@ function logPhabricatorResponse(endpoint, response) {
     maxArrayLength: null,
     breakLength: 120,
   });
-  console.log(`!!! ${endpoint} response`, pretty);
+  console.log(`${endpoint} response`, pretty);
 }
 
 /**
@@ -353,7 +353,9 @@ async function getUserProjects(geckoDir, userId) {
     )
   );
 
-  logPhabricatorResponse("project.search", response);
+  if (false) {
+    logPhabricatorResponse("project.search", response);
+  }
 
   if (response.error || response.response === null) {
     throw new Error(response.errorMessage);
