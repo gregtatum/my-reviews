@@ -10,7 +10,8 @@ if [[ "$BUMP_TYPE" != "patch" && "$BUMP_TYPE" != "minor" && "$BUMP_TYPE" != "maj
   exit 1
 fi
 
-npm run typecheck
+npm run ts
+npm run test
 
 if ! git diff --quiet --exit-code || ! git diff --cached --quiet --exit-code; then
   echo "Working tree has uncommitted changes. Please commit or stash before publishing." >&2
