@@ -1,11 +1,11 @@
-import { describe, expect, test, afterAll } from "@jest/globals";
+import { describe, expect, it, afterAll } from "@jest/globals";
 import { setup } from "./utils/index.mjs";
 
-describe("cli --help", () => {
+describe("cli", () => {
   const { runCLI, teardown } = setup();
   afterAll(teardown);
 
-  test("prints help when run as a subprocess", () => {
+  it("prints --help", () => {
     const output = runCLI("--help");
     expect(output).toMatchInlineSnapshot(`
 "my-reviews — list your review queues
@@ -37,13 +37,8 @@ Examples:
 "
 `);
   });
-});
 
-describe("cli phabricator snapshots", () => {
-  const { runCLI, teardown } = setup();
-  afterAll(teardown);
-
-  test("runs phabricator with snapshots and fake path", () => {
+  it("can get the phabricator user ID", () => {
     const output = runCLI("phabricator /fakepath/firefox");
     expect(output).toMatchInlineSnapshot(`
 "Saved Phabricator config for /fakepath/firefox (user: gregtatum, PHID: PHID-USER-hch2p624jejt4kddoqow).
