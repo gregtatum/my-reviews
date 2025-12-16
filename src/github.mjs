@@ -136,6 +136,10 @@ function printHeader(owner, repo, text) {
   );
 }
 
+/**
+ * @param {string} endpoint
+ * @param {unknown} response
+ */
 function logGithubResponse(endpoint, response) {
   const shouldPersist = process.env.MY_REVIEWS_PERSIST === "github";
   const shouldLog =

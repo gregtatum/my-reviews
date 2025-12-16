@@ -93,7 +93,7 @@ function sanitizeEndpoint(endpoint) {
  * @param {JsonValue} data
  * @param {import("child_process").ExecOptions} [options]
  * @returns {Promise<Response<any>>}
-*/
+ */
 const callConduit = async function (endpoint, data, options = {}) {
   const useSnapshots = isSnapshotMode();
 

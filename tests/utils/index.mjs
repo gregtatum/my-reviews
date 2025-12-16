@@ -11,6 +11,9 @@ export function setup() {
   const storePath = path.join(tmpDir, "store.json");
   setStorePath(storePath);
 
+  /**
+   * @param {string} argsString
+   */
   const runCLI = (argsString) => {
     const args = argsString.trim() ? argsString.trim().split(/\s+/) : [];
     const result = spawnSync("node", ["src/cli.mjs", ...args], {
