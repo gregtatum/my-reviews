@@ -38,3 +38,16 @@ Examples:
 `);
   });
 });
+
+describe("cli phabricator snapshots", () => {
+  const { runCLI, teardown } = setup();
+  afterAll(teardown);
+
+  test("runs phabricator with snapshots and fake path", () => {
+    const output = runCLI("phabricator /fakepath/firefox");
+    expect(output).toMatchInlineSnapshot(`
+"Saved Phabricator config for /fakepath/firefox (user: gregtatum, PHID: PHID-USER-hch2p624jejt4kddoqow).
+"
+`);
+  });
+});

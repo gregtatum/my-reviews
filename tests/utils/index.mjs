@@ -15,12 +15,13 @@ export function setup() {
    * @param {string} argsString
    */
   const runCLI = (argsString) => {
-    const args = argsString.trim() ? argsString.trim().split(/\s+/) : [];
+    const args = parseArgs(argsString);
     const result = spawnSync("node", ["src/cli.mjs", ...args], {
       encoding: "utf8",
       env: {
         ...process.env,
         MY_REVIEWS_STORE_PATH: storePath,
+        MOZ_REVIEWS_USE_SNAPSHOTS: "1",
       },
     });
 
@@ -44,3 +45,16 @@ export function setup() {
 }
 
 export { stripAnsi } from "./stripAnsi.mjs";
+
+/**
+ * Very small arg parser to honor quoted segments in tests.
+ * @param {string} argsString
+ * @returns {string[]}
+ */
+function parseArgs(argsString) {
+  if (/["']/.test(argsString)) {
+    throw new Error("Do not use quoted arguments in runCLI tests.");
+  }
+  const trimmed = argsString.trim();
+  return trimmed ? trimmed.split(/\s+/) : [];
+}
