@@ -41,7 +41,12 @@ export function setup() {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   };
 
-  return { runCLI, teardown };
+  const readStore = () => {
+    const contents = fs.readFileSync(storePath, "utf8");
+    return JSON.parse(contents);
+  };
+
+  return { runCLI, teardown, readStore };
 }
 
 export { stripAnsi } from "./stripAnsi.mjs";
