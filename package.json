@@ -35,7 +35,6 @@
   "devDependencies": {
     "@types/cli-color": "^2.0.6",
     "@types/node": "^24.10.1",
-    "flow-bin": "^0.107.0",
     "typescript": "^5.9.3"
   }
 }
