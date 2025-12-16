@@ -23,17 +23,7 @@ const { isIgnoredPhabricator } = require("./ignore-store");
  */
 
 /**
- * @typedef {Object} RevisionFields
- * @property {string} title
- * @property {string} authorPHID
- * @property {{ value: string; name: string; closed: boolean }} status
- */
-
-/**
- * @typedef {Object} Revision
- * @property {number} id
- * @property {RevisionFields} fields
- * @property {{ reviewers?: { reviewers?: { reviewerPHID: string; status: string }[] } }} [attachments]
+ * @import {Revision} from "./types"
  */
 
 /**

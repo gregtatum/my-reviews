@@ -13,3 +13,19 @@ export type Store = {
 export type IgnoreTarget =
   | { type: "phabricator"; id: string }
   | { type: "github"; owner: string; repo: string; number: string };
+
+export type RevisionFields = {
+  title: string;
+  authorPHID: string;
+  status: { value: string; name: string; closed: boolean };
+};
+
+export type Revision = {
+  id: number;
+  fields: RevisionFields;
+  attachments?: {
+    reviewers?: {
+      reviewers?: { reviewerPHID: string; status: string }[];
+    };
+  };
+};
