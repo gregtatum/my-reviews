@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @ts-check
+import color from "cli-color";
 import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
 import {
@@ -11,6 +12,11 @@ import {
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
+
+  if (command === "--help" || command === "-h" || command === "help") {
+    printHelp({ showHeader: true });
+    return;
+  }
 
   try {
     switch (command) {
@@ -39,7 +45,9 @@ async function main() {
         if (added) {
           console.log(`Saved GitHub config for ${org}/${repo} (${user}).`);
         } else {
-          console.log(`GitHub config already saved for ${org}/${repo} (${user}).`);
+          console.log(
+            `GitHub config already saved for ${org}/${repo} (${user}).`
+          );
         }
         break;
       }
@@ -69,7 +77,7 @@ async function main() {
       }
       default:
         console.error(`Unknown command: ${String(command)}`);
-        printUsage();
+        printHelp(false /* showHeader */);
         process.exit(1);
     }
   } catch (error) {
@@ -82,18 +90,43 @@ async function main() {
   }
 }
 
-function printUsage() {
+/**
+ * @param {boolean} showHeader
+ */
+function printHelp(showHeader) {
+  if (showHeader) {
+    const header = color.cyan("my-reviews — list your review queues");
+    console.log(header);
+  }
+  console.log("");
+  console.log(color.yellow("Usage:"));
+  console.log(color.green("- Run all saved configs."));
+  console.log(color.red("    my-reviews\n"));
+  console.log(color.green("- Add your Firefox Phabricator user."));
   console.log(
-    `Usage:\n  my-reviews                          # Run using saved configurations\n  my-reviews phabricator <gecko>          # Detect user via arc and save\n  my-reviews github <org> <repo> <user>   # Save a GitHub config\n  my-reviews ignore <phabricator-url-or-id|github-url-or-number>`
+    color.red("    my-reviews phabricator ") +
+      color.blue("<path_to_firefox_repo>\n")
   );
+  console.log(color.green("- Add your GitHub repo."));
+  console.log(
+    color.red("    my-reviews github ") + color.blue("<org> <repo> <user>\n")
+  );
+  console.log(color.green("- Ignore a Phabricator diff/bug or GitHub PR."));
+  console.log(color.red("    my-reviews ignore ") + color.blue("<target>\n"));
+  console.log("");
+  console.log(color.yellow("Examples:"));
+
+  console.log("  my-reviews");
+  console.log('  my-reviews phabricator "$HOME/dev/firefox"');
+  console.log("  my-reviews github mozilla translations gregtatum");
+  console.log("  my-reviews ignore mozilla/translations#123");
 }
 
 async function runSavedConfigurations() {
   const { github, phabricator } = getSavedConfigs();
   if (phabricator.length === 0 && github.length === 0) {
-    console.log(
-      "No configurations saved. Add one with `my-reviews phabricator ...` or `my-reviews github ...`."
-    );
+    console.log("No configurations saved.");
+    printHelp(false /* showHeader */);
     return;
   }
 
