@@ -5,7 +5,7 @@ A small Node.js tool that prints your current review queue from GitHub and Phabr
 ## Example Usage
 
 ```
-my-reviews                  # Fetches all saved configurations
+➤ my-reviews
 
 ======= Phabricator Mine =====================================================
 
@@ -41,19 +41,44 @@ npm install -g my-reviews
 Or run it ad-hoc with `npx`:
 
 ```sh
-npx my-reviews github mozilla translations nordzilla
+npx my-reviews
+```
+
+Add your projects:
+
+
+```sh
+my-reviews phabricator "$HOME/dev/firefox"
+my-reviews github mozilla translations gregtatum
+my-reviews ignore mozilla/translations#123
 ```
 
 ## Usage
 
-Save configurations first, then run `my-reviews` to print everything in one go. Subcommands include `phabricator`, `github`, and `ignore`.
+Save configurations first, then run `my-reviews` to print everything in one go. Subcommands include `phabricator`, `github`, `ignore`, and `ignore-list`.
+
+### Command reference (mirrors `my-reviews --help`)
+
+- Run all saved configs  
+  `my-reviews`
+- Add or delete your Firefox Phabricator user  
+  `my-reviews phabricator <path_to_firefox_repo>`  
+  `my-reviews phabricator <path_to_firefox_repo> --delete`
+- Add or delete a GitHub repo/user combo  
+  `my-reviews github <org> <repo> <user>`  
+  `my-reviews github <org> <repo> <user> --delete`
+- Add or delete an ignored Phabricator diff/bug or GitHub PR  
+  `my-reviews ignore <target>`  
+  `my-reviews ignore <target> --delete`
+- List ignored entries  
+  `my-reviews ignore-list`
 
 ### Phabricator reviews
 
 ```sh
 my-reviews phabricator <path-to-firefox-repo>
 # remove a saved config
-my-reviews phabricator -d <path-to-firefox-repo>
+my-reviews phabricator --delete <path-to-firefox-repo>
 ```
 
 - The argument must be the Firefox checkout.
@@ -66,7 +91,7 @@ Once added, running `my-reviews` will fetch and print the current queue for all 
 ```sh
 my-reviews github <org> <repo> <github-username>
 # remove a saved config
-my-reviews github -d <org> <repo> <github-username>
+my-reviews github --delete <org> <repo> <github-username>
 ```
 
 The command saves the configuration and fetches open pull requests for the given repository when you run `my-reviews`, printing:
@@ -81,7 +106,7 @@ my-reviews github mozilla translations gregtatum
 
 ### Ignoring reviews
 
-Add Phabricator or GitHub reviews to a persistent ignore list stored at `~/.my-reviews.json`:
+Add Phabricator or GitHub reviews to a persistent ignore list
 
 ```sh
 # Phabricator
@@ -101,7 +126,7 @@ my-reviews ignore-list
 
 ## Development
 
-- `npm run typecheck` runs TypeScript against the JSDoc annotations (`phab.js`, `github.js`, and the CLI) to ensure structural typing stays sound.
+- `npm run ts` runs TypeScript against the JSDoc annotations (`phab.js`, `github.js`, and the CLI) to ensure structural typing stays sound.
 
 ## Publishing
 
