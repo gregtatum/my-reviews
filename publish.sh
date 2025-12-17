@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BUMP_TYPE="${1:-patch}"
+BUMP_TYPE="${1:-}"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT_DIR"
 
-if [[ "$BUMP_TYPE" != "patch" && "$BUMP_TYPE" != "minor" && "$BUMP_TYPE" != "major" ]]; then
-  echo "Usage: ./publish.sh [patch|minor|major]" >&2
+if [[ -z "$BUMP_TYPE" || ( "$BUMP_TYPE" != "patch" && "$BUMP_TYPE" != "minor" && "$BUMP_TYPE" != "major" ) ]]; then
+  echo "Usage: ./publish.sh <patch|minor|major>" >&2
   exit 1
 fi
 
