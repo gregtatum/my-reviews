@@ -309,11 +309,14 @@ export async function runPhabricatorReviews(geckoDir, userId) {
       /** @type {{ reviewerPHID: string; status: string }[]} */ (
         revision.attachments?.reviewers?.reviewers || []
       );
-    return reviewers.some(
+    const actionableStatuses = new Set(["added", "blocking", "rejected"]);
+    const actionableReviewers = reviewers.filter((reviewer) =>
+      actionableStatuses.has(reviewer.status)
+    );
+    return actionableReviewers.some(
       (reviewer) =>
-        (reviewer.reviewerPHID === userId ||
-          userProjects.has(reviewer.reviewerPHID)) &&
-        (reviewer.status === "added" || reviewer.status === "blocking")
+        reviewer.reviewerPHID === userId ||
+        userProjects.has(reviewer.reviewerPHID)
     );
   });
 

@@ -105,6 +105,11 @@ Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
               https://phabricator.services.mozilla.com/D276110
 
+Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
+
+     Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
+              https://phabricator.services.mozilla.com/D274523
+
 Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
      Review - Bug 2003214 - Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
@@ -152,6 +157,11 @@ Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
               https://phabricator.services.mozilla.com/D276110
 
+Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
+
+     Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
+              https://phabricator.services.mozilla.com/D274523
+
 Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
      Review - Bug 2003214 - Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
@@ -196,6 +206,11 @@ Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
               https://phabricator.services.mozilla.com/D276111
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
               https://phabricator.services.mozilla.com/D276110
+
+Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
+
+     Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
+              https://phabricator.services.mozilla.com/D274523
 "
 `);
   });
