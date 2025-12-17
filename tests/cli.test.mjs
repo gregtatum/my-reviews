@@ -26,6 +26,10 @@ Usage:
     my-reviews phabricator <path_to_firefox_repo>
     my-reviews phabricator <path_to_firefox_repo> --delete
 
+- Add or delete your Bugzilla account.
+    my-reviews bugzilla <email> [bugzilla_url]
+    my-reviews bugzilla <email> [bugzilla_url] --delete
+
 - Add or delete your GitHub repo.
     my-reviews github <org> <repo> <user>
     my-reviews github <org> <repo> <user> --delete
@@ -40,6 +44,7 @@ Usage:
 Examples:
   my-reviews
   my-reviews phabricator "$HOME/dev/firefox"
+  my-reviews bugzilla greg@example.com
   my-reviews github mozilla translations gregtatum
   my-reviews ignore mozilla/translations#123
 "
@@ -47,6 +52,11 @@ Examples:
   });
 
   it("can get the phabricator user ID", () => {
+    expect(ctx.runCLI("bugzilla greg@example.com")).toMatchInlineSnapshot(`
+"Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).
+"
+`);
+
     expect(ctx.runCLI("phabricator /fakepath/firefox")).toMatchInlineSnapshot(`
 "Saved Phabricator config for /fakepath/firefox (user: gregtatum, PHID: PHID-USER-hch2p624jejt4kddoqow).
 "
@@ -58,11 +68,25 @@ Examples:
         userId: "PHID-USER-hch2p624jejt4kddoqow",
       },
     ]);
+    expect(ctx.readStore().bugzilla).toEqual([
+      { email: "greg@example.com", url: "https://bugzilla.mozilla.org" },
+    ]);
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
+Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
 Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+
+======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+
+Bug 101: Fix crash when opening preference pane
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
+request: needinfo? reporter@example.com
+
+Bug 202: Update tests for new localization pipeline
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
+request: needinfo? module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 
@@ -125,7 +149,18 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
+Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
 Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+
+======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+
+Bug 101: Fix crash when opening preference pane
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
+request: needinfo? reporter@example.com
+
+Bug 202: Update tests for new localization pipeline
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
+request: needinfo? module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 
@@ -175,7 +210,18 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
+Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
 Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+
+======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+
+Bug 101: Fix crash when opening preference pane
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
+request: needinfo? reporter@example.com
+
+Bug 202: Update tests for new localization pipeline
+     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
+request: needinfo? module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 

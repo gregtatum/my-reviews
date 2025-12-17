@@ -8,6 +8,7 @@ export type Store = {
     // e.g. "D12345" or "Bug 12345"
     phabricator: string[];
   };
+  bugzilla: BugzillaConfig[];
   github: GithubConfig[];
   phabricator: PhabricatorConfig[];
 };
@@ -26,6 +27,11 @@ export type GithubConfig = {
 export type PhabricatorConfig = {
   geckoDir: string;
   userId: string;
+};
+
+export type BugzillaConfig = {
+  email: string;
+  url: string;
 };
 
 export type RevisionFields = {

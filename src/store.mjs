@@ -2,10 +2,17 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
+import { DEFAULT_BUGZILLA_URL, normalizeBugzillaUrl } from "./bugzilla.mjs";
 
 let storagePath = resolveStoragePath();
 /**
- * @import {Store, IgnoreTarget, GithubConfig, PhabricatorConfig} from "./types.d.ts"
+ * @import {
+ *   Store,
+ *   IgnoreTarget,
+ *   GithubConfig,
+ *   PhabricatorConfig,
+ *   BugzillaConfig,
+ * } from "./types.d.ts"
  */
 
 /** @type {Store | null} */
@@ -30,6 +37,7 @@ function loadStore() {
 
   cachedStore = {
     ignored: { github: [], phabricator: [] },
+    bugzilla: [],
     github: [],
     phabricator: [],
   };
@@ -71,6 +79,7 @@ function normalizeStore(store) {
       github: store.ignored.github.filter(isString),
       phabricator: store.ignored.phabricator.filter(isString),
     },
+    bugzilla: (store.bugzilla || []).filter(isBugzillaConfig),
     github: (store.github || []).filter(isGithubConfig),
     phabricator: (store.phabricator || []).filter(isPhabricatorConfig),
   };
@@ -125,6 +134,19 @@ function isPhabricatorConfig(value) {
     typeof value === "object" &&
     typeof /** @type {any} */ (value).geckoDir === "string" &&
     typeof /** @type {any} */ (value).userId === "string"
+  );
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is BugzillaConfig}
+ */
+function isBugzillaConfig(value) {
+  return (
+    !!value &&
+    typeof value === "object" &&
+    typeof /** @type {any} */ (value).email === "string" &&
+    typeof /** @type {any} */ (value).url === "string"
   );
 }
 
@@ -359,11 +381,68 @@ export function removePhabricatorConfig(geckoDir) {
 }
 
 /**
- * @returns {Pick<Store, "github" | "phabricator">}
+ * @param {string} email
+ * @param {string} url
+ * @returns {{ added: boolean; config: BugzillaConfig }}
+ */
+export function addBugzillaConfig(email, url) {
+  if (!email) {
+    throw new Error("Bugzilla configuration requires an email address.");
+  }
+  const normalized = {
+    email,
+    url: normalizeBugzillaUrl(url || DEFAULT_BUGZILLA_URL),
+  };
+  const store = loadStore();
+  const existing = store.bugzilla.some(
+    (item /** @type {BugzillaConfig} */) =>
+      item.email === normalized.email && item.url === normalized.url
+  );
+  if (!existing) {
+    store.bugzilla = [...store.bugzilla, normalized];
+    saveStore(store);
+  }
+  return { added: !existing, config: normalized };
+}
+
+/**
+ * @param {string} email
+ * @param {string} url
+ * @returns {{ removed: boolean; config: BugzillaConfig }}
+ */
+export function removeBugzillaConfig(email, url) {
+  if (!email) {
+    throw new Error(
+      "Bugzilla configuration delete requires the email address that was saved."
+    );
+  }
+  const normalized = {
+    email,
+    url: normalizeBugzillaUrl(url || DEFAULT_BUGZILLA_URL),
+  };
+  const store = loadStore();
+  const before = store.bugzilla.length;
+  store.bugzilla = store.bugzilla.filter(
+    (item /** @type {BugzillaConfig} */) =>
+      item.email !== normalized.email || item.url !== normalized.url
+  );
+  const removed = store.bugzilla.length !== before;
+  if (removed) {
+    saveStore(store);
+  }
+  return { removed, config: normalized };
+}
+
+/**
+ * @returns {Pick<Store, "github" | "phabricator" | "bugzilla">}
  */
 export function getSavedConfigs() {
   const store = loadStore();
-  return { github: store.github, phabricator: store.phabricator };
+  return {
+    bugzilla: store.bugzilla,
+    github: store.github,
+    phabricator: store.phabricator,
+  };
 }
 
 /**

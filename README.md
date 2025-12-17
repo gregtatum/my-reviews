@@ -1,6 +1,6 @@
 # My Reviews CLI
 
-A small Node.js tool that prints your current review queue from GitHub and Phabricator so you can keep up with incoming requests from the terminal.
+A small Node.js tool that prints your current review queue from GitHub, Bugzilla, and Phabricator so you can keep up with incoming requests from the terminal.
 
 ## Example Usage
 
@@ -49,13 +49,14 @@ Add your projects:
 
 ```sh
 my-reviews phabricator "$HOME/dev/firefox"
+my-reviews bugzilla greg@example.com
 my-reviews github mozilla translations gregtatum
 my-reviews ignore mozilla/translations#123
 ```
 
 ## Usage
 
-Save configurations first, then run `my-reviews` to print everything in one go. Subcommands include `phabricator`, `github`, `ignore`, and `ignore-list`.
+Save configurations first, then run `my-reviews` to print everything in one go. Subcommands include `phabricator`, `bugzilla`, `github`, `ignore`, and `ignore-list`.
 
 ### Command reference (mirrors `my-reviews --help`)
 
@@ -64,6 +65,9 @@ Save configurations first, then run `my-reviews` to print everything in one go. 
 - Add or delete your Firefox Phabricator user  
   `my-reviews phabricator <path_to_firefox_repo>`  
   `my-reviews phabricator <path_to_firefox_repo> --delete`
+- Add or delete your Bugzilla account  
+  `my-reviews bugzilla <email> [bugzilla_url]`  
+  `my-reviews bugzilla <email> [bugzilla_url] --delete`
 - Add or delete a GitHub repo/user combo  
   `my-reviews github <org> <repo> <user>`  
   `my-reviews github <org> <repo> <user> --delete`
@@ -85,6 +89,18 @@ my-reviews phabricator --delete <path-to-firefox-repo>
 - The command will detect your Phabricator user via `arc` and save it.
 
 Once added, running `my-reviews` will fetch and print the current queue for all saved Phabricator configs.
+
+### Bugzilla needinfo
+
+```sh
+my-reviews bugzilla greg@example.com
+# custom Bugzilla instance
+my-reviews bugzilla greg@example.com https://bugzilla-dev.allizom.org
+# remove a saved config
+my-reviews bugzilla greg@example.com --delete
+```
+
+The command saves your Bugzilla email (and optional host) and fetches open `needinfo?` requests for you when running `my-reviews`.
 
 ### GitHub reviews
 
@@ -128,7 +144,7 @@ my-reviews ignore-list
 
 - `npm run ts` runs TypeScript against the JSDoc annotations.
 - Persist or log API responses when working on fixtures:
-  - `MY_REVIEWS_PERSIST=phabricator` or `MY_REVIEWS_PERSIST=github` writes raw responses to `tests/utils/*-<endpoint>.json`.
+  - `MY_REVIEWS_PERSIST=phabricator`, `MY_REVIEWS_PERSIST=bugzilla`, or `MY_REVIEWS_PERSIST=github` writes raw responses to `tests/utils/*-<endpoint>.json`.
   - `MY_REVIEWS_LOG=1` logs responses to stdout.
 - Update Jest snapshots after fixture or output changes with:
   ```sh

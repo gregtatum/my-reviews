@@ -1,0 +1,51 @@
+{
+  "bugs": [
+    {
+      "id": 101,
+      "summary": "Fix crash when opening preference pane",
+      "flags": [
+        {
+          "name": "needinfo",
+          "status": "?",
+          "requestee": "greg@example.com",
+          "setter": "reporter@example.com"
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "summary": "Update tests for new localization pipeline",
+      "flags": [
+        {
+          "name": "needinfo",
+          "status": "?",
+          "requestee": {
+            "email": "greg@example.com",
+            "name": "Greg Tester"
+          },
+          "setter": {
+            "name": "module-owner@example.com"
+          }
+        },
+        {
+          "name": "needinfo",
+          "status": "?",
+          "requestee": "another@example.com",
+          "setter": "triager@example.com"
+        }
+      ]
+    },
+    {
+      "id": 303,
+      "summary": "An unrelated bug",
+      "flags": [
+        {
+          "name": "needinfo",
+          "status": "?",
+          "requestee": "not-greg@example.com",
+          "setter": "random@example.com"
+        }
+      ]
+    }
+  ]
+}
