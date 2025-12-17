@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // @ts-check
 import { fileURLToPath } from "url";
 import color from "cli-color";
@@ -176,7 +175,7 @@ function printHelp(showHeader) {
     color.red("    my-reviews ignore ") +
       color.blue("<target>") +
       "\n" +
-    color.red("    my-reviews ignore ") +
+      color.red("    my-reviews ignore ") +
       color.blue("<target>") +
       color.red(" --delete\n")
   );

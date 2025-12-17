@@ -9,7 +9,7 @@
     "url": "git+https://github.com/gregtatum/my-reviews.git"
   },
   "bin": {
-    "my-reviews": "./src/cli.mjs"
+    "my-reviews": "./bin/my-reviews.mjs"
   },
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
@@ -24,7 +24,8 @@
     "cli"
   ],
   "files": [
-    "src"
+    "src",
+    "bin"
   ],
   "dependencies": {
     "@octokit/rest": "^22.0.1",
