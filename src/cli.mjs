@@ -4,12 +4,17 @@ import { fileURLToPath } from "url";
 import color from "cli-color";
 import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
-import { DEFAULT_BUGZILLA_URL, runBugzillaNeedinfos } from "./bugzilla.mjs";
+import {
+  DEFAULT_BUGZILLA_URL,
+  normalizeBugzillaUrl,
+  runBugzillaNeedinfos,
+} from "./bugzilla.mjs";
 import {
   addBugzillaConfig,
   addGithubConfig,
   addIgnoredTarget,
   addPhabricatorConfig,
+  getBugzillaAuth,
   getPhabricatorAuth,
   removeBugzillaConfig,
   removeGithubConfig,
@@ -17,6 +22,7 @@ import {
   removePhabricatorConfig,
   getIgnoredEntries,
   getSavedConfigs,
+  setBugzillaAuth,
   setPhabricatorAuth,
 } from "./store.mjs";
 
@@ -77,7 +83,11 @@ export async function main(argv = process.argv) {
         break;
       }
       case "bugzilla": {
-        const { isDelete, args: filteredArgs } = parseDeleteArgs(args);
+        const {
+          isDelete,
+          apiKey,
+          args: filteredArgs,
+        } = parseBugzillaArgs(args);
         const [email, bugzillaUrl = DEFAULT_BUGZILLA_URL] = filteredArgs;
         if (isDelete) {
           const { removed } = removeBugzillaConfig(email, bugzillaUrl);
@@ -95,10 +105,22 @@ export async function main(argv = process.argv) {
             );
           }
         } else {
+          if (!email) {
+            throw new Error(
+              "Bugzilla setup requires an email (e.g. `my-reviews bugzilla greg@example.com`)."
+            );
+          }
+          const authResult = await ensureBugzillaAuth(
+            bugzillaUrl,
+            email,
+            apiKey
+          );
           const { added } = addBugzillaConfig(email, bugzillaUrl);
           if (added) {
+            console.log(`Saved Bugzilla config for ${email} (${bugzillaUrl}).`);
+          } else if (authResult.updated || authResult.added) {
             console.log(
-              `Saved Bugzilla config for ${email} (${bugzillaUrl}).`
+              `Updated Bugzilla config for ${email} (${bugzillaUrl}).`
             );
           } else {
             console.log(
@@ -248,6 +270,57 @@ async function ensurePhabricatorAuth(conduitURI, userName) {
 }
 
 /**
+ * @param {string} bugzillaUrl
+ * @param {string} email
+ * @param {string | undefined} apiKey
+ * @returns {Promise<{ added: boolean; updated: boolean }>}
+ */
+async function ensureBugzillaAuth(bugzillaUrl, email, apiKey) {
+  const normalizedUrl = normalizeBugzillaUrl(bugzillaUrl);
+  if (apiKey) {
+    const { added, updated } = setBugzillaAuth({
+      email,
+      url: normalizedUrl,
+      apiKey,
+    });
+    return { added, updated };
+  }
+
+  if (isSnapshotMode()) {
+    return { added: false, updated: false };
+  }
+
+  const existing = getBugzillaAuth(email, normalizedUrl);
+  if (existing?.apiKey) {
+    return { added: false, updated: false };
+  }
+
+  if (!process.stdin.isTTY) {
+    throw new Error(
+      "No Bugzilla API key configured. Run `my-reviews bugzilla <email> [bugzilla_url]` in a terminal to set one."
+    );
+  }
+
+  const origin = new URL(normalizedUrl).origin;
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  try {
+    console.log(`API key URL: ${origin}/userprefs.cgi?tab=apikey`);
+    const token = (await rl.question("Paste Bugzilla API key: ")).trim();
+    if (!token) {
+      throw new Error("Bugzilla API key cannot be empty.");
+    }
+    const { added, updated } = setBugzillaAuth({
+      email,
+      url: normalizedUrl,
+      apiKey: token,
+    });
+    return { added, updated };
+  } finally {
+    rl.close();
+  }
+}
+
+/**
  * @param {string} uri
  * @returns {string}
  */
@@ -321,7 +394,9 @@ function printHelp(showHeader) {
 
   console.log("  my-reviews");
   console.log("  my-reviews phabricator gregtatum");
-  console.log("  my-reviews phabricator gregtatum https://phabricator.example.com/");
+  console.log(
+    "  my-reviews phabricator gregtatum https://phabricator.example.com/"
+  );
   console.log("  my-reviews bugzilla greg@example.com");
   console.log("  my-reviews github mozilla translations gregtatum");
   console.log("  my-reviews ignore mozilla/translations#123");
@@ -329,7 +404,11 @@ function printHelp(showHeader) {
 
 async function runSavedConfigurations() {
   const { bugzilla, github, phabricator } = getSavedConfigs();
-  if (bugzilla.length === 0 && phabricator.length === 0 && github.length === 0) {
+  if (
+    bugzilla.length === 0 &&
+    phabricator.length === 0 &&
+    github.length === 0
+  ) {
     console.log("No configurations saved.");
     printHelp(false /* showHeader */);
     return;
@@ -337,7 +416,7 @@ async function runSavedConfigurations() {
 
   console.log(color.cyan("\nChecking:"));
   for (const config of bugzilla) {
-    const label = "Bugzilla  ";
+    const label = "Bugzilla   ";
     const email = color.green(config.email);
     const url = color.blackBright(`(${config.url})`);
     console.log(`${label} ${email} ${url}`);
@@ -356,7 +435,8 @@ async function runSavedConfigurations() {
   }
 
   for (const config of bugzilla) {
-    await runBugzillaNeedinfos(config.email, config.url);
+    const auth = getBugzillaAuth(config.email, config.url);
+    await runBugzillaNeedinfos(config.email, config.url, auth?.apiKey);
   }
 
   for (const config of phabricator) {
@@ -387,6 +467,34 @@ function printIgnoreList() {
       console.log(`    ${color.green(item)}`);
     }
   }
+}
+
+/**
+ * @param {string[]} args
+ * @returns {{ isDelete: boolean; apiKey: string | undefined; args: string[] }}
+ */
+function parseBugzillaArgs(args) {
+  const filtered = [];
+  let apiKey;
+  let isDelete = false;
+  for (let index = 0; index < args.length; index++) {
+    const arg = args[index];
+    if (arg === "-d" || arg === "--delete") {
+      isDelete = true;
+      continue;
+    }
+    if (arg === "--api-key") {
+      const value = args[index + 1];
+      if (!value || value.startsWith("-")) {
+        throw new Error("The --api-key flag requires a value.");
+      }
+      apiKey = value;
+      index++;
+      continue;
+    }
+    filtered.push(arg);
+  }
+  return { isDelete, apiKey, args: filtered };
 }
 
 /**

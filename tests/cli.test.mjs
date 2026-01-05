@@ -52,8 +52,34 @@ Examples:
 `);
   });
 
+  it("updates the Bugzilla API key without duplicating configs", () => {
+    expect(
+      ctx.runCLI("bugzilla greg@example.com --api-key original-key")
+    ).toBe("Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n");
+
+    expect(
+      ctx.runCLI("bugzilla greg@example.com --api-key new-key")
+    ).toBe("Updated Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n");
+
+    expect(ctx.readStore().bugzilla).toEqual([
+      {
+        email: "greg@example.com",
+        url: "https://bugzilla.mozilla.org",
+      },
+    ]);
+    expect(ctx.readStore().bugzillaAuth).toEqual([
+      {
+        email: "greg@example.com",
+        url: "https://bugzilla.mozilla.org",
+        apiKey: "new-key",
+      },
+    ]);
+  });
+
   it("can get the phabricator user ID", () => {
-    expect(ctx.runCLI("bugzilla greg@example.com")).toMatchInlineSnapshot(`
+    expect(
+      ctx.runCLI("bugzilla greg@example.com --api-key SECRET_TOKEN")
+    ).toMatchInlineSnapshot(`
 "Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).
 "
 `);
@@ -71,24 +97,36 @@ Examples:
       },
     ]);
     expect(ctx.readStore().bugzilla).toEqual([
-      { email: "greg@example.com", url: "https://bugzilla.mozilla.org" },
+      {
+        email: "greg@example.com",
+        url: "https://bugzilla.mozilla.org",
+      },
+    ]);
+    expect(ctx.readStore().bugzillaAuth).toEqual([
+      {
+        email: "greg@example.com",
+        url: "https://bugzilla.mozilla.org",
+        apiKey: "SECRET_TOKEN",
+      },
     ]);
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
-Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
+Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
 Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+======= bugzilla.mozilla.org needinfos ===============================================
 
-Bug 101: Fix crash when opening preference pane
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
-request: needinfo? reporter@example.com
+Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
 
-Bug 202: Update tests for new localization pipeline
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
-request: needinfo? module-owner@example.com
+              Fix crash when opening preference pane
+              reporter@example.com
+
+Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
+
+              Update tests for new localization pipeline
+              module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 
@@ -151,18 +189,20 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
-Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
+Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
 Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+======= bugzilla.mozilla.org needinfos ===============================================
 
-Bug 101: Fix crash when opening preference pane
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
-request: needinfo? reporter@example.com
+Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
 
-Bug 202: Update tests for new localization pipeline
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
-request: needinfo? module-owner@example.com
+              Fix crash when opening preference pane
+              reporter@example.com
+
+Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
+
+              Update tests for new localization pipeline
+              module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 
@@ -212,18 +252,20 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
 Checking:
-Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
+Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
 Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
+======= bugzilla.mozilla.org needinfos ===============================================
 
-Bug 101: Fix crash when opening preference pane
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=101
-request: needinfo? reporter@example.com
+Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
 
-Bug 202: Update tests for new localization pipeline
-     url: https://bugzilla.mozilla.org/show_bug.cgi?id=202
-request: needinfo? module-owner@example.com
+              Fix crash when opening preference pane
+              reporter@example.com
+
+Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
+
+              Update tests for new localization pipeline
+              module-owner@example.com
 
 ======= Phabricator Mine =====================================================
 

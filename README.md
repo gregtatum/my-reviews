@@ -106,7 +106,7 @@ my-reviews bugzilla greg@example.com https://bugzilla-dev.allizom.org
 my-reviews bugzilla greg@example.com --delete
 ```
 
-The command saves your Bugzilla email (and optional host) and fetches open `needinfo?` requests for you when running `my-reviews`.
+Get a Bugzilla API key from your Bugzilla user preferences (API Keys section) at `https://bugzilla.mozilla.org/userprefs.cgi?tab=apikey`. The CLI will prompt for the key the first time you configure Bugzilla and store it for future runs, using the JSON-RPC `MyDashboard.run_flag_query` endpoint to fetch open `needinfo?` requests.
 
 ### GitHub reviews
 

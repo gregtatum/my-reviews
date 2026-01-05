@@ -6,6 +6,10 @@ import { fileURLToPath } from "url";
 import { inspect } from "util";
 
 export const DEFAULT_BUGZILLA_URL = "https://bugzilla.mozilla.org";
+const SNAPSHOT_DIR = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../tests/utils"
+);
 
 /**
  * @typedef {{
@@ -17,6 +21,8 @@ export const DEFAULT_BUGZILLA_URL = "https://bugzilla.mozilla.org";
  *       status?: string;
  *       requestee?: unknown;
  *       setter?: unknown;
+ *       updatedFancy?: string;
+ *       updatedEpoch?: number;
  *     }>;
  *   }>;
  * }} BugSearchResponse
@@ -25,18 +31,20 @@ export const DEFAULT_BUGZILLA_URL = "https://bugzilla.mozilla.org";
 /**
  * @param {string} email
  * @param {string | undefined} bugzillaUrl
+ * @param {string | undefined} apiKey
  * @returns {Promise<{ needinfos: BugSearchResponse["bugs"] }>}
  */
 export async function runBugzillaNeedinfos(
   email,
-  bugzillaUrl = DEFAULT_BUGZILLA_URL
+  bugzillaUrl = DEFAULT_BUGZILLA_URL,
+  apiKey
 ) {
   if (!email) {
     throw new Error("The first argument must be your Bugzilla email.");
   }
 
   const baseUrl = normalizeBugzillaUrl(bugzillaUrl);
-  const bugs = await fetchNeedinfoBugs(email, baseUrl);
+  const bugs = await fetchNeedinfoBugs(email, baseUrl, apiKey);
 
   if (bugs.length > 0) {
     printHeader(baseUrl);
@@ -51,27 +59,19 @@ export async function runBugzillaNeedinfos(
 /**
  * @param {string} email
  * @param {string} baseUrl
+ * @param {string | undefined} apiKey
  */
-async function fetchNeedinfoBugs(email, baseUrl) {
-  const params = new URLSearchParams({
-    include_fields: "id,summary,flags",
-    f1: "requestees.login_name",
-    o1: "equals",
-    v1: email,
-    f2: "flagtypes.name",
-    o2: "equals",
-    v2: "needinfo",
-  });
-  const response = /** @type {BugSearchResponse} */ (
-    await fetchBugzilla("needinfo", baseUrl, params)
-  );
-
-  if (!response || !Array.isArray(response.bugs)) {
-    throw new Error("Bugzilla response missing bug list.");
+async function fetchNeedinfoBugs(email, baseUrl, apiKey) {
+  if (!apiKey) {
+    throw new Error(
+      "Missing Bugzilla API key. Run `my-reviews bugzilla <email> [bugzilla_url]` to set one."
+    );
   }
 
+  const bugs = await fetchNeedinfoBugsViaRpc(email, baseUrl, apiKey);
+
   const lowerEmail = email.toLowerCase();
-  const bugsWithNeedinfo = response.bugs.filter((bug) =>
+  const bugsWithNeedinfo = bugs.filter((bug) =>
     bug.flags?.some((flag) => isNeedinfoFor(flag, lowerEmail))
   );
 
@@ -80,46 +80,168 @@ async function fetchNeedinfoBugs(email, baseUrl) {
 }
 
 /**
+ * @param {string} email
+ * @param {string} baseUrl
+ */
+/**
+ * @param {string} email
+ * @param {string} baseUrl
+ * @param {string} apiKey
+ */
+async function fetchNeedinfoBugsViaRpc(email, baseUrl, apiKey) {
+  const body = {
+    method: "MyDashboard.run_flag_query",
+    params: {
+      Bugzilla_api_key: apiKey,
+      type: "requestee",
+      name: "needinfo",
+      statuses: ["?"],
+      requestees: [email],
+      include_fields: ["id", "summary", "flags"],
+    },
+    id: "my-reviews",
+    version: "1.1",
+  };
+  const response = await fetchBugzillaRpc(
+    "needinfo-rpc",
+    baseUrl,
+    body,
+    apiKey
+  );
+  const bugs = response?.result?.bugs;
+  if (Array.isArray(bugs)) {
+    return bugs;
+  }
+  const requestee = response?.result?.result?.requestee;
+  if (Array.isArray(requestee)) {
+    return coerceNeedinfoFlagsToBugs(requestee);
+  }
+  throw new Error("Bugzilla RPC response missing bug list.");
+}
+
+/**
+ * @param {unknown[]} items
+ * @returns {BugSearchResponse["bugs"]}
+ */
+function coerceNeedinfoFlagsToBugs(items) {
+  /** @type {Map<number, BugSearchResponse["bugs"][number]>} */
+  const bugsById = new Map();
+
+  for (const item of items) {
+    if (!item || typeof item !== "object") {
+      continue;
+    }
+    const type =
+      /** @type {any} */ (item).type ||
+      /** @type {any} */ (item).flag_type ||
+      /** @type {any} */ (item).name;
+    if (type && String(type) !== "needinfo") {
+      continue;
+    }
+    const idValue =
+      /** @type {any} */ (item).bug_id ??
+      /** @type {any} */ (item).id ??
+      /** @type {any} */ (item).bugId;
+    const bugId = Number(idValue);
+    if (!Number.isFinite(bugId)) {
+      continue;
+    }
+    const summaryValue =
+      /** @type {any} */ (item).bug_summary ??
+      /** @type {any} */ (item).summary ??
+      "";
+    const summary = String(summaryValue || "");
+    const flagName =
+      /** @type {any} */ (item).flag_name ||
+      /** @type {any} */ (item).flag ||
+      /** @type {any} */ (item).name ||
+      "needinfo";
+    const status =
+      /** @type {any} */ (item).flag_status ||
+      /** @type {any} */ (item).status ||
+      "?";
+    const requestee =
+      /** @type {any} */ (item).requestee ??
+      /** @type {any} */ (item).requestee_email ??
+      /** @type {any} */ (item).requestee_name ??
+      /** @type {any} */ (item).requestee_login;
+    const setter =
+      /** @type {any} */ (item).requester ??
+      /** @type {any} */ (item).setter ??
+      /** @type {any} */ (item).setter_email ??
+      /** @type {any} */ (item).setter_name ??
+      /** @type {any} */ (item).setter_login;
+    const updatedFancy =
+      /** @type {any} */ (item).updated_fancy ??
+      /** @type {any} */ (item).updatedFancy;
+    const updatedEpochRaw =
+      /** @type {any} */ (item).updated_epoch ??
+      /** @type {any} */ (item).updatedEpoch;
+    const updatedEpoch =
+      typeof updatedEpochRaw === "number"
+        ? updatedEpochRaw
+        : Number(updatedEpochRaw);
+
+    let bug = bugsById.get(bugId);
+    if (!bug) {
+      bug = { id: bugId, summary, flags: [] };
+      bugsById.set(bugId, bug);
+    } else if (!bug.summary && summary) {
+      bug.summary = summary;
+    }
+
+    bug.flags = bug.flags || [];
+    bug.flags.push({
+      name: String(flagName),
+      status: String(status),
+      requestee,
+      setter,
+      ...(updatedFancy ? { updatedFancy: String(updatedFancy) } : {}),
+      ...(Number.isFinite(updatedEpoch) ? { updatedEpoch } : {}),
+    });
+  }
+
+  return [...bugsById.values()];
+}
+
+/**
  * @param {string} endpoint
  * @param {string} baseUrl
- * @param {URLSearchParams} params
+ * @param {unknown} body
+ * @param {string} apiKey
  */
-async function fetchBugzilla(endpoint, baseUrl, params) {
-  const url = new URL("/rest/bug", baseUrl);
-  for (const [key, value] of params.entries()) {
-    url.searchParams.set(key, value);
-  }
-
-  const safeEndpoint = sanitizeEndpoint(endpoint);
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputDir = path.resolve(dirname, "../tests/utils");
-  const outputPath = path.join(outputDir, `bugzilla-${safeEndpoint}.json`);
+async function fetchBugzillaRpc(endpoint, baseUrl, body, apiKey) {
+  const url = new URL("/jsonrpc.cgi", baseUrl);
 
   if (isSnapshotMode()) {
-    if (!fs.existsSync(outputPath)) {
-      throw new Error(
-        `Snapshot not found for endpoint "${endpoint}" at ${outputPath}`
-      );
-    }
-    const contents = fs.readFileSync(outputPath, "utf8");
-    return JSON.parse(contents);
+    return readSnapshot(endpoint);
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Bugzilla-API-Key": apiKey,
+    },
+    body: JSON.stringify(body),
+  });
   if (!response.ok) {
-    const body = await response.text();
+    const text = await response.text();
     throw new Error(
-      `Bugzilla request failed (${response.status}): ${response.statusText}\n${body}`
+      `Bugzilla RPC request failed (${response.status}): ${response.statusText}\n${text}`
     );
   }
 
   const json = await response.json();
-  logBugzillaResponse(endpoint, json);
-
-  if (shouldPersist()) {
-    fs.mkdirSync(outputDir, { recursive: true });
-    fs.writeFileSync(outputPath, JSON.stringify(json, null, 2));
+  if (json.error) {
+    const message =
+      json.error?.message ||
+      json.error?.messageText ||
+      JSON.stringify(json.error, null, 2);
+    throw new Error(`Bugzilla RPC error: ${message}`);
   }
+  logBugzillaResponse(endpoint, json);
+  persistSnapshot(endpoint, json);
 
   return json;
 }
@@ -143,7 +265,7 @@ function printHeader(text) {
   const url = new URL(text);
   console.log(
     color.cyan(
-      `\n======= Bugzilla Needinfo (${url.host}) ===============================================`
+      `\n======= ${url.host} needinfos ===============================================`
     )
   );
 }
@@ -154,20 +276,26 @@ function printHeader(text) {
  * @param {string} email
  */
 function printNeedinfo(bug, baseUrl, email) {
+  const indent = "              ";
   console.log("");
   const gray = color.xterm(8);
-  console.log(color.yellow(`Bug ${bug.id}: `) + color.whiteBright(bug.summary));
   console.log(
-    gray("     url: ") +
+    color.yellow(`Bug ${bug.id} - `) +
       color.blue.underline(`${baseUrl}/show_bug.cgi?id=${bug.id}`)
   );
+  console.log();
+  console.log(indent + color.whiteBright(bug.summary));
 
   for (const flag of bug.flags || []) {
     if (!isNeedinfoFor(flag, email.toLowerCase())) {
       continue;
     }
     const requester = describeUser(flag.setter);
-    console.log(gray("request: ") + color.magenta("needinfo? ") + requester);
+    console.log(indent + color.blackBright(requester));
+    const age = describeAge(flag);
+    if (age) {
+      console.log(indent + color.blackBright(age));
+    }
   }
 }
 
@@ -201,9 +329,7 @@ function matchUser(input, lowerEmail) {
   }
   if (typeof input === "object") {
     const candidate =
-      /** @type {{ login?: string; name?: string; email?: string }} */ (
-        input
-      );
+      /** @type {{ login?: string; name?: string; email?: string }} */ (input);
     const values = [candidate.login, candidate.name, candidate.email];
     return values.some(
       (value) => typeof value === "string" && value.toLowerCase() === lowerEmail
@@ -223,9 +349,8 @@ function describeUser(input) {
     return input;
   }
   if (typeof input === "object") {
-    const user = /** @type {{ name?: string; email?: string; login?: string }} */ (
-      input
-    );
+    const user =
+      /** @type {{ name?: string; email?: string; login?: string }} */ (input);
     return (
       user.name ||
       user.email ||
@@ -234,6 +359,34 @@ function describeUser(input) {
     );
   }
   return String(input);
+}
+
+/**
+ * @param {{ updatedFancy?: string; updatedEpoch?: number }} flag
+ * @returns {string | null}
+ */
+function describeAge(flag) {
+  if (flag.updatedFancy) {
+    return flag.updatedFancy;
+  }
+  if (typeof flag.updatedEpoch === "number") {
+    const nowSeconds = Math.floor(Date.now() / 1000);
+    const seconds = Math.max(0, nowSeconds - flag.updatedEpoch);
+    const days = Math.floor(seconds / 86400);
+    if (days > 0) {
+      return `${days} day${days === 1 ? "" : "s"} ago`;
+    }
+    const hours = Math.floor(seconds / 3600);
+    if (hours > 0) {
+      return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    if (minutes > 0) {
+      return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+    }
+    return "just now";
+  }
+  return null;
 }
 
 function isSnapshotMode() {
@@ -245,6 +398,33 @@ function isSnapshotMode() {
 
 function shouldPersist() {
   return process.env.MY_REVIEWS_PERSIST === "bugzilla";
+}
+
+/**
+ * @param {string} endpoint
+ */
+function readSnapshot(endpoint) {
+  const outputPath = resolveSnapshotPath(endpoint);
+  if (!fs.existsSync(outputPath)) {
+    throw new Error(
+      `Snapshot not found for endpoint "${endpoint}" at ${outputPath}`
+    );
+  }
+  const contents = fs.readFileSync(outputPath, "utf8");
+  return JSON.parse(contents);
+}
+
+/**
+ * @param {string} endpoint
+ * @param {unknown} json
+ */
+function persistSnapshot(endpoint, json) {
+  if (!shouldPersist()) {
+    return;
+  }
+  const outputPath = resolveSnapshotPath(endpoint);
+  fs.mkdirSync(SNAPSHOT_DIR, { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify(json, null, 2));
 }
 
 /**
@@ -272,4 +452,12 @@ function logBugzillaResponse(endpoint, response) {
  */
 function sanitizeEndpoint(endpoint) {
   return endpoint.replace(/[^a-zA-Z0-9._-]/g, "-");
+}
+
+/**
+ * @param {string} endpoint
+ */
+function resolveSnapshotPath(endpoint) {
+  const safeEndpoint = sanitizeEndpoint(endpoint);
+  return path.join(SNAPSHOT_DIR, `bugzilla-${safeEndpoint}.json`);
 }

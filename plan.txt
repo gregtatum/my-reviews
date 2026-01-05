@@ -1,0 +1,5 @@
+Plan to support Bugzilla API key
+- Add storage: extend Store.bugzilla entries to include optional apiKey; update validation/normalization and ensure existing configs default to undefined.
+- CLI flow: update bugzilla subcommand to accept an optional --api-key (or prompt?); allow setting, updating, and deleting configs while preserving other fields; update help text.
+- Fetching: switch Bugzilla needinfo requests to JSON-RPC MyDashboard.run_flag_query using API key when present; fall back to REST if no key; persist/log responses.
+- Tests/fixtures: add new Bugzilla snapshot using JSON-RPC response and adjust jest snapshots; cover config storage with apiKey in store tests and CLI tests; document usage in README.

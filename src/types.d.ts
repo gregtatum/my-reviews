@@ -11,6 +11,7 @@ export type Store = {
   bugzilla: BugzillaConfig[];
   github: GithubConfig[];
   phabricator: PhabricatorConfig[];
+  bugzillaAuth?: BugzillaAuth[] | null;
   phabricatorAuth?: PhabricatorAuth | null;
 };
 
@@ -40,6 +41,12 @@ export type PhabricatorAuth = {
 export type BugzillaConfig = {
   email: string;
   url: string;
+};
+
+export type BugzillaAuth = {
+  email: string;
+  url: string;
+  apiKey: string;
 };
 
 export type RevisionFields = {
