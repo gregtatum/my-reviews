@@ -451,7 +451,7 @@ export function setPhabricatorAuth(auth) {
 
 /**
  * @param {string} email
- * @param {string} url
+ * @param {string | undefined} url
  * @returns {{ added: boolean; updated: boolean; config: BugzillaConfig }}
  */
 export function addBugzillaConfig(email, url) {
@@ -556,23 +556,25 @@ export function setBugzillaAuth(auth) {
     throw new Error("Bugzilla auth requires an email, URL, and API key.");
   }
   const store = loadStore();
+  const existingAuth = store.bugzillaAuth || [];
   const normalizedAuth = {
     email: auth.email,
     url: normalizeBugzillaUrl(auth.url || DEFAULT_BUGZILLA_URL),
     apiKey,
   };
-  const existingIndex = (store.bugzillaAuth || []).findIndex(
+  const existingIndex = existingAuth.findIndex(
     (item) =>
       item.email === normalizedAuth.email && item.url === normalizedAuth.url
   );
   if (existingIndex === -1) {
-    store.bugzillaAuth = [...(store.bugzillaAuth || []), normalizedAuth];
+    store.bugzillaAuth = [...existingAuth, normalizedAuth];
     saveStore(store);
     return { added: true, updated: false, auth: normalizedAuth };
   }
-  const existing = store.bugzillaAuth[existingIndex];
+  const existing = existingAuth[existingIndex];
   const updated = existing.apiKey !== normalizedAuth.apiKey;
   if (updated) {
+    store.bugzillaAuth = [...existingAuth];
     store.bugzillaAuth[existingIndex] = normalizedAuth;
     saveStore(store);
   }
@@ -611,14 +613,15 @@ function normalizeBugzillaAuthStore(authStore, legacyBugzilla) {
       if (!isBugzillaAuth(entry)) {
         continue;
       }
+      const apiKey = normalizeApiKey(entry.apiKey);
+      if (!apiKey) {
+        continue;
+      }
       const normalized = {
         email: entry.email,
         url: normalizeBugzillaUrl(entry.url || DEFAULT_BUGZILLA_URL),
-        apiKey: normalizeApiKey(entry.apiKey),
+        apiKey,
       };
-      if (!normalized.apiKey) {
-        continue;
-      }
       authByKey.set(`${normalized.email}::${normalized.url}`, normalized);
     }
   }

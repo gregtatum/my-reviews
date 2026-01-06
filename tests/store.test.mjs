@@ -11,8 +11,10 @@ import {
 } from "../src/store.mjs";
 
 describe("store bugzilla api keys", () => {
-  let tmpDir;
-  let storePath;
+  /** @type {string} */
+  let tmpDir = "";
+  /** @type {string} */
+  let storePath = "";
 
   beforeEach(() => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "my-reviews-store-"));
@@ -25,7 +27,7 @@ describe("store bugzilla api keys", () => {
   });
 
   it("stores api keys separately while preserving configs", () => {
-    const first = addBugzillaConfig("greg@example.com");
+    const first = addBugzillaConfig("greg@example.com", undefined);
     expect(first.added).toBe(true);
     expect(first.updated).toBe(false);
     expect(first.config).toEqual({
@@ -41,7 +43,7 @@ describe("store bugzilla api keys", () => {
     expect(updated.added).toBe(true);
     expect(updated.updated).toBe(false);
 
-    const untouched = addBugzillaConfig("greg@example.com");
+    const untouched = addBugzillaConfig("greg@example.com", undefined);
     expect(untouched.updated).toBe(false);
     expect(getSavedConfigs().bugzilla).toEqual([
       {

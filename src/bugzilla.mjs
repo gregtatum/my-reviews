@@ -72,7 +72,9 @@ async function fetchNeedinfoBugs(email, baseUrl, apiKey) {
 
   const lowerEmail = email.toLowerCase();
   const bugsWithNeedinfo = bugs.filter((bug) =>
-    bug.flags?.some((flag) => isNeedinfoFor(flag, lowerEmail))
+    bug.flags?.some(
+      (/** @type {unknown} */ flag) => isNeedinfoFor(flag, lowerEmail)
+    )
   );
 
   bugsWithNeedinfo.sort((a, b) => a.id - b.id);
