@@ -2,11 +2,7 @@
 import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "url";
 import color from "cli-color";
-import {
-  runPhabricatorReviews,
-  getPhabricatorUser,
-  getConduitURI,
-} from "./phab.mjs";
+import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
 import { DEFAULT_BUGZILLA_URL, runBugzillaNeedinfos } from "./bugzilla.mjs";
 import {
@@ -40,30 +36,42 @@ export async function main(argv = process.argv) {
       }
       case "phabricator": {
         const { isDelete, args: filteredArgs } = parseDeleteArgs(args);
-        const [geckoDir] = filteredArgs;
+        const [userName, maybeUri] = filteredArgs;
+        const conduitURI = normalizeBaseURI(
+          maybeUri || "https://phabricator.services.mozilla.com/"
+        );
         if (isDelete) {
-          const { removed } = removePhabricatorConfig(geckoDir);
+          const { removed } = removePhabricatorConfig(userName, conduitURI);
           if (removed) {
             console.log(
-              `Removed Phabricator config for ${color.green(geckoDir)}.`
+              `Removed Phabricator config for ${color.green(userName)}.`
             );
           } else {
             console.log(
-              `No saved Phabricator config found for ${color.green(geckoDir)}.`
+              `No saved Phabricator config found for ${color.green(userName)}.`
             );
           }
           break;
         }
-        await ensurePhabricatorAuth(geckoDir);
-        const user = await getPhabricatorUser(geckoDir);
-        const { added } = addPhabricatorConfig(geckoDir, user.phid);
+        if (!userName) {
+          throw new Error(
+            "Phabricator setup requires a username (e.g. `my-reviews phabricator gregtatum`)."
+          );
+        }
+        await ensurePhabricatorAuth(conduitURI, userName);
+        const user = await getPhabricatorUser(conduitURI);
+        const { added } = addPhabricatorConfig(
+          conduitURI,
+          user.phid,
+          user.userName
+        );
         if (added) {
           console.log(
-            `Saved Phabricator config for ${geckoDir} (user: ${user.userName}, PHID: ${user.phid}).`
+            `Saved Phabricator config for ${conduitURI} (user: ${user.userName}, PHID: ${user.phid}).`
           );
         } else {
           console.log(
-            `Phabricator config already saved for ${geckoDir} (user: ${user.userName}, PHID: ${user.phid}).`
+            `Phabricator config already saved for ${conduitURI} (user: ${user.userName}, PHID: ${user.phid}).`
           );
         }
         break;
@@ -191,14 +199,14 @@ function isSnapshotMode() {
 }
 
 /**
- * @param {string} geckoDir
+ * @param {string} conduitURI
+ * @param {string} userName
  */
-async function ensurePhabricatorAuth(geckoDir) {
+async function ensurePhabricatorAuth(conduitURI, userName) {
   if (isSnapshotMode()) {
     return;
   }
 
-  const conduitURI = getConduitURI(geckoDir);
   const auth = getPhabricatorAuth();
   const normalized = normalizeConduitURI(conduitURI);
   if (auth && normalizeConduitURI(auth.uri) === normalized && auth.token) {
@@ -207,17 +215,13 @@ async function ensurePhabricatorAuth(geckoDir) {
 
   if (!process.stdin.isTTY) {
     throw new Error(
-      "No Phabricator API token configured. Run `my-reviews phabricator <path>` in a terminal to set one."
+      "No Phabricator API token configured. Run `my-reviews phabricator <username> [url]` in a terminal to set one."
     );
   }
 
   const origin = new URL(normalized).origin;
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    const userName = (await rl.question(
-      "Phabricator username (optional, for the token URL): "
-    )).trim();
-
     if (userName) {
       console.log(
         `Token URL: ${origin}/settings/user/${userName}/page/apitokens/`
@@ -252,6 +256,18 @@ function normalizeConduitURI(uri) {
 }
 
 /**
+ * @param {string} uri
+ * @returns {string}
+ */
+function normalizeBaseURI(uri) {
+  const normalized = normalizeConduitURI(uri);
+  if (normalized.endsWith("/api/")) {
+    return normalized.slice(0, -"/api/".length) + "/";
+  }
+  return normalized;
+}
+
+/**
  * @param {boolean} showHeader
  */
 function printHelp(showHeader) {
@@ -263,13 +279,13 @@ function printHelp(showHeader) {
   console.log(color.yellow("Usage:"));
   console.log(color.green("- Run all saved configs."));
   console.log(color.red("    my-reviews\n"));
-  console.log(color.green("- Add or delete your Firefox Phabricator user."));
+  console.log(color.green("- Add or delete your Phabricator user."));
   console.log(
     color.red("    my-reviews phabricator ") +
-      color.blue("<path_to_firefox_repo>") +
+      color.blue("<username> [phabricator_url]") +
       "\n" +
       color.red("    my-reviews phabricator ") +
-      color.blue("<path_to_firefox_repo>") +
+      color.blue("<username> [phabricator_url]") +
       color.red(" --delete\n")
   );
   console.log(color.green("- Add or delete your Bugzilla account."));
@@ -304,7 +320,8 @@ function printHelp(showHeader) {
   console.log(color.yellow("Examples:"));
 
   console.log("  my-reviews");
-  console.log('  my-reviews phabricator "$HOME/dev/firefox"');
+  console.log("  my-reviews phabricator gregtatum");
+  console.log("  my-reviews phabricator gregtatum https://phabricator.example.com/");
   console.log("  my-reviews bugzilla greg@example.com");
   console.log("  my-reviews github mozilla translations gregtatum");
   console.log("  my-reviews ignore mozilla/translations#123");
@@ -327,9 +344,9 @@ async function runSavedConfigurations() {
   }
   for (const config of phabricator) {
     const label = "Phabricator";
-    const repoPath = color.green(config.geckoDir);
-    const user = color.blackBright(`(${config.userId})`);
-    console.log(`${label} ${repoPath} ${user}`);
+    const uri = color.green(config.uri);
+    const user = color.blackBright(`(${config.userName})`);
+    console.log(`${label} ${uri} ${user}`);
   }
   for (const config of github) {
     const label = "GitHub     ";
@@ -343,7 +360,7 @@ async function runSavedConfigurations() {
   }
 
   for (const config of phabricator) {
-    await runPhabricatorReviews(config.geckoDir, config.userId);
+    await runPhabricatorReviews(config.uri, config.userId);
   }
 
   for (const config of github) {

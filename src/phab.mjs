@@ -28,7 +28,7 @@ import { getPhabricatorAuth, isIgnoredPhabricator } from "./store.mjs";
 
 /**
  * @template T
- * @typedef {(endpoint: string, data: JsonValue, options?: import("child_process").ExecOptions) => Promise<Response<T>>} CallConduit
+ * @typedef {(endpoint: string, data: JsonValue, options?: { conduitURI?: string }) => Promise<Response<T>>} CallConduit
  */
 
 function isSnapshotMode() {
@@ -48,7 +48,7 @@ function sanitizeEndpoint(endpoint) {
 /**
  * @param {string} endpoint
  * @param {JsonValue} data
- * @param {import("child_process").ExecOptions} [options]
+ * @param {{ conduitURI?: string }} [options]
  * @returns {Promise<Response<any>>}
  */
 const callConduit = async function (endpoint, data, options = {}) {
@@ -68,7 +68,9 @@ const callConduit = async function (endpoint, data, options = {}) {
     return JSON.parse(contents);
   }
 
-  const conduitConfig = getConduitConfig(options.cwd);
+  const conduitConfig = getConduitConfig(
+    options.conduitURI || "https://phabricator.services.mozilla.com/"
+  );
   return await callConduitHTTP(conduitConfig, endpoint, data);
 };
 
@@ -117,8 +119,9 @@ function getBugId(revision) {
 
 /**
  * @param {Revision} revision
+ * @param {string} baseURI
  */
-function printRevision(revision) {
+function printRevision(revision, baseURI) {
   const maxStatusLength = 11;
   const statusName = revision.fields.status.name.replace(
     "Needs Review",
@@ -129,9 +132,7 @@ function printRevision(revision) {
   console.log(`${status} - ${revision.fields.title}`);
 
   const indent = "".padStart(maxStatusLength + 2);
-  const url = color.blackBright.underline(
-    `https://phabricator.services.mozilla.com/D${revision.id}`
-  );
+  const url = color.blackBright.underline(`${baseURI}D${revision.id}`);
 
   console.log(`${indent} ${url}`);
 }
@@ -155,8 +156,9 @@ function printBug(revision) {
 
 /**
  * @param {Revision[]} revisions
+ * @param {string} baseURI
  */
-function printRevisionList(revisions) {
+function printRevisionList(revisions, baseURI) {
   let prevBug = null;
   for (const revision of revisions) {
     const thisBug = getBugId(revision) || "no bug";
@@ -164,7 +166,7 @@ function printRevisionList(revisions) {
       printBug(revision);
     }
     prevBug = thisBug;
-    printRevision(revision);
+    printRevision(revision, baseURI);
   }
 }
 
@@ -180,14 +182,14 @@ function printHeader(text) {
 }
 
 /**
- * @param {string} geckoDir
+ * @param {string} conduitURI
  * @param {string} userId
  * @returns {Promise<{ mine: Revision[]; others: Revision[] }>}
  */
-export async function runPhabricatorReviews(geckoDir, userId) {
-  if (!geckoDir) {
+export async function runPhabricatorReviews(conduitURI, userId) {
+  if (!conduitURI) {
     throw new Error(
-      "The first argument must be the path to the gecko directory with a .arcconfig."
+      "The first argument must be the Phabricator Conduit URI."
     );
   }
 
@@ -197,7 +199,8 @@ export async function runPhabricatorReviews(geckoDir, userId) {
     );
   }
 
-  ensureConduitConfig(geckoDir);
+  ensureConduitConfig(conduitURI);
+  const baseURI = normalizeBaseURI(conduitURI);
 
   const response = /** @type {Response<Cursor<Revision>>} */ (
     await callConduit(
@@ -208,7 +211,7 @@ export async function runPhabricatorReviews(geckoDir, userId) {
           reviewers: true,
         },
       },
-      { cwd: geckoDir }
+      { conduitURI }
     )
   );
 
@@ -245,10 +248,10 @@ export async function runPhabricatorReviews(geckoDir, userId) {
 
   if (mine.length > 0) {
     printHeader("Mine");
-    printRevisionList(mine);
+    printRevisionList(mine, baseURI);
   }
 
-  const userProjects = await getUserProjects(geckoDir, userId);
+  const userProjects = await getUserProjects(conduitURI, userId);
 
   const others = data.filter((revision) => {
     if (userId === revision.fields.authorPHID) {
@@ -274,31 +277,31 @@ export async function runPhabricatorReviews(geckoDir, userId) {
 
   if (others.length > 0) {
     printHeader("Others");
-    printRevisionList(others);
+    printRevisionList(others, baseURI);
   }
 
   return { mine, others };
 }
 
 /**
- * @param {string} geckoDir
+ * @param {string} conduitURI
  * @returns {Promise<{ phid: string; userName: string }>}
  */
-export async function getPhabricatorUser(geckoDir) {
-  if (!geckoDir) {
+export async function getPhabricatorUser(conduitURI) {
+  if (!conduitURI) {
     throw new Error(
-      "The first argument must be the path to the gecko directory with a .arcconfig."
+      "The first argument must be the Phabricator Conduit URI."
     );
   }
 
-  ensureConduitConfig(geckoDir);
+  ensureConduitConfig(conduitURI);
 
   const response = /** @type {Response<{ phid: string; userName: string }>} */ (
     await callConduit(
       "user.whoami",
       {},
       {
-        cwd: geckoDir,
+        conduitURI,
       }
     )
   );
@@ -313,41 +316,23 @@ export async function getPhabricatorUser(geckoDir) {
 }
 
 /**
- * @param {string} geckoDir
- * @returns {string}
+ * @param {string} conduitURI
  */
-export function getConduitURI(geckoDir) {
-  const arcConfig = readArcConfig(geckoDir);
-  const conduitURI =
-    /** @type {string | undefined} */ (arcConfig["phabricator.uri"]);
-
-  if (!conduitURI) {
-    throw new Error("Missing phabricator.uri in .arcconfig.");
-  }
-
-  return conduitURI;
-}
-
-function ensureConduitConfig(geckoDir) {
+function ensureConduitConfig(conduitURI) {
   if (isSnapshotMode()) {
     return;
   }
-  getConduitConfig(geckoDir);
+  getConduitConfig(conduitURI);
 }
 
 /**
- * @param {string} geckoDir
+ * @param {string} conduitURI
  * @returns {{ conduitURI: string; token: string | null }}
  */
-function getConduitConfig(geckoDir) {
-  if (!geckoDir) {
-    throw new Error(
-      "The Phabricator gecko directory must be provided to load .arcconfig."
-    );
+function getConduitConfig(conduitURI) {
+  if (!conduitURI) {
+    throw new Error("The Phabricator Conduit URI is required.");
   }
-
-  const conduitURI = getConduitURI(geckoDir);
-
   const auth = getPhabricatorAuth();
   const normalized = normalizeConduitURI(conduitURI);
   const token =
@@ -355,22 +340,6 @@ function getConduitConfig(geckoDir) {
 
   return { conduitURI, token };
 }
-
-/**
- * @param {string} geckoDir
- * @returns {Record<string, unknown>}
- */
-function readArcConfig(geckoDir) {
-  const configPath = path.join(geckoDir, ".arcconfig");
-  if (!fs.existsSync(configPath)) {
-    throw new Error(`Missing .arcconfig at ${configPath}`);
-  }
-  return readJson(configPath, ".arcconfig");
-}
-
-/**
- * @returns {Record<string, unknown>}
- */
 /**
  * @param {string} value
  * @returns {string}
@@ -380,17 +349,15 @@ function normalizeConduitURI(value) {
 }
 
 /**
- * @param {string} filePath
- * @param {string} label
- * @returns {Record<string, unknown>}
+ * @param {string} value
+ * @returns {string}
  */
-function readJson(filePath, label) {
-  const contents = fs.readFileSync(filePath, "utf8");
-  try {
-    return JSON.parse(contents);
-  } catch (error) {
-    throw new Error(`Invalid JSON in ${label}: ${error}`);
+function normalizeBaseURI(value) {
+  const normalized = normalizeConduitURI(value);
+  if (normalized.endsWith("/api/")) {
+    return normalized.slice(0, -"/api/".length) + "/";
   }
+  return normalized;
 }
 
 /**
@@ -403,7 +370,7 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
   const { conduitURI, token } = conduitConfig;
   if (!token) {
     throw new Error(
-      "Missing Phabricator API token. Run `my-reviews phabricator <path>` to set it."
+      "Missing Phabricator API token. Run `my-reviews phabricator <username> [url]` to set it."
     );
   }
 
@@ -464,11 +431,11 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
 
 /**
  * Look up project PHIDs the user belongs to so we can match reviewer groups.
- * @param {string} geckoDir
+ * @param {string} conduitURI
  * @param {string} userId
  * @returns {Promise<Set<string>>}
  */
-async function getUserProjects(geckoDir, userId) {
+async function getUserProjects(conduitURI, userId) {
   const response = /** @type {Response<Cursor<{ phid: string }>>} */ (
     await callConduit(
       "project.search",
@@ -478,7 +445,7 @@ async function getUserProjects(geckoDir, userId) {
         },
         limit: 100,
       },
-      { cwd: geckoDir }
+      { conduitURI }
     )
   );
 

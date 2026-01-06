@@ -26,8 +26,9 @@ export type GithubConfig = {
 };
 
 export type PhabricatorConfig = {
-  geckoDir: string;
+  uri: string;
   userId: string;
+  userName: string;
 };
 
 export type PhabricatorAuth = {

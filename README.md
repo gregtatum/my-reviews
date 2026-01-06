@@ -30,9 +30,9 @@ Bug 2000885 - https://bugzilla.mozilla.org/show_bug.cgi?id=2000885
 
 ## Installation
 
-Phabricator support requires a configured `.arcconfig` (for `phabricator.uri`)
-and an API token (stored in `~/.my-reviews.json`). You can generate a token from
-your Phabricator instance.
+Phabricator support requires an API token (stored in `~/.my-reviews.json`).
+By default it uses `https://phabricator.services.mozilla.com/`, or you can
+pass a custom Phabricator URL when adding a user.
 
 Install from npm to get the CLI on your PATH:
 
@@ -50,7 +50,8 @@ Add your projects:
 
 
 ```sh
-my-reviews phabricator "$HOME/dev/firefox"
+my-reviews phabricator gregtatum
+my-reviews phabricator gregtatum https://phabricator.example.com/
 my-reviews bugzilla greg@example.com
 my-reviews github mozilla translations gregtatum
 my-reviews ignore mozilla/translations#123
@@ -64,9 +65,9 @@ Save configurations first, then run `my-reviews` to print everything in one go. 
 
 - Run all saved configs  
   `my-reviews`
-- Add or delete your Firefox Phabricator user  
-  `my-reviews phabricator <path_to_firefox_repo>`  
-  `my-reviews phabricator <path_to_firefox_repo> --delete`
+- Add or delete your Phabricator user  
+  `my-reviews phabricator <username> [phabricator_url]`  
+  `my-reviews phabricator <username> [phabricator_url] --delete`
 - Add or delete your Bugzilla account  
   `my-reviews bugzilla <email> [bugzilla_url]`  
   `my-reviews bugzilla <email> [bugzilla_url] --delete`
@@ -82,16 +83,15 @@ Save configurations first, then run `my-reviews` to print everything in one go. 
 ### Phabricator reviews
 
 ```sh
-my-reviews phabricator <path-to-firefox-repo>
+my-reviews phabricator <username> [phabricator_url]
 # remove a saved config
-my-reviews phabricator --delete <path-to-firefox-repo>
+my-reviews phabricator --delete <username> [phabricator_url]
 ```
-
-- The argument must be the Firefox checkout.
 - The command will prompt for a Phabricator API token (stored locally) the first
   time you run it.
 - Tokens can be generated at:
   `https://phabricator.services.mozilla.com/settings/user/<your-username>/page/apitokens/`
+- If you use a custom Phabricator URL, use that base URL in the token page.
 - The command will detect your Phabricator user via the Conduit API and save it.
 
 Once added, running `my-reviews` will fetch and print the current queue for all saved Phabricator configs.

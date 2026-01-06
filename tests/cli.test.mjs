@@ -22,9 +22,9 @@ Usage:
 - Run all saved configs.
     my-reviews
 
-- Add or delete your Firefox Phabricator user.
-    my-reviews phabricator <path_to_firefox_repo>
-    my-reviews phabricator <path_to_firefox_repo> --delete
+- Add or delete your Phabricator user.
+    my-reviews phabricator <username> [phabricator_url]
+    my-reviews phabricator <username> [phabricator_url] --delete
 
 - Add or delete your Bugzilla account.
     my-reviews bugzilla <email> [bugzilla_url]
@@ -43,7 +43,8 @@ Usage:
 
 Examples:
   my-reviews
-  my-reviews phabricator "$HOME/dev/firefox"
+  my-reviews phabricator gregtatum
+  my-reviews phabricator gregtatum https://phabricator.example.com/
   my-reviews bugzilla greg@example.com
   my-reviews github mozilla translations gregtatum
   my-reviews ignore mozilla/translations#123
@@ -57,15 +58,16 @@ Examples:
 "
 `);
 
-    expect(ctx.runCLI("phabricator /fakepath/firefox")).toMatchInlineSnapshot(`
-"Saved Phabricator config for /fakepath/firefox (user: gregtatum, PHID: PHID-USER-hch2p624jejt4kddoqow).
+    expect(ctx.runCLI("phabricator gregtatum")).toMatchInlineSnapshot(`
+"Saved Phabricator config for https://phabricator.services.mozilla.com/ (user: gregtatum, PHID: PHID-USER-hch2p624jejt4kddoqow).
 "
 `);
 
     expect(ctx.readStore().phabricator).toEqual([
       {
-        geckoDir: "/fakepath/firefox",
+        uri: "https://phabricator.services.mozilla.com/",
         userId: "PHID-USER-hch2p624jejt4kddoqow",
+        userName: "gregtatum",
       },
     ]);
     expect(ctx.readStore().bugzilla).toEqual([
@@ -76,7 +78,7 @@ Examples:
 "
 Checking:
 Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
-Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
 ======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
 
@@ -150,7 +152,7 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 "
 Checking:
 Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
-Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
 ======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
 
@@ -211,7 +213,7 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 "
 Checking:
 Bugzilla   greg@example.com (https://bugzilla.mozilla.org)
-Phabricator /fakepath/firefox (PHID-USER-hch2p624jejt4kddoqow)
+Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
 ======= Bugzilla Needinfo (bugzilla.mozilla.org) ===============================================
 

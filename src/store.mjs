@@ -137,8 +137,9 @@ function isPhabricatorConfig(value) {
   return (
     !!value &&
     typeof value === "object" &&
-    typeof /** @type {any} */ (value).geckoDir === "string" &&
-    typeof /** @type {any} */ (value).userId === "string"
+    typeof /** @type {any} */ (value).uri === "string" &&
+    typeof /** @type {any} */ (value).userId === "string" &&
+    typeof /** @type {any} */ (value).userName === "string"
   );
 }
 
@@ -353,21 +354,22 @@ export function removeGithubConfig(owner, repo, user) {
 }
 
 /**
- * @param {string} geckoDir
+ * @param {string} uri
  * @param {string} userId
+ * @param {string} userName
  * @returns {{ added: boolean; config: PhabricatorConfig }}
  */
-export function addPhabricatorConfig(geckoDir, userId) {
-  if (!geckoDir || !userId) {
+export function addPhabricatorConfig(uri, userId, userName) {
+  if (!uri || !userId || !userName) {
     throw new Error(
-      "Phabricator configuration requires the path to Gecko and your Phabricator user PHID."
+      "Phabricator configuration requires a Conduit URI and your Phabricator user PHID."
     );
   }
   const store = loadStore();
-  const normalized = { geckoDir, userId };
+  const normalized = { uri, userId, userName };
   const existing = store.phabricator.some(
     (item /** @type {PhabricatorConfig} */) =>
-      item.geckoDir === geckoDir && item.userId === userId
+      item.uri === uri && item.userId === userId
   );
   if (!existing) {
     store.phabricator = [...store.phabricator, normalized];
@@ -377,25 +379,27 @@ export function addPhabricatorConfig(geckoDir, userId) {
 }
 
 /**
- * @param {string} geckoDir
- * @returns {{ removed: boolean; geckoDir: string }}
+ * @param {string} userName
+ * @param {string | undefined} uri
+ * @returns {{ removed: boolean; userName: string }}
  */
-export function removePhabricatorConfig(geckoDir) {
-  if (!geckoDir) {
+export function removePhabricatorConfig(userName, uri) {
+  if (!userName) {
     throw new Error(
-      "Phabricator configuration delete requires the path to Gecko that was saved."
+      "Phabricator configuration delete requires the saved username."
     );
   }
   const store = loadStore();
   const before = store.phabricator.length;
   store.phabricator = store.phabricator.filter(
-    (item /** @type {PhabricatorConfig} */) => item.geckoDir !== geckoDir
+    (item /** @type {PhabricatorConfig} */) =>
+      item.userName !== userName || (uri ? item.uri !== uri : false)
   );
   const removed = store.phabricator.length !== before;
   if (removed) {
     saveStore(store);
   }
-  return { removed, geckoDir };
+  return { removed, userName };
 }
 
 /**
