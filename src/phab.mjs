@@ -1,11 +1,10 @@
 // @ts-check
 import * as fs from "fs";
-import * as os from "os";
 import * as path from "path";
 import color from "cli-color";
 import { inspect } from "util";
 import { fileURLToPath } from "url";
-import { isIgnoredPhabricator } from "./store.mjs";
+import { getPhabricatorAuth, isIgnoredPhabricator } from "./store.mjs";
 
 /** @typedef {unknown} JsonValue */
 
@@ -188,7 +187,7 @@ function printHeader(text) {
 export async function runPhabricatorReviews(geckoDir, userId) {
   if (!geckoDir) {
     throw new Error(
-      "The first argument must be the path to the gecko directory where arcanist is configured."
+      "The first argument must be the path to the gecko directory with a .arcconfig."
     );
   }
 
@@ -288,7 +287,7 @@ export async function runPhabricatorReviews(geckoDir, userId) {
 export async function getPhabricatorUser(geckoDir) {
   if (!geckoDir) {
     throw new Error(
-      "The first argument must be the path to the gecko directory where arcanist is configured."
+      "The first argument must be the path to the gecko directory with a .arcconfig."
     );
   }
 
@@ -313,6 +312,22 @@ export async function getPhabricatorUser(geckoDir) {
   return response.response;
 }
 
+/**
+ * @param {string} geckoDir
+ * @returns {string}
+ */
+export function getConduitURI(geckoDir) {
+  const arcConfig = readArcConfig(geckoDir);
+  const conduitURI =
+    /** @type {string | undefined} */ (arcConfig["phabricator.uri"]);
+
+  if (!conduitURI) {
+    throw new Error("Missing phabricator.uri in .arcconfig.");
+  }
+
+  return conduitURI;
+}
+
 function ensureConduitConfig(geckoDir) {
   if (isSnapshotMode()) {
     return;
@@ -331,20 +346,12 @@ function getConduitConfig(geckoDir) {
     );
   }
 
-  const arcConfig = readArcConfig(geckoDir);
-  const conduitURI =
-    process.env.MY_REVIEWS_PHABRICATOR_URI || arcConfig["phabricator.uri"];
+  const conduitURI = getConduitURI(geckoDir);
 
-  if (!conduitURI) {
-    throw new Error(
-      "Missing phabricator.uri in .arcconfig (or set MY_REVIEWS_PHABRICATOR_URI)."
-    );
-  }
-
-  const arcRc = readArcRc();
+  const auth = getPhabricatorAuth();
+  const normalized = normalizeConduitURI(conduitURI);
   const token =
-    process.env.MY_REVIEWS_PHABRICATOR_TOKEN ||
-    findConduitToken(arcRc, conduitURI);
+    auth && normalizeConduitURI(auth.uri) === normalized ? auth.token : null;
 
   return { conduitURI, token };
 }
@@ -364,41 +371,6 @@ function readArcConfig(geckoDir) {
 /**
  * @returns {Record<string, unknown>}
  */
-function readArcRc() {
-  const rcPath = path.join(os.homedir(), ".arcrc");
-  if (!fs.existsSync(rcPath)) {
-    return {};
-  }
-  return readJson(rcPath, ".arcrc");
-}
-
-/**
- * @param {Record<string, unknown>} arcRc
- * @param {string} conduitURI
- * @returns {string | null}
- */
-function findConduitToken(arcRc, conduitURI) {
-  const hosts = /** @type {Record<string, any>} */ (arcRc.hosts || {});
-  const normalized = normalizeConduitURI(conduitURI);
-  const apiNormalized = new URL("api/", normalized).toString();
-  const candidates = [
-    conduitURI,
-    normalized,
-    normalized.replace(/\/$/, ""),
-    apiNormalized,
-    apiNormalized.replace(/\/$/, ""),
-  ];
-
-  for (const key of candidates) {
-    const host = hosts[key];
-    if (host?.token && typeof host.token === "string") {
-      return host.token;
-    }
-  }
-
-  return null;
-}
-
 /**
  * @param {string} value
  * @returns {string}
@@ -431,7 +403,7 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
   const { conduitURI, token } = conduitConfig;
   if (!token) {
     throw new Error(
-      "Missing Phabricator API token in ~/.arcrc (or set MY_REVIEWS_PHABRICATOR_TOKEN)."
+      "Missing Phabricator API token. Run `my-reviews phabricator <path>` to set it."
     );
   }
 

@@ -11,6 +11,7 @@ export type Store = {
   bugzilla: BugzillaConfig[];
   github: GithubConfig[];
   phabricator: PhabricatorConfig[];
+  phabricatorAuth?: PhabricatorAuth | null;
 };
 
 export type IgnoreTarget =
@@ -27,6 +28,12 @@ export type GithubConfig = {
 export type PhabricatorConfig = {
   geckoDir: string;
   userId: string;
+};
+
+export type PhabricatorAuth = {
+  uri: string;
+  token: string;
+  userName?: string;
 };
 
 export type BugzillaConfig = {

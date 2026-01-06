@@ -11,6 +11,7 @@ let storagePath = resolveStoragePath();
  *   IgnoreTarget,
  *   GithubConfig,
  *   PhabricatorConfig,
+ *   PhabricatorAuth,
  *   BugzillaConfig,
  * } from "./types.d.ts"
  */
@@ -40,6 +41,7 @@ function loadStore() {
     bugzilla: [],
     github: [],
     phabricator: [],
+    phabricatorAuth: null,
   };
   return cachedStore;
 }
@@ -82,6 +84,9 @@ function normalizeStore(store) {
     bugzilla: (store.bugzilla || []).filter(isBugzillaConfig),
     github: (store.github || []).filter(isGithubConfig),
     phabricator: (store.phabricator || []).filter(isPhabricatorConfig),
+    phabricatorAuth: isPhabricatorAuth(store.phabricatorAuth)
+      ? store.phabricatorAuth
+      : null,
   };
 }
 
@@ -134,6 +139,19 @@ function isPhabricatorConfig(value) {
     typeof value === "object" &&
     typeof /** @type {any} */ (value).geckoDir === "string" &&
     typeof /** @type {any} */ (value).userId === "string"
+  );
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is PhabricatorAuth}
+ */
+function isPhabricatorAuth(value) {
+  return (
+    !!value &&
+    typeof value === "object" &&
+    typeof /** @type {any} */ (value).uri === "string" &&
+    typeof /** @type {any} */ (value).token === "string"
   );
 }
 
@@ -378,6 +396,28 @@ export function removePhabricatorConfig(geckoDir) {
     saveStore(store);
   }
   return { removed, geckoDir };
+}
+
+/**
+ * @returns {PhabricatorAuth | null}
+ */
+export function getPhabricatorAuth() {
+  const store = loadStore();
+  return store.phabricatorAuth || null;
+}
+
+/**
+ * @param {PhabricatorAuth} auth
+ */
+export function setPhabricatorAuth(auth) {
+  if (!auth || !auth.uri || !auth.token) {
+    throw new Error(
+      "Phabricator auth requires a Conduit URI and an API token."
+    );
+  }
+  const store = loadStore();
+  store.phabricatorAuth = auth;
+  saveStore(store);
 }
 
 /**

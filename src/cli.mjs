@@ -1,7 +1,12 @@
 // @ts-check
+import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "url";
 import color from "cli-color";
-import { runPhabricatorReviews, getPhabricatorUser } from "./phab.mjs";
+import {
+  runPhabricatorReviews,
+  getPhabricatorUser,
+  getConduitURI,
+} from "./phab.mjs";
 import { runGithubReviews } from "./github.mjs";
 import { DEFAULT_BUGZILLA_URL, runBugzillaNeedinfos } from "./bugzilla.mjs";
 import {
@@ -9,12 +14,14 @@ import {
   addGithubConfig,
   addIgnoredTarget,
   addPhabricatorConfig,
+  getPhabricatorAuth,
   removeBugzillaConfig,
   removeGithubConfig,
   removeIgnoredTarget,
   removePhabricatorConfig,
   getIgnoredEntries,
   getSavedConfigs,
+  setPhabricatorAuth,
 } from "./store.mjs";
 
 export async function main(argv = process.argv) {
@@ -47,6 +54,7 @@ export async function main(argv = process.argv) {
           }
           break;
         }
+        await ensurePhabricatorAuth(geckoDir);
         const user = await getPhabricatorUser(geckoDir);
         const { added } = addPhabricatorConfig(geckoDir, user.phid);
         if (added) {
@@ -173,6 +181,74 @@ export async function main(argv = process.argv) {
     }
     process.exit(1);
   }
+}
+
+function isSnapshotMode() {
+  return (
+    process.env.MOZ_REVIEWS_USE_SNAPSHOTS === "1" ||
+    process.env.MOZ_REVIEWS_USE_SNAPSHOTS?.toLowerCase() === "true"
+  );
+}
+
+/**
+ * @param {string} geckoDir
+ */
+async function ensurePhabricatorAuth(geckoDir) {
+  if (isSnapshotMode()) {
+    return;
+  }
+
+  const conduitURI = getConduitURI(geckoDir);
+  const auth = getPhabricatorAuth();
+  const normalized = normalizeConduitURI(conduitURI);
+  if (auth && normalizeConduitURI(auth.uri) === normalized && auth.token) {
+    return;
+  }
+
+  if (!process.stdin.isTTY) {
+    throw new Error(
+      "No Phabricator API token configured. Run `my-reviews phabricator <path>` in a terminal to set one."
+    );
+  }
+
+  const origin = new URL(normalized).origin;
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  try {
+    const userName = (await rl.question(
+      "Phabricator username (optional, for the token URL): "
+    )).trim();
+
+    if (userName) {
+      console.log(
+        `Token URL: ${origin}/settings/user/${userName}/page/apitokens/`
+      );
+    } else {
+      console.log(
+        `Token URL: ${origin}/settings/user/<your-username>/page/apitokens/`
+      );
+    }
+
+    const token = (await rl.question("Paste Phabricator API token: ")).trim();
+    if (!token) {
+      throw new Error("Phabricator API token cannot be empty.");
+    }
+
+    setPhabricatorAuth({
+      uri: normalized,
+      token,
+      userName: userName || undefined,
+    });
+  } finally {
+    rl.close();
+  }
+}
+
+/**
+ * @param {string} uri
+ * @returns {string}
+ */
+function normalizeConduitURI(uri) {
+  return uri.endsWith("/") ? uri : `${uri}/`;
 }
 
 /**
