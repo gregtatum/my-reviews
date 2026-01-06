@@ -1,6 +1,6 @@
 // @ts-check
-import { exec, spawnSync } from "child_process";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
 import color from "cli-color";
 import { inspect } from "util";
@@ -31,48 +31,6 @@ import { isIgnoredPhabricator } from "./store.mjs";
  * @template T
  * @typedef {(endpoint: string, data: JsonValue, options?: import("child_process").ExecOptions) => Promise<Response<T>>} CallConduit
  */
-
-/**
- * @param {string} cmd
- * @param {import("child_process").ExecOptions} [options]
- * @returns {Promise<string>}
- */
-function run(cmd, options = {}) {
-  return new Promise((resolve, reject) => {
-    /**
-     * @param {Error | null} error
-     * @param {Buffer | string} stdout
-     * @param {Buffer | string} stderr
-     */
-    const handleExec = (error, stdout, stderr) => {
-      if (error) {
-        console.log(`Error running: ${cmd}`);
-        console.log(stderr);
-        return reject(error);
-      }
-      if (typeof stdout === "string") {
-        resolve(stdout);
-      } else {
-        reject(new Error("stdout was not a string"));
-      }
-    };
-
-    exec(cmd, options, handleExec);
-  });
-}
-
-/**
- * @param {JsonValue} data
- * @returns {string}
- */
-function stringify(data) {
-  const string = JSON.stringify(data);
-  if (!string) {
-    throw new Error("JSON stringify returned nothing.");
-  }
-  // Escape the string for bash.
-  return string.replace(`'`, `'"'"'`);
-}
 
 function isSnapshotMode() {
   return (
@@ -111,13 +69,8 @@ const callConduit = async function (endpoint, data, options = {}) {
     return JSON.parse(contents);
   }
 
-  const arcBinary = resolveArcBinary();
-  const quotedArc = JSON.stringify(arcBinary);
-  const results = await run(
-    `echo '${stringify(data)}' | ${quotedArc} call-conduit -- ${endpoint}`,
-    options
-  );
-  return JSON.parse(results);
+  const conduitConfig = getConduitConfig(options.cwd);
+  return await callConduitHTTP(conduitConfig, endpoint, data);
 };
 
 /**
@@ -245,7 +198,7 @@ export async function runPhabricatorReviews(geckoDir, userId) {
     );
   }
 
-  ensureArcAvailable();
+  ensureConduitConfig(geckoDir);
 
   const response = /** @type {Response<Cursor<Revision>>} */ (
     await callConduit(
@@ -339,7 +292,7 @@ export async function getPhabricatorUser(geckoDir) {
     );
   }
 
-  ensureArcAvailable();
+  ensureConduitConfig(geckoDir);
 
   const response = /** @type {Response<{ phid: string; userName: string }>} */ (
     await callConduit(
@@ -360,37 +313,181 @@ export async function getPhabricatorUser(geckoDir) {
   return response.response;
 }
 
-function ensureArcAvailable() {
+function ensureConduitConfig(geckoDir) {
   if (isSnapshotMode()) {
     return;
   }
-  const arcBinary = resolveArcBinary();
-  const result = spawnSync(arcBinary, ["help"], { stdio: "ignore" });
-  const spawnError = /** @type {NodeJS.ErrnoException | undefined} */ (
-    result.error || undefined
-  );
-  if (spawnError && spawnError.code === "ENOENT") {
+  getConduitConfig(geckoDir);
+}
+
+/**
+ * @param {string} geckoDir
+ * @returns {{ conduitURI: string; token: string | null }}
+ */
+function getConduitConfig(geckoDir) {
+  if (!geckoDir) {
     throw new Error(
-      "Could not find the `arc` binary. Install Arcanist by following https://we.phorge.it/book/phorge/article/installation_guide/."
+      "The Phabricator gecko directory must be provided to load .arcconfig."
     );
+  }
+
+  const arcConfig = readArcConfig(geckoDir);
+  const conduitURI =
+    process.env.MY_REVIEWS_PHABRICATOR_URI || arcConfig["phabricator.uri"];
+
+  if (!conduitURI) {
+    throw new Error(
+      "Missing phabricator.uri in .arcconfig (or set MY_REVIEWS_PHABRICATOR_URI)."
+    );
+  }
+
+  const arcRc = readArcRc();
+  const token =
+    process.env.MY_REVIEWS_PHABRICATOR_TOKEN ||
+    findConduitToken(arcRc, conduitURI);
+
+  return { conduitURI, token };
+}
+
+/**
+ * @param {string} geckoDir
+ * @returns {Record<string, unknown>}
+ */
+function readArcConfig(geckoDir) {
+  const configPath = path.join(geckoDir, ".arcconfig");
+  if (!fs.existsSync(configPath)) {
+    throw new Error(`Missing .arcconfig at ${configPath}`);
+  }
+  return readJson(configPath, ".arcconfig");
+}
+
+/**
+ * @returns {Record<string, unknown>}
+ */
+function readArcRc() {
+  const rcPath = path.join(os.homedir(), ".arcrc");
+  if (!fs.existsSync(rcPath)) {
+    return {};
+  }
+  return readJson(rcPath, ".arcrc");
+}
+
+/**
+ * @param {Record<string, unknown>} arcRc
+ * @param {string} conduitURI
+ * @returns {string | null}
+ */
+function findConduitToken(arcRc, conduitURI) {
+  const hosts = /** @type {Record<string, any>} */ (arcRc.hosts || {});
+  const normalized = normalizeConduitURI(conduitURI);
+  const apiNormalized = new URL("api/", normalized).toString();
+  const candidates = [
+    conduitURI,
+    normalized,
+    normalized.replace(/\/$/, ""),
+    apiNormalized,
+    apiNormalized.replace(/\/$/, ""),
+  ];
+
+  for (const key of candidates) {
+    const host = hosts[key];
+    if (host?.token && typeof host.token === "string") {
+      return host.token;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * @param {string} value
+ * @returns {string}
+ */
+function normalizeConduitURI(value) {
+  return value.endsWith("/") ? value : `${value}/`;
+}
+
+/**
+ * @param {string} filePath
+ * @param {string} label
+ * @returns {Record<string, unknown>}
+ */
+function readJson(filePath, label) {
+  const contents = fs.readFileSync(filePath, "utf8");
+  try {
+    return JSON.parse(contents);
+  } catch (error) {
+    throw new Error(`Invalid JSON in ${label}: ${error}`);
   }
 }
 
 /**
- * @returns {string}
+ * @param {{ conduitURI: string; token: string | null }} conduitConfig
+ * @param {string} endpoint
+ * @param {JsonValue} data
+ * @returns {Promise<Response<any>>}
  */
-function resolveArcBinary() {
-  if (process.env.MY_REVIEWS_ARC_PATH) {
-    return process.env.MY_REVIEWS_ARC_PATH;
+async function callConduitHTTP(conduitConfig, endpoint, data) {
+  const { conduitURI, token } = conduitConfig;
+  if (!token) {
+    throw new Error(
+      "Missing Phabricator API token in ~/.arcrc (or set MY_REVIEWS_PHABRICATOR_TOKEN)."
+    );
   }
 
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  const localArc = path.join(dirname, "arcanist", "bin", "arc");
-  if (fs.existsSync(localArc)) {
-    return localArc;
+  const payload = /** @type {Record<string, unknown>} */ (
+    typeof data === "object" && data !== null ? { ...data } : {}
+  );
+
+  const conduitMeta = /** @type {Record<string, unknown>} */ (
+    typeof payload.__conduit__ === "object" && payload.__conduit__ !== null
+      ? payload.__conduit__
+      : {}
+  );
+  conduitMeta.token = token;
+  payload.__conduit__ = conduitMeta;
+
+  const body = new URLSearchParams();
+  body.set("params", JSON.stringify(payload));
+  body.set("output", "json");
+  body.set("__conduit__", "true");
+
+  const url = new URL(`/api/${endpoint}`, normalizeConduitURI(conduitURI));
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: body.toString(),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Conduit request failed (${response.status} ${response.statusText})`
+    );
   }
 
-  return "arc";
+  const rawBody = await response.text();
+  const shield = "for(;;);";
+  const jsonBody = rawBody.startsWith(shield)
+    ? rawBody.slice(shield.length)
+    : rawBody;
+
+  /** @type {{ error_code: string | null; error_info: string | null; result: any }} */
+  const parsed = JSON.parse(jsonBody);
+  if (parsed.error_code) {
+    return {
+      error: parsed.error_code,
+      errorMessage: parsed.error_info || "Unknown Conduit error",
+      response: null,
+    };
+  }
+
+  return {
+    error: null,
+    errorMessage: null,
+    response: parsed.result,
+  };
 }
 
 /**

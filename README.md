@@ -30,7 +30,9 @@ Bug 2000885 - https://bugzilla.mozilla.org/show_bug.cgi?id=2000885
 
 ## Installation
 
-Phabricator support requires `arc` on your PATH: https://we.phorge.it/book/phorge/article/installation_guide/
+Phabricator support requires a configured `.arcconfig` (for `phabricator.uri`)
+and an API token in `~/.arcrc` (under `hosts`). You can generate a token from
+your Phabricator instance.
 
 Install from npm to get the CLI on your PATH:
 
@@ -86,7 +88,7 @@ my-reviews phabricator --delete <path-to-firefox-repo>
 ```
 
 - The argument must be the Firefox checkout.
-- The command will detect your Phabricator user via `arc` and save it.
+- The command will detect your Phabricator user via the Conduit API and save it.
 
 Once added, running `my-reviews` will fetch and print the current queue for all saved Phabricator configs.
 
