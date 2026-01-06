@@ -30,10 +30,6 @@ Bug 2000885 - https://bugzilla.mozilla.org/show_bug.cgi?id=2000885
 
 ## Installation
 
-Phabricator support requires an API token (stored in `~/.my-reviews.json`).
-By default it uses `https://phabricator.services.mozilla.com/`, or you can
-pass a custom Phabricator URL when adding a user.
-
 Install from npm to get the CLI on your PATH:
 
 ```sh
@@ -46,14 +42,23 @@ Or run it ad-hoc with `npx`:
 npx my-reviews
 ```
 
-Add your projects:
+Add your projects, you will be prompted for API tokens as needed.
 
 
 ```sh
+# Add phabricator.services.mozilla.com support.
 my-reviews phabricator gregtatum
+
+# Add phabricator support for a custom domain.
 my-reviews phabricator gregtatum https://phabricator.example.com/
+
+# Add support for bugzilla needinfos
 my-reviews bugzilla greg@example.com
+
+# Add a github project with the org, repo, and user.
 my-reviews github mozilla translations gregtatum
+
+# Ignore reviews that you don't need to look at.
 my-reviews ignore mozilla/translations#123
 ```
 
