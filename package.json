@@ -1,6 +1,6 @@
 {
   "name": "my-reviews",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Review queue helpers for GitHub and Phabricator.",
   "type": "module",
   "main": "src/index.mjs",
