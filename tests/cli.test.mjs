@@ -133,51 +133,51 @@ Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
 Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
 
    Accepted - Bug 1998228 - Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
+              https://phabricator.services.mozilla.com/D271264 @gregtatum
 Needs Revision - Bug 1998228 - Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
+              https://phabricator.services.mozilla.com/D271263 @gregtatum
    Accepted - Bug 1998228 - Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
+              https://phabricator.services.mozilla.com/D271262 @gregtatum
    Accepted - Bug 1998228 - Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
+              https://phabricator.services.mozilla.com/D271261 @gregtatum
 
 ======= Phabricator Others =====================================================
 
 Bug 1940906 - https://bugzilla.mozilla.org/show_bug.cgi?id=1940906
 
      Review - Bug 1940906 - Allow getting a Blob of a model file in the HWInference process, cross-process, without copies. r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268411
+              https://phabricator.services.mozilla.com/D268411 @Unknown
      Review - Bug 1940906 - Implement the backend for downloading a model file, using ModelHub. r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268410
+              https://phabricator.services.mozilla.com/D268410 @Unknown
      Review - Bug 1940906 - Introduce PSPeechRecognition, implement SpeechRecognition.available(). r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268409
+              https://phabricator.services.mozilla.com/D268409 @Unknown
      Review - Bug 1940906 - Introduce the HWInference utility process. r?#ipc-reviewers,gerard-majax
-              https://phabricator.services.mozilla.com/D268403
+              https://phabricator.services.mozilla.com/D268403 @Unknown
 
 Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
 
      Review - Bug 1992232 - Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
+              https://phabricator.services.mozilla.com/D276138 @author2
      Review - Bug 1992232 - Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
+              https://phabricator.services.mozilla.com/D276137 @author2
      Review - Bug 1992232 - Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
+              https://phabricator.services.mozilla.com/D276113 @author2
      Review - Bug 1992232 - Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
+              https://phabricator.services.mozilla.com/D276112 @author2
      Review - Bug 1992232 - Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
+              https://phabricator.services.mozilla.com/D276111 @author2
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
+              https://phabricator.services.mozilla.com/D276110 @author2
 
 Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
 
      Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
+              https://phabricator.services.mozilla.com/D274523 @Unknown
 
 Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
      Review - Bug 2003214 - Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274680
+              https://phabricator.services.mozilla.com/D274680 @Unknown
 "
 `);
 
@@ -209,40 +209,40 @@ Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
 Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
 
    Accepted - Bug 1998228 - Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
+              https://phabricator.services.mozilla.com/D271264 @gregtatum
 Needs Revision - Bug 1998228 - Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
+              https://phabricator.services.mozilla.com/D271263 @gregtatum
    Accepted - Bug 1998228 - Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
+              https://phabricator.services.mozilla.com/D271262 @gregtatum
    Accepted - Bug 1998228 - Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
+              https://phabricator.services.mozilla.com/D271261 @gregtatum
 
 ======= Phabricator Others =====================================================
 
 Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
 
      Review - Bug 1992232 - Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
+              https://phabricator.services.mozilla.com/D276138 @author2
      Review - Bug 1992232 - Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
+              https://phabricator.services.mozilla.com/D276137 @author2
      Review - Bug 1992232 - Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
+              https://phabricator.services.mozilla.com/D276113 @author2
      Review - Bug 1992232 - Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
+              https://phabricator.services.mozilla.com/D276112 @author2
      Review - Bug 1992232 - Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
+              https://phabricator.services.mozilla.com/D276111 @author2
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
+              https://phabricator.services.mozilla.com/D276110 @author2
 
 Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
 
      Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
+              https://phabricator.services.mozilla.com/D274523 @Unknown
 
 Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
      Review - Bug 2003214 - Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274680
+              https://phabricator.services.mozilla.com/D274680 @Unknown
 "
 `);
 
@@ -272,35 +272,35 @@ Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
 Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
 
    Accepted - Bug 1998228 - Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
+              https://phabricator.services.mozilla.com/D271264 @gregtatum
 Needs Revision - Bug 1998228 - Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
+              https://phabricator.services.mozilla.com/D271263 @gregtatum
    Accepted - Bug 1998228 - Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
+              https://phabricator.services.mozilla.com/D271262 @gregtatum
    Accepted - Bug 1998228 - Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
+              https://phabricator.services.mozilla.com/D271261 @gregtatum
 
 ======= Phabricator Others =====================================================
 
 Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
 
      Review - Bug 1992232 - Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
+              https://phabricator.services.mozilla.com/D276138 @author2
      Review - Bug 1992232 - Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
+              https://phabricator.services.mozilla.com/D276137 @author2
      Review - Bug 1992232 - Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
+              https://phabricator.services.mozilla.com/D276113 @author2
      Review - Bug 1992232 - Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
+              https://phabricator.services.mozilla.com/D276112 @author2
      Review - Bug 1992232 - Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
+              https://phabricator.services.mozilla.com/D276111 @author2
      Review - Bug 1992232 - Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
+              https://phabricator.services.mozilla.com/D276110 @author2
 
 Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
 
      Review - Bug 2003190 - Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
+              https://phabricator.services.mozilla.com/D274523 @Unknown
 "
 `);
   });

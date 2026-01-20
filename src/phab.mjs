@@ -120,8 +120,9 @@ function getBugId(revision) {
 /**
  * @param {Revision} revision
  * @param {string} baseURI
+ * @param {Map<string, string>} authorNames
  */
-function printRevision(revision, baseURI) {
+function printRevision(revision, baseURI, authorNames) {
   const maxStatusLength = 11;
   const statusName = revision.fields.status.name.replace(
     "Needs Review",
@@ -129,12 +130,16 @@ function printRevision(revision, baseURI) {
   );
   let status = statusName.padStart(maxStatusLength);
   status = statusName === "Accepted" ? color.green(status) : color.red(status);
+
+  const authorName = authorNames.get(revision.fields.authorPHID) || "Unknown";
+  const author = color.cyan(`@${authorName}`);
+
   console.log(`${status} - ${revision.fields.title}`);
 
   const indent = "".padStart(maxStatusLength + 2);
   const url = color.blackBright.underline(`${baseURI}D${revision.id}`);
 
-  console.log(`${indent} ${url}`);
+  console.log(`${indent} ${url} ${author}`);
 }
 
 /**
@@ -157,8 +162,9 @@ function printBug(revision) {
 /**
  * @param {Revision[]} revisions
  * @param {string} baseURI
+ * @param {Map<string, string>} authorNames
  */
-function printRevisionList(revisions, baseURI) {
+function printRevisionList(revisions, baseURI, authorNames) {
   let prevBug = null;
   for (const revision of revisions) {
     const thisBug = getBugId(revision) || "no bug";
@@ -166,7 +172,7 @@ function printRevisionList(revisions, baseURI) {
       printBug(revision);
     }
     prevBug = thisBug;
-    printRevision(revision, baseURI);
+    printRevision(revision, baseURI, authorNames);
   }
 }
 
@@ -234,6 +240,10 @@ export async function runPhabricatorReviews(conduitURI, userId) {
     return bugA - bugB;
   });
 
+  // Collect all unique author PHIDs to fetch usernames
+  const authorPHIDs = [...new Set(data.map((r) => r.fields.authorPHID))];
+  const authorNames = await getUsernames(conduitURI, authorPHIDs);
+
   // Get any reviews that aren't marked as WIP that are "mine".
   const mine = data.filter((revision) => {
     const { title, authorPHID } = revision.fields;
@@ -248,7 +258,7 @@ export async function runPhabricatorReviews(conduitURI, userId) {
 
   if (mine.length > 0) {
     printHeader("Mine");
-    printRevisionList(mine, baseURI);
+    printRevisionList(mine, baseURI, authorNames);
   }
 
   const userProjects = await getUserProjects(conduitURI, userId);
@@ -277,7 +287,7 @@ export async function runPhabricatorReviews(conduitURI, userId) {
 
   if (others.length > 0) {
     printHeader("Others");
-    printRevisionList(others, baseURI);
+    printRevisionList(others, baseURI, authorNames);
   }
 
   return { mine, others };
@@ -460,4 +470,40 @@ async function getUserProjects(conduitURI, userId) {
     set.add(project.phid);
   }
   return set;
+}
+
+/**
+ * Look up usernames for a list of PHIDs.
+ * @param {string} conduitURI
+ * @param {string[]} phids
+ * @returns {Promise<Map<string, string>>}
+ */
+async function getUsernames(conduitURI, phids) {
+  if (phids.length === 0) {
+    return new Map();
+  }
+
+  const response = /** @type {Response<Cursor<{ phid: string; fields: { username: string } }>>} */ (
+    await callConduit(
+      "user.search",
+      {
+        constraints: {
+          phids: phids,
+        },
+      },
+      { conduitURI }
+    )
+  );
+
+  logPhabricatorResponse("user.search", response);
+
+  if (response.error || response.response === null) {
+    throw new Error(response.errorMessage);
+  }
+
+  const map = new Map();
+  for (const user of response.response.data) {
+    map.set(user.phid, user.fields.username);
+  }
+  return map;
 }

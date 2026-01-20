@@ -1,0 +1,188 @@
+{
+  "error": null,
+  "errorMessage": null,
+  "response": {
+    "data": [
+      {
+        "id": 1,
+        "type": "USER",
+        "phid": "PHID-USER-hch2p624jejt4kddoqow",
+        "fields": {
+          "username": "gregtatum",
+          "realName": "Greg Tatum",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 2,
+        "type": "USER",
+        "phid": "PHID-USER-s67lruoaw3kqp7y5e4gr",
+        "fields": {
+          "username": "author1",
+          "realName": "Author One",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 3,
+        "type": "USER",
+        "phid": "PHID-USER-mq7y7r6dbls7vxputx7b",
+        "fields": {
+          "username": "author2",
+          "realName": "Author Two",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 4,
+        "type": "USER",
+        "phid": "PHID-USER-2unm6j7c36hylplkvkb6",
+        "fields": {
+          "username": "author3",
+          "realName": "Author Three",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 5,
+        "type": "USER",
+        "phid": "PHID-USER-52tll3zmlcopd5aoarnv",
+        "fields": {
+          "username": "author4",
+          "realName": "Author Four",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 6,
+        "type": "USER",
+        "phid": "PHID-USER-5tyh6lu2ycegxsjx6542",
+        "fields": {
+          "username": "author5",
+          "realName": "Author Five",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 7,
+        "type": "USER",
+        "phid": "PHID-USER-7jyixdsmu5ixuy2zedco",
+        "fields": {
+          "username": "author6",
+          "realName": "Author Six",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 8,
+        "type": "USER",
+        "phid": "PHID-USER-7kwqcpqrdv7xuk47hcvc",
+        "fields": {
+          "username": "author7",
+          "realName": "Author Seven",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 9,
+        "type": "USER",
+        "phid": "PHID-USER-a4fd6usoyx75n6ewpcff",
+        "fields": {
+          "username": "author8",
+          "realName": "Author Eight",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      },
+      {
+        "id": 10,
+        "type": "USER",
+        "phid": "PHID-USER-aaptg3a34v3lr4kblwu6",
+        "fields": {
+          "username": "author9",
+          "realName": "Author Nine",
+          "roles": ["verified", "approved", "activated"],
+          "dateCreated": 1234567890,
+          "dateModified": 1234567890,
+          "policy": {
+            "view": "public",
+            "edit": "no-one"
+          }
+        },
+        "attachments": {}
+      }
+    ],
+    "maps": {},
+    "query": {
+      "queryKey": null
+    },
+    "cursor": {
+      "limit": 100,
+      "after": null,
+      "before": null,
+      "order": null
+    }
+  }
+}
