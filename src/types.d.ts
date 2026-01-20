@@ -13,6 +13,14 @@ export type Store = {
   phabricator: PhabricatorConfig[];
   bugzillaAuth?: BugzillaAuth[] | null;
   phabricatorAuth?: PhabricatorAuth | null;
+  phabricatorUsernames?: PhabricatorUsernameCache | null;
+};
+
+export type PhabricatorUsernameCache = {
+  [phid: string]: {
+    username: string;
+    fetchedAt: number;
+  };
 };
 
 export type IgnoreTarget =

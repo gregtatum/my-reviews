@@ -14,6 +14,7 @@ let storagePath = resolveStoragePath();
  *   PhabricatorAuth,
  *   BugzillaConfig,
  *   BugzillaAuth,
+ *   PhabricatorUsernameCache,
  * } from "./types.d.ts"
  */
 
@@ -685,4 +686,47 @@ function describeTarget(target) {
     return `Bug ${target.id}`;
   }
   return `GitHub ${target.owner}/${target.repo}#${target.number}`;
+}
+
+const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
+
+/**
+ * Get cached usernames that are still fresh (less than 1 month old).
+ * @param {string[]} phids
+ * @returns {{ cached: Map<string, string>; uncached: string[] }}
+ */
+export function getCachedPhabricatorUsernames(phids) {
+  const store = loadStore();
+  const cache = store.phabricatorUsernames || {};
+  const now = Date.now();
+  const cached = new Map();
+  const uncached = [];
+
+  for (const phid of phids) {
+    const entry = cache[phid];
+    if (entry && now - entry.fetchedAt < ONE_MONTH_MS) {
+      cached.set(phid, entry.username);
+    } else {
+      uncached.push(phid);
+    }
+  }
+
+  return { cached, uncached };
+}
+
+/**
+ * Save usernames to the cache.
+ * @param {Map<string, string>} usernames
+ */
+export function cachePhabricatorUsernames(usernames) {
+  const store = loadStore();
+  const cache = store.phabricatorUsernames || {};
+  const now = Date.now();
+
+  for (const [phid, username] of usernames.entries()) {
+    cache[phid] = { username, fetchedAt: now };
+  }
+
+  store.phabricatorUsernames = cache;
+  saveStore(store);
 }

@@ -4,7 +4,12 @@ import * as path from "path";
 import color from "cli-color";
 import { inspect } from "util";
 import { fileURLToPath } from "url";
-import { getPhabricatorAuth, isIgnoredPhabricator } from "./store.mjs";
+import {
+  getPhabricatorAuth,
+  isIgnoredPhabricator,
+  getCachedPhabricatorUsernames,
+  cachePhabricatorUsernames,
+} from "./store.mjs";
 
 /** @typedef {unknown} JsonValue */
 
@@ -134,12 +139,15 @@ function printRevision(revision, baseURI, authorNames) {
   const authorName = authorNames.get(revision.fields.authorPHID) || "Unknown";
   const author = color.cyan(`@${authorName}`);
 
-  console.log(`${status} - ${revision.fields.title}`);
+  // Remove "Bug XXXXX - " prefix from title
+  const title = revision.fields.title.replace(/^Bug \d+\s*-\s*/, "");
+
+  console.log(`${status} - ${author} ${title}`);
 
   const indent = "".padStart(maxStatusLength + 2);
   const url = color.blackBright.underline(`${baseURI}D${revision.id}`);
 
-  console.log(`${indent} ${url} ${author}`);
+  console.log(`${indent} ${url}`);
 }
 
 /**
@@ -473,7 +481,7 @@ async function getUserProjects(conduitURI, userId) {
 }
 
 /**
- * Look up usernames for a list of PHIDs.
+ * Look up usernames for a list of PHIDs, using cache when available.
  * @param {string} conduitURI
  * @param {string[]} phids
  * @returns {Promise<Map<string, string>>}
@@ -483,12 +491,21 @@ async function getUsernames(conduitURI, phids) {
     return new Map();
   }
 
+  // Check cache first
+  const { cached, uncached } = getCachedPhabricatorUsernames(phids);
+
+  // If all usernames are cached, return early
+  if (uncached.length === 0) {
+    return cached;
+  }
+
+  // Fetch uncached usernames
   const response = /** @type {Response<Cursor<{ phid: string; fields: { username: string } }>>} */ (
     await callConduit(
       "user.search",
       {
         constraints: {
-          phids: phids,
+          phids: uncached,
         },
       },
       { conduitURI }
@@ -501,9 +518,20 @@ async function getUsernames(conduitURI, phids) {
     throw new Error(response.errorMessage);
   }
 
-  const map = new Map();
+  // Combine cached and newly fetched usernames
+  const freshlyFetched = new Map();
   for (const user of response.response.data) {
-    map.set(user.phid, user.fields.username);
+    freshlyFetched.set(user.phid, user.fields.username);
   }
-  return map;
+
+  // Cache the newly fetched usernames
+  cachePhabricatorUsernames(freshlyFetched);
+
+  // Merge cached and freshly fetched
+  const result = new Map(cached);
+  for (const [phid, username] of freshlyFetched.entries()) {
+    result.set(phid, username);
+  }
+
+  return result;
 }
