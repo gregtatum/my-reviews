@@ -25,6 +25,7 @@ import {
   setBugzillaAuth,
   setPhabricatorAuth,
 } from "./store.mjs";
+import { checkForUpdates } from "./update-checker.mjs";
 
 export async function main(argv = process.argv) {
   const [command, ...args] = argv.slice(2);
@@ -413,6 +414,11 @@ async function runSavedConfigurations() {
     printHelp(false /* showHeader */);
     return;
   }
+
+  // Check for updates in the background (non-blocking)
+  checkForUpdates().catch(() => {
+    // Silently fail if update check fails
+  });
 
   console.log(color.cyan("\nChecking:"));
   for (const config of bugzilla) {

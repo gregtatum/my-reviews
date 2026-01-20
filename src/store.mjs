@@ -730,3 +730,21 @@ export function cachePhabricatorUsernames(usernames) {
   store.phabricatorUsernames = cache;
   saveStore(store);
 }
+
+/**
+ * Get the timestamp of the last update check.
+ * @returns {number}
+ */
+export function getLastUpdateCheck() {
+  const store = loadStore();
+  return store.lastUpdateCheck || 0;
+}
+
+/**
+ * Update the last update check timestamp.
+ */
+export function setLastUpdateCheck() {
+  const store = loadStore();
+  store.lastUpdateCheck = Date.now();
+  saveStore(store);
+}

@@ -14,6 +14,7 @@ export type Store = {
   bugzillaAuth?: BugzillaAuth[] | null;
   phabricatorAuth?: PhabricatorAuth | null;
   phabricatorUsernames?: PhabricatorUsernameCache | null;
+  lastUpdateCheck?: number | null;
 };
 
 export type PhabricatorUsernameCache = {
