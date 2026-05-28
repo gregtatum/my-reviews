@@ -269,7 +269,7 @@ export async function runPhabricatorReviews(conduitURI, userId) {
     printRevisionList(mine, baseURI, authorNames);
   }
 
-  const userProjects = await getUserProjects(conduitURI, userId);
+  const { groupPhids, groupMembers } = await getUserProjects(conduitURI, userId);
 
   const others = data.filter((revision) => {
     if (userId === revision.fields.authorPHID) {
@@ -286,11 +286,32 @@ export async function runPhabricatorReviews(conduitURI, userId) {
     const actionableReviewers = reviewers.filter((reviewer) =>
       actionableStatuses.has(reviewer.status)
     );
-    return actionableReviewers.some(
-      (reviewer) =>
-        reviewer.reviewerPHID === userId ||
-        userProjects.has(reviewer.reviewerPHID)
-    );
+
+    if (actionableReviewers.some((r) => r.reviewerPHID === userId)) {
+      return true;
+    }
+
+    const matchingGroups = actionableReviewers
+      .filter((r) => groupPhids.has(r.reviewerPHID))
+      .map((r) => r.reviewerPHID);
+
+    if (matchingGroups.length === 0) {
+      return false;
+    }
+
+    // If another group member is already individually assigned, skip this revision.
+    const individualPhids = actionableReviewers
+      .filter((r) => r.reviewerPHID !== userId && !groupPhids.has(r.reviewerPHID))
+      .map((r) => r.reviewerPHID);
+
+    for (const groupPhid of matchingGroups) {
+      const members = groupMembers.get(groupPhid) ?? new Set();
+      if (individualPhids.some((phid) => members.has(phid))) {
+        return false;
+      }
+    }
+
+    return true;
   });
 
   if (others.length > 0) {
@@ -448,18 +469,21 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
 }
 
 /**
- * Look up project PHIDs the user belongs to so we can match reviewer groups.
+ * Look up project PHIDs the user belongs to, plus the member lists for each group.
  * @param {string} conduitURI
  * @param {string} userId
- * @returns {Promise<Set<string>>}
+ * @returns {Promise<{ groupPhids: Set<string>; groupMembers: Map<string, Set<string>> }>}
  */
 async function getUserProjects(conduitURI, userId) {
-  const response = /** @type {Response<Cursor<{ phid: string }>>} */ (
+  const response = /** @type {Response<Cursor<{ phid: string; attachments: { members: { members: { phid: string }[] } } }>>} */ (
     await callConduit(
       "project.search",
       {
         constraints: {
           members: [userId],
+        },
+        attachments: {
+          members: true,
         },
         limit: 100,
       },
@@ -473,11 +497,14 @@ async function getUserProjects(conduitURI, userId) {
     throw new Error(response.errorMessage);
   }
 
-  const set = new Set();
+  const groupPhids = new Set();
+  const groupMembers = new Map();
   for (const project of response.response.data) {
-    set.add(project.phid);
+    groupPhids.add(project.phid);
+    const members = project.attachments?.members?.members ?? [];
+    groupMembers.set(project.phid, new Set(members.map((m) => m.phid)));
   }
-  return set;
+  return { groupPhids, groupMembers };
 }
 
 /**
