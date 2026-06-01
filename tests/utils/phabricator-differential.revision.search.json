@@ -4,6 +4,55 @@
   "response": {
     "data": [
       {
+        "id": 303033,
+        "type": "DREV",
+        "phid": "PHID-DREV-d303033testfixture00",
+        "fields": {
+          "title": "Bug 1999999 - Add AI platform feature r?#ai-ondevice-reviewers,testuser",
+          "uri": "https://phabricator.services.mozilla.com/D303033",
+          "authorPHID": "PHID-USER-s67lruoaw3kqp7y5e4gr",
+          "status": {
+            "value": "needs-review",
+            "name": "Needs Review",
+            "closed": false,
+            "color.ansi": "magenta"
+          },
+          "repositoryPHID": "PHID-REPO-wxrrnneqyw2v3wcqbkfj",
+          "diffPHID": "PHID-DIFF-d303033testfixture00",
+          "diffID": "9999999",
+          "summary": "",
+          "testPlan": "",
+          "isDraft": false,
+          "holdAsDraft": false,
+          "dateCreated": 1770000000,
+          "dateModified": 1770000100,
+          "policy": {
+            "view": "public",
+            "edit": "PHID-PROJ-njo5uuqyyq3oijbkhy55"
+          },
+          "bugzilla.bug-id": "1999999",
+          "uplift.request": []
+        },
+        "attachments": {
+          "reviewers": {
+            "reviewers": [
+              {
+                "reviewerPHID": "PHID-PROJ-xxkitorhpzb7wsoo3cfp",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              },
+              {
+                "reviewerPHID": "PHID-USER-testgroupmember00001",
+                "status": "added",
+                "isBlocking": false,
+                "actorPHID": null
+              }
+            ]
+          }
+        }
+      },
+      {
         "id": 276302,
         "type": "DREV",
         "phid": "PHID-DREV-fpbklusaftsiac25iaey",
@@ -4067,7 +4116,7 @@
           "repositoryPHID": "PHID-REPO-saax4qdxlbbhahhp2kg5",
           "diffPHID": "PHID-DIFF-74yb223speynvquus2vi",
           "diffID": "730742",
-          "summary": "This patch enables stylelint to discourage the use of “px” / “pt” units for `font-size` and `line-height`. The goal is to provide an aid for keeping our `font-size` and `line-height` sizings consistent in Firefox moving forward. \n\nFollow-up tasks will be filed for the affected modules and the owning teams can decide whether or not to remove `/* stylelint-disable-next-line declaration-property-unit-allowed-list */` from their stylesheets. \n",
+          "summary": "This patch enables stylelint to discourage the use of \u201cpx\u201d / \u201cpt\u201d units for `font-size` and `line-height`. The goal is to provide an aid for keeping our `font-size` and `line-height` sizings consistent in Firefox moving forward. \n\nFollow-up tasks will be filed for the affected modules and the owning teams can decide whether or not to remove `/* stylelint-disable-next-line declaration-property-unit-allowed-list */` from their stylesheets. \n",
           "testPlan": "",
           "isDraft": false,
           "holdAsDraft": false,

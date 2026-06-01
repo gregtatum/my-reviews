@@ -33,7 +33,13 @@
           },
           "description": "AI On Device Reviewers"
         },
-        "attachments": []
+        "attachments": {
+          "members": {
+            "members": [
+              { "phid": "PHID-USER-testgroupmember00001" }
+            ]
+          }
+        }
       },
       {
         "id": 192,
@@ -65,7 +71,11 @@
           },
           "description": "Translations Reviewers Group"
         },
-        "attachments": []
+        "attachments": {
+          "members": {
+            "members": []
+          }
+        }
       }
     ],
     "maps": {

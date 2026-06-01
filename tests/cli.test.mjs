@@ -53,13 +53,13 @@ Examples:
   });
 
   it("updates the Bugzilla API key without duplicating configs", () => {
-    expect(
-      ctx.runCLI("bugzilla greg@example.com --api-key original-key")
-    ).toBe("Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n");
+    expect(ctx.runCLI("bugzilla greg@example.com --api-key original-key")).toBe(
+      "Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n",
+    );
 
-    expect(
-      ctx.runCLI("bugzilla greg@example.com --api-key new-key")
-    ).toBe("Updated Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n");
+    expect(ctx.runCLI("bugzilla greg@example.com --api-key new-key")).toBe(
+      "Updated Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).\n",
+    );
 
     expect(ctx.readStore().bugzilla).toEqual([
       {
@@ -77,9 +77,8 @@ Examples:
   });
 
   it("can get the phabricator user ID", () => {
-    expect(
-      ctx.runCLI("bugzilla greg@example.com --api-key SECRET_TOKEN")
-    ).toMatchInlineSnapshot(`
+    expect(ctx.runCLI("bugzilla greg@example.com --api-key SECRET_TOKEN"))
+      .toMatchInlineSnapshot(`
 "Saved Bugzilla config for greg@example.com (https://bugzilla.mozilla.org).
 "
 `);
@@ -110,7 +109,17 @@ Examples:
       },
     ]);
 
-    expect(ctx.runCLI("")).toMatchInlineSnapshot(`
+    const output = ctx.runCLI("");
+    // D303033 has #ai-ondevice-reviewers + a group member individually
+    // assigned — suppressed because someone in the group is already handling it.
+    expect(output).not.toContain("D303033");
+    expect(output).not.toContain("1999999");
+    // D274523/D274680 have #ai-ondevice-reviewers + tarek (not a group member)
+    // — must still appear.
+    expect(output).toContain("D274523");
+    expect(output).toContain("D274680");
+
+    expect(output).toMatchInlineSnapshot(`
 "
 Checking:
 Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
