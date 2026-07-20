@@ -26,6 +26,7 @@ import {
   setPhabricatorAuth,
 } from "./store.mjs";
 import { checkForUpdates } from "./update-checker.mjs";
+import { treeConnectors } from "./terminal.mjs";
 
 export async function main(argv = process.argv) {
   const [command, ...args] = argv.slice(2);
@@ -420,25 +421,31 @@ async function runSavedConfigurations() {
     // Silently fail if update check fails
   });
 
-  console.log(color.cyan("\nChecking:"));
+  console.log(color.cyan("\nChecking"));
+  /** @type {string[]} */
+  const checking = [];
   for (const config of bugzilla) {
     const label = "Bugzilla   ";
     const email = color.green(config.email);
     const url = color.blackBright(`(${config.url})`);
-    console.log(`${label} ${email} ${url}`);
+    checking.push(`${label} ${email} ${url}`);
   }
   for (const config of phabricator) {
     const label = "Phabricator";
     const uri = color.green(config.uri);
     const user = color.blackBright(`(${config.userName})`);
-    console.log(`${label} ${uri} ${user}`);
+    checking.push(`${label} ${uri} ${user}`);
   }
   for (const config of github) {
     const label = "GitHub     ";
     const repo = color.green(`${config.owner}/${config.repo}`);
     const user = color.blackBright(`(${config.user})`);
-    console.log(`${label} ${repo} ${user}`);
+    checking.push(`${label} ${repo} ${user}`);
   }
+  checking.forEach((line, index) => {
+    const { branch } = treeConnectors(index === checking.length - 1);
+    console.log(color.blackBright(branch) + line);
+  });
 
   for (const config of bugzilla) {
     const auth = getBugzillaAuth(config.email, config.url);

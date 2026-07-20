@@ -10,6 +10,7 @@ import {
   getCachedPhabricatorUsernames,
   cachePhabricatorUsernames,
 } from "./store.mjs";
+import { hyperlink, treeConnectors } from "./terminal.mjs";
 
 /** @typedef {unknown} JsonValue */
 
@@ -123,76 +124,120 @@ function getBugId(revision) {
 }
 
 /**
- * @param {Revision} revision
- * @param {string} baseURI
- * @param {Map<string, string>} authorNames
+ * Strip the trailing reviewer tag(s) (e.g. " r?#foo,bar" or " r=baz") from a
+ * revision title, along with the leading "Bug XXXXX - " prefix.
+ *
+ * @param {string} rawTitle
+ * @returns {string}
  */
-function printRevision(revision, baseURI, authorNames) {
-  const maxStatusLength = 11;
-  const statusName = revision.fields.status.name.replace(
-    "Needs Review",
-    "Review"
-  );
-  let status = statusName.padStart(maxStatusLength);
-  status = statusName === "Accepted" ? color.green(status) : color.red(status);
-
-  const authorName = authorNames.get(revision.fields.authorPHID) || "Unknown";
-  const author = color.cyan(`@${authorName}`);
-
-  // Remove "Bug XXXXX - " prefix from title
-  const title = revision.fields.title.replace(/^Bug \d+\s*-\s*/, "");
-
-  console.log(`${status} - ${author} ${title}`);
-
-  const indent = "".padStart(maxStatusLength + 2);
-  const url = color.blackBright.underline(`${baseURI}D${revision.id}`);
-
-  console.log(`${indent} ${url}`);
+function cleanTitle(rawTitle) {
+  return rawTitle
+    .replace(/^Bug \d+\s*-\s*/, "")
+    .replace(/\s+r[?=]\S+(?:\s+r[?=]\S+)*\s*$/, "");
 }
 
 /**
- * @param {Revision} revision
+ * Group revisions by their bug id, preserving the (already sorted) order in
+ * which the bugs first appear.
+ *
+ * @param {Revision[]} revisions
+ * @returns {Array<{ bugId: string | undefined; revisions: Revision[] }>}
  */
-function printBug(revision) {
-  const bugId = getBugId(revision);
-  if (!bugId) {
-    const bugLabel = color.yellow(`No Bug`);
-    console.log(`\n${bugLabel}\n`);
-    return;
+function groupByBug(revisions) {
+  /** @type {Map<string, { bugId: string | undefined; revisions: Revision[] }>} */
+  const groups = new Map();
+  for (const revision of revisions) {
+    const bugId = getBugId(revision);
+    const key = bugId ?? "no-bug";
+    let group = groups.get(key);
+    if (!group) {
+      group = { bugId, revisions: [] };
+      groups.set(key, group);
+    }
+    group.revisions.push(revision);
   }
-  const bugLabel = color.yellow(`Bug ${bugId}`);
-  const url = color.blue.underline(
-    `https://bugzilla.mozilla.org/show_bug.cgi?id=${bugId}`
-  );
-  console.log(`\n${bugLabel} - ${url}\n`);
+  return [...groups.values()];
 }
 
 /**
+ * Render revisions as a tree grouped by bug:
+ *
+ *   ├─ Bug 123456
+ *   │  ├─ D111    Accepted @author Some revision title
+ *   │  └─ D222      Review @author Another revision title
+ *   └─ Bug 234567
+ *      └─ D333      Review @author Yet another title
+ *
+ * The bug number and each diff id are OSC 8 hyperlinks.
+ *
+ * The diff id is the primary target, so it gets the bright color while the bug
+ * number is dimmed. Columns are left-aligned and padded so titles line up.
+ *
  * @param {Revision[]} revisions
  * @param {string} baseURI
  * @param {Map<string, string>} authorNames
+ * @param {boolean} showAuthor When false (e.g. the "Mine" section) the author
+ *   column is omitted since it is implied by the header.
  */
-function printRevisionList(revisions, baseURI, authorNames) {
-  let prevBug = null;
-  for (const revision of revisions) {
-    const thisBug = getBugId(revision) || "no bug";
-    if (prevBug !== thisBug) {
-      printBug(revision);
-    }
-    prevBug = thisBug;
-    printRevision(revision, baseURI, authorNames);
-  }
+function printRevisionList(revisions, baseURI, authorNames, showAuthor) {
+  const groups = groupByBug(revisions);
+
+  const statusOf = (/** @type {Revision} */ r) =>
+    r.fields.status.name.replace("Needs Review", "Review");
+  const authorOf = (/** @type {Revision} */ r) =>
+    `@${authorNames.get(r.fields.authorPHID) || "Unknown"}`;
+
+  // Pad each column to its widest entry so titles line up.
+  const diffWidth = Math.max(...revisions.map((r) => `D${r.id}`.length));
+  const statusWidth = Math.max(...revisions.map((r) => statusOf(r).length));
+  const authorWidth = showAuthor
+    ? Math.max(...revisions.map((r) => authorOf(r).length))
+    : 0;
+
+  groups.forEach((group, groupIndex) => {
+    const isLastBug = groupIndex === groups.length - 1;
+    const bug = treeConnectors(isLastBug);
+
+    const bugLabel = group.bugId
+      ? hyperlink(
+          `https://bugzilla.mozilla.org/show_bug.cgi?id=${group.bugId}`,
+          color.blackBright(`Bug ${group.bugId}`)
+        )
+      : color.blackBright("No Bug");
+    console.log(color.blackBright(bug.branch) + bugLabel);
+
+    group.revisions.forEach((revision, revisionIndex) => {
+      const isLastRev = revisionIndex === group.revisions.length - 1;
+      const rev = treeConnectors(isLastRev);
+      const prefix = color.blackBright(bug.stem + rev.branch);
+
+      // The diff id and its status read as one scannable unit: a single
+      // hyperlink to the diff, colored by the review status.
+      const diffText = `D${revision.id}`;
+      const statusName = statusOf(revision);
+      const label = `${diffText.padEnd(diffWidth)} ${statusName}`;
+      const paint = statusName === "Accepted" ? color.green : color.red;
+      // Keep the right-hand alignment padding outside the hyperlink.
+      const unit =
+        hyperlink(`${baseURI}${diffText}`, paint(label)) +
+        " ".repeat(statusWidth - statusName.length);
+
+      const cells = [unit];
+      if (showAuthor) {
+        cells.push(color.cyan(authorOf(revision).padEnd(authorWidth)));
+      }
+      cells.push(cleanTitle(revision.fields.title));
+
+      console.log(prefix + cells.join(" "));
+    });
+  });
 }
 
 /**
  * @param {string} text
  */
 function printHeader(text) {
-  console.log(
-    color.cyan(
-      `\n======= Phabricator ${text} =====================================================`
-    )
-  );
+  console.log(color.cyan(`\nPhabricator ${text}`));
 }
 
 /**
@@ -265,8 +310,9 @@ export async function runPhabricatorReviews(conduitURI, userId) {
   });
 
   if (mine.length > 0) {
-    printHeader("Mine");
-    printRevisionList(mine, baseURI, authorNames);
+    const meName = authorNames.get(userId) || "me";
+    printHeader(`author: @${meName}`);
+    printRevisionList(mine, baseURI, authorNames, false /* showAuthor */);
   }
 
   const { groupPhids, groupMembers } = await getUserProjects(conduitURI, userId);
@@ -315,8 +361,8 @@ export async function runPhabricatorReviews(conduitURI, userId) {
   });
 
   if (others.length > 0) {
-    printHeader("Others");
-    printRevisionList(others, baseURI, authorNames);
+    printHeader("author: others");
+    printRevisionList(others, baseURI, authorNames, true /* showAuthor */);
   }
 
   return { mine, others };

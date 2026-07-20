@@ -1,5 +1,6 @@
 // @ts-check
 import color from "cli-color";
+import { hyperlink, treeConnectors } from "./terminal.mjs";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -48,9 +49,9 @@ export async function runBugzillaNeedinfos(
 
   if (bugs.length > 0) {
     printHeader(baseUrl);
-    for (const bug of bugs) {
-      printNeedinfo(bug, baseUrl, email);
-    }
+    bugs.forEach((bug, index) => {
+      printNeedinfo(bug, baseUrl, email, index === bugs.length - 1);
+    });
   }
 
   return { needinfos: bugs };
@@ -265,40 +266,49 @@ export function normalizeBugzillaUrl(bugzillaUrl) {
  */
 function printHeader(text) {
   const url = new URL(text);
-  console.log(
-    color.cyan(
-      `\n======= ${url.host} needinfos ===============================================`
-    )
-  );
+  console.log(color.cyan(`\n${url.host} needinfos`));
 }
 
 /**
+ * Render a needinfo as a tree node grouped by bug:
+ *
+ *   ├─ Bug 12345 Some bug summary
+ *   │  └─ from Requester Name · 3 days ago
+ *   └─ Bug 67890 Another summary
+ *      └─ from Someone Else
+ *
+ * The bug number is an OSC 8 hyperlink.
+ *
  * @param {BugSearchResponse["bugs"][number]} bug
  * @param {string} baseUrl
  * @param {string} email
+ * @param {boolean} isLastBug
  */
-function printNeedinfo(bug, baseUrl, email) {
-  const indent = "              ";
-  console.log("");
-  const gray = color.xterm(8);
-  console.log(
-    color.yellow(`Bug ${bug.id} - `) +
-      color.blue.underline(`${baseUrl}/show_bug.cgi?id=${bug.id}`)
+function printNeedinfo(bug, baseUrl, email, isLastBug) {
+  const bugConnectors = treeConnectors(isLastBug);
+  const bugLink = hyperlink(
+    `${baseUrl}/show_bug.cgi?id=${bug.id}`,
+    color.yellow(`Bug ${bug.id}`)
   );
-  console.log();
-  console.log(indent + color.whiteBright(bug.summary));
+  console.log(
+    color.blackBright(bugConnectors.branch) +
+      bugLink +
+      (bug.summary ? " " + color.whiteBright(bug.summary) : "")
+  );
 
-  for (const flag of bug.flags || []) {
-    if (!isNeedinfoFor(flag, email.toLowerCase())) {
-      continue;
-    }
+  const flags = (bug.flags || []).filter((flag) =>
+    isNeedinfoFor(flag, email.toLowerCase())
+  );
+  flags.forEach((flag, index) => {
+    const flagConnectors = treeConnectors(index === flags.length - 1);
+    const prefix = color.blackBright(
+      bugConnectors.stem + flagConnectors.branch
+    );
     const requester = describeUser(flag.setter);
-    console.log(indent + color.blackBright(requester));
     const age = describeAge(flag);
-    if (age) {
-      console.log(indent + color.blackBright(age));
-    }
-  }
+    const detail = age ? `from ${requester} · ${age}` : `from ${requester}`;
+    console.log(prefix + color.blackBright(detail));
+  });
 }
 
 /**

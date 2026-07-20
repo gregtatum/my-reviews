@@ -121,72 +121,40 @@ Examples:
 
     expect(output).toMatchInlineSnapshot(`
 "
-Checking:
-Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Checking
+├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
+└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= bugzilla.mozilla.org needinfos ===============================================
+bugzilla.mozilla.org needinfos
+├─ Bug 101 Fix crash when opening preference pane
+│  └─ from reporter@example.com
+└─ Bug 202 Update tests for new localization pipeline
+   └─ from module-owner@example.com
 
-Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
+Phabricator author: @gregtatum
+└─ Bug 1998228
+   ├─ D271264 Accepted       Type check StaticEmbeddingsPipeline.mjs
+   ├─ D271263 Needs Revision Type check MLEngineParent.sys.mjs
+   ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
+   └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-              Fix crash when opening preference pane
-              reporter@example.com
-
-Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
-
-              Update tests for new localization pipeline
-              module-owner@example.com
-
-======= Phabricator Mine =====================================================
-
-Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
-
-   Accepted - @gregtatum Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
-Needs Revision - @gregtatum Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
-   Accepted - @gregtatum Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
-   Accepted - @gregtatum Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
-
-======= Phabricator Others =====================================================
-
-Bug 1940906 - https://bugzilla.mozilla.org/show_bug.cgi?id=1940906
-
-     Review - @Unknown Allow getting a Blob of a model file in the HWInference process, cross-process, without copies. r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268411
-     Review - @Unknown Implement the backend for downloading a model file, using ModelHub. r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268410
-     Review - @Unknown Introduce PSPeechRecognition, implement SpeechRecognition.available(). r?#ipc-reviewers
-              https://phabricator.services.mozilla.com/D268409
-     Review - @Unknown Introduce the HWInference utility process. r?#ipc-reviewers,gerard-majax
-              https://phabricator.services.mozilla.com/D268403
-
-Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
-
-     Review - @author2 Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
-     Review - @author2 Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
-     Review - @author2 Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
-     Review - @author2 Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
-     Review - @author2 Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
-     Review - @author2 Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
-
-Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
-
-     Review - @Unknown Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
-
-Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
-
-     Review - @Unknown Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274680
+Phabricator author: others
+├─ Bug 1940906
+│  ├─ D268411 Review @Unknown Allow getting a Blob of a model file in the HWInference process, cross-process, without copies.
+│  ├─ D268410 Review @Unknown Implement the backend for downloading a model file, using ModelHub.
+│  ├─ D268409 Review @Unknown Introduce PSPeechRecognition, implement SpeechRecognition.available().
+│  └─ D268403 Review @Unknown Introduce the HWInference utility process.
+├─ Bug 1992232
+│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+├─ Bug 2003190
+│  └─ D274523 Review @Unknown Add policy engine to security layer
+└─ Bug 2003214
+   └─ D274680 Review @Unknown Add security audit logger to AI Window security layer
 "
 `);
 
@@ -197,61 +165,35 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
-Checking:
-Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Checking
+├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
+└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= bugzilla.mozilla.org needinfos ===============================================
+bugzilla.mozilla.org needinfos
+├─ Bug 101 Fix crash when opening preference pane
+│  └─ from reporter@example.com
+└─ Bug 202 Update tests for new localization pipeline
+   └─ from module-owner@example.com
 
-Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
+Phabricator author: @gregtatum
+└─ Bug 1998228
+   ├─ D271264 Accepted       Type check StaticEmbeddingsPipeline.mjs
+   ├─ D271263 Needs Revision Type check MLEngineParent.sys.mjs
+   ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
+   └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-              Fix crash when opening preference pane
-              reporter@example.com
-
-Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
-
-              Update tests for new localization pipeline
-              module-owner@example.com
-
-======= Phabricator Mine =====================================================
-
-Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
-
-   Accepted - @gregtatum Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
-Needs Revision - @gregtatum Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
-   Accepted - @gregtatum Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
-   Accepted - @gregtatum Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
-
-======= Phabricator Others =====================================================
-
-Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
-
-     Review - @author2 Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
-     Review - @author2 Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
-     Review - @author2 Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
-     Review - @author2 Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
-     Review - @author2 Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
-     Review - @author2 Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
-
-Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
-
-     Review - @Unknown Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
-
-Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
-
-     Review - @Unknown Add security audit logger to AI Window security layer r?tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274680
+Phabricator author: others
+├─ Bug 1992232
+│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+├─ Bug 2003190
+│  └─ D274523 Review @Unknown Add policy engine to security layer
+└─ Bug 2003214
+   └─ D274680 Review @Unknown Add security audit logger to AI Window security layer
 "
 `);
 
@@ -260,56 +202,33 @@ Bug 2003214 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003214
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
-Checking:
-Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Checking
+├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
+└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
 
-======= bugzilla.mozilla.org needinfos ===============================================
+bugzilla.mozilla.org needinfos
+├─ Bug 101 Fix crash when opening preference pane
+│  └─ from reporter@example.com
+└─ Bug 202 Update tests for new localization pipeline
+   └─ from module-owner@example.com
 
-Bug 101 - https://bugzilla.mozilla.org/show_bug.cgi?id=101
+Phabricator author: @gregtatum
+└─ Bug 1998228
+   ├─ D271264 Accepted       Type check StaticEmbeddingsPipeline.mjs
+   ├─ D271263 Needs Revision Type check MLEngineParent.sys.mjs
+   ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
+   └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-              Fix crash when opening preference pane
-              reporter@example.com
-
-Bug 202 - https://bugzilla.mozilla.org/show_bug.cgi?id=202
-
-              Update tests for new localization pipeline
-              module-owner@example.com
-
-======= Phabricator Mine =====================================================
-
-Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
-
-   Accepted - @gregtatum Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
-Needs Revision - @gregtatum Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
-   Accepted - @gregtatum Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
-   Accepted - @gregtatum Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
-
-======= Phabricator Others =====================================================
-
-Bug 1992232 - https://bugzilla.mozilla.org/show_bug.cgi?id=1992232
-
-     Review - @author2 Part 6/6: Implement Copy Button Functionality r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276138
-     Review - @author2 Part 5/6: Implement Copy Button Enabled States r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276137
-     Review - @author2 Part 4/6: Add Target Section Copy Button r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276113
-     Review - @author2 Part 3/6: Rework about:translations Resizing Logic r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276112
-     Review - @author2 Part 2/6: Sort about:translations Elements r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276111
-     Review - @author2 Part 1/6: Refactor about:translations Event Handling r=#translations-reviewers!
-              https://phabricator.services.mozilla.com/D276110
-
-Bug 2003190 - https://bugzilla.mozilla.org/show_bug.cgi?id=2003190
-
-     Review - @Unknown Add policy engine to security layer r=tarek,#ai-ondevice-reviewers
-              https://phabricator.services.mozilla.com/D274523
+Phabricator author: others
+├─ Bug 1992232
+│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+└─ Bug 2003190
+   └─ D274523 Review @Unknown Add policy engine to security layer
 "
 `);
   });
