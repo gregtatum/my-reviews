@@ -82,29 +82,9 @@ export async function checkForUpdates() {
   }
 
   if (isNewerVersion(currentVersion, latestVersion)) {
-    console.log(
-      color.yellow(
-        `\n┌─────────────────────────────────────────────────────────────┐`
-      )
-    );
-    console.log(
-      color.yellow(
-        `│ Update available: ${color.green(
-          `${currentVersion} → ${latestVersion}`
-        )}${" ".repeat(
-          Math.max(0, 37 - currentVersion.length - latestVersion.length)
-        )}│`
-      )
-    );
-    console.log(
-      color.yellow(
-        `│ Run: ${color.cyan("npm install -g my-reviews")}                       │`
-      )
-    );
-    console.log(
-      color.yellow(
-        `└─────────────────────────────────────────────────────────────┘\n`
-      )
-    );
+    const b = color.yellow("┃");
+    console.log(`\n${b} Update available: ${color.green(`${currentVersion} → ${latestVersion}`)}`);
+    console.log(`${b} Run: ${color.cyan("npm install -g my-reviews")}`);
+    console.log(`${b} ${color.cyan("https://github.com/gregtatum/my-reviews/blob/main/CHANGELOG.md")}\n`);
   }
 }
