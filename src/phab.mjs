@@ -10,7 +10,7 @@ import {
   getCachedPhabricatorUsernames,
   cachePhabricatorUsernames,
 } from "./store.mjs";
-import { hyperlink, treeConnectors } from "./terminal.mjs";
+import { hyperlink, treeConnectors, UnderlineColor } from "./terminal.mjs";
 
 /** @typedef {unknown} JsonValue */
 
@@ -201,7 +201,8 @@ function printRevisionList(revisions, baseURI, authorNames, showAuthor) {
     const bugLabel = group.bugId
       ? hyperlink(
           `https://bugzilla.mozilla.org/show_bug.cgi?id=${group.bugId}`,
-          color.blackBright(`Bug ${group.bugId}`)
+          color.blackBright(`Bug ${group.bugId}`),
+          UnderlineColor.gray
         )
       : color.blackBright("No Bug");
     console.log(color.blackBright(bug.branch) + bugLabel);
@@ -217,9 +218,11 @@ function printRevisionList(revisions, baseURI, authorNames, showAuthor) {
       const statusName = statusOf(revision);
       const label = `${diffText.padEnd(diffWidth)} ${statusName}`;
       const paint = statusName === "Accepted" ? color.green : color.red;
+      const underline =
+        statusName === "Accepted" ? UnderlineColor.green : UnderlineColor.red;
       // Keep the right-hand alignment padding outside the hyperlink.
       const unit =
-        hyperlink(`${baseURI}${diffText}`, paint(label)) +
+        hyperlink(`${baseURI}${diffText}`, paint(label), underline) +
         " ".repeat(statusWidth - statusName.length);
 
       const cells = [unit];

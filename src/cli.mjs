@@ -26,7 +26,7 @@ import {
   setPhabricatorAuth,
 } from "./store.mjs";
 import { checkForUpdates } from "./update-checker.mjs";
-import { hyperlink, treeConnectors } from "./terminal.mjs";
+import { hyperlink, treeConnectors, UnderlineColor } from "./terminal.mjs";
 
 export async function main(argv = process.argv) {
   const [command, ...args] = argv.slice(2);
@@ -453,7 +453,11 @@ async function runSavedConfigurations() {
   const primaryWidth = Math.max(0, ...sources.map((s) => s.primary.length));
   sources.forEach((source, index) => {
     const { branch } = treeConnectors(index === sources.length - 1);
-    const link = hyperlink(source.url, color.yellow(source.primary));
+    const link = hyperlink(
+      source.url,
+      color.yellow(source.primary),
+      UnderlineColor.yellow
+    );
     const pad = " ".repeat(primaryWidth - source.primary.length);
     console.log(
       color.blackBright(branch) +

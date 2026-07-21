@@ -1,6 +1,6 @@
 // @ts-check
 import color from "cli-color";
-import { hyperlink, treeConnectors } from "./terminal.mjs";
+import { hyperlink, treeConnectors, UnderlineColor } from "./terminal.mjs";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -288,7 +288,8 @@ function printNeedinfo(bug, baseUrl, email, isLastBug) {
   const bugConnectors = treeConnectors(isLastBug);
   const bugLink = hyperlink(
     `${baseUrl}/show_bug.cgi?id=${bug.id}`,
-    color.yellow(`Bug ${bug.id}`)
+    color.yellow(`Bug ${bug.id}`),
+    UnderlineColor.yellow
   );
   console.log(
     color.blackBright(bugConnectors.branch) +

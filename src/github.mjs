@@ -6,6 +6,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 import { inspect } from "util";
 import { isIgnoredGithub } from "./store.mjs";
+import { hyperlink, UnderlineColor } from "./terminal.mjs";
 
 /** @typedef {import("@octokit/rest").RestEndpointMethodTypes["pulls"]["list"]["response"]} PullsResponse */
 /** @typedef {PullsResponse["data"][number]} PullRequest */
@@ -88,7 +89,10 @@ async function printPR(owner, repo, pr) {
   console.log("");
   const gray = color.xterm(8);
   console.log(color.yellow(`PR #${pr.number}: `) + color.whiteBright(pr.title));
-  console.log(gray("     url: ") + color.blue.underline(pr.html_url));
+  console.log(
+    gray("     url: ") +
+      hyperlink(pr.html_url, color.blue(pr.html_url), UnderlineColor.blue)
+  );
   const author = pr.user ? pr.user.login : "unknown";
   console.log(gray("  author: ") + author);
   console.log(gray("  branch: ") + pr.head.ref);
