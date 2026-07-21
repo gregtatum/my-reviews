@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-07-21
+
+### Changed
+- Reworked the output into a compact tree layout: a "Review Sources" overview, grouped sections, and tree connectors
+- Bugzilla needinfos now show a relative timestamp for each request (e.g. "1 hour ago")
+- Reworked the "update available" notice
+
+### Fixed
+- Terminal hyperlink underlines are now tinted to match the link text color instead of the terminal's default white underline
+
 ## [3.3.0] - 2026-06-01
 
 ### Changed

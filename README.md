@@ -7,25 +7,16 @@ A small Node.js tool that prints your current review queue from GitHub, Bugzilla
 ```
 ➤ my-reviews
 
-======= Phabricator Mine =====================================================
+Phabricator author: @gregtatum
+└─ Bug 1998228
+   ├─ D271264 Review    Type check StaticEmbeddingsPipeline.mjs
+   ├─ D271263 Review    Type check MLEngineParent.sys.mjs
+   ├─ D271262 Review    Type check MLEngineChild.sys.mjs
+   └─ D271261 Approved  Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-Bug 1998228 - https://bugzilla.mozilla.org/show_bug.cgi?id=1998228
-
-     Review - Bug 1998228 - Type check StaticEmbeddingsPipeline.mjs
-              https://phabricator.services.mozilla.com/D271264
-     Review - Bug 1998228 - Type check MLEngineParent.sys.mjs
-              https://phabricator.services.mozilla.com/D271263
-     Review - Bug 1998228 - Type check MLEngineChild.sys.mjs
-              https://phabricator.services.mozilla.com/D271262
-Needs Revision - Bug 1998228 - Add toolkit/components/ml/tsconfig.json for some initial type checking
-              https://phabricator.services.mozilla.com/D271261
-
-======= Phabricator Others =====================================================
-
-Bug 2000885 - https://bugzilla.mozilla.org/show_bug.cgi?id=2000885
-
-     Review - Bug 2000885 - create an ai window singleton registered with BrowserComponents.manifest r=mardak
-              https://phabricator.services.mozilla.com/D273122
+Phabricator author: others
+└─ Bug 2000885
+   └─ D273122 Review @aosmond create an ai window singleton registered with BrowserComponents.manifest
 ```
 
 ## Installation
