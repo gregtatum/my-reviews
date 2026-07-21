@@ -26,7 +26,7 @@ import {
   setPhabricatorAuth,
 } from "./store.mjs";
 import { checkForUpdates } from "./update-checker.mjs";
-import { treeConnectors } from "./terminal.mjs";
+import { hyperlink, treeConnectors } from "./terminal.mjs";
 
 export async function main(argv = process.argv) {
   const [command, ...args] = argv.slice(2);
@@ -421,30 +421,44 @@ async function runSavedConfigurations() {
     // Silently fail if update check fails
   });
 
-  console.log(color.cyan("\nChecking"));
-  /** @type {string[]} */
-  const checking = [];
+  console.log(color.cyan("\nReview Sources"));
+  /** @type {Array<{ label: string; primary: string; url: string; detail: string }>} */
+  const sources = [];
   for (const config of bugzilla) {
-    const label = "Bugzilla   ";
-    const email = color.green(config.email);
-    const url = color.blackBright(`(${config.url})`);
-    checking.push(`${label} ${email} ${url}`);
+    sources.push({
+      label: "Bugzilla   ",
+      primary: new URL(config.url).host,
+      url: config.url,
+      detail: config.email,
+    });
   }
   for (const config of phabricator) {
-    const label = "Phabricator";
-    const uri = color.green(config.uri);
-    const user = color.blackBright(`(${config.userName})`);
-    checking.push(`${label} ${uri} ${user}`);
+    sources.push({
+      label: "Phabricator",
+      primary: config.uri,
+      url: config.uri,
+      detail: config.userName,
+    });
   }
   for (const config of github) {
-    const label = "GitHub     ";
-    const repo = color.green(`${config.owner}/${config.repo}`);
-    const user = color.blackBright(`(${config.user})`);
-    checking.push(`${label} ${repo} ${user}`);
+    const slug = `${config.owner}/${config.repo}`;
+    sources.push({
+      label: "GitHub     ",
+      primary: slug,
+      url: `https://github.com/${slug}/`,
+      detail: config.user,
+    });
   }
-  checking.forEach((line, index) => {
-    const { branch } = treeConnectors(index === checking.length - 1);
-    console.log(color.blackBright(branch) + line);
+  // Align the detail column by padding the primary link to its widest entry.
+  const primaryWidth = Math.max(0, ...sources.map((s) => s.primary.length));
+  sources.forEach((source, index) => {
+    const { branch } = treeConnectors(index === sources.length - 1);
+    const link = hyperlink(source.url, color.yellow(source.primary));
+    const pad = " ".repeat(primaryWidth - source.primary.length);
+    console.log(
+      color.blackBright(branch) +
+        `${source.label} ${link}${pad} ${color.blackBright(source.detail)}`
+    );
   });
 
   for (const config of bugzilla) {

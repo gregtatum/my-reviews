@@ -121,9 +121,9 @@ Examples:
 
     expect(output).toMatchInlineSnapshot(`
 "
-Checking
-├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Review Sources
+├─ Bugzilla    bugzilla.mozilla.org                      greg@example.com
+└─ Phabricator https://phabricator.services.mozilla.com/ gregtatum
 
 bugzilla.mozilla.org needinfos
 ├─ Bug 101 Fix crash when opening preference pane
@@ -165,9 +165,9 @@ Phabricator author: others
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
-Checking
-├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Review Sources
+├─ Bugzilla    bugzilla.mozilla.org                      greg@example.com
+└─ Phabricator https://phabricator.services.mozilla.com/ gregtatum
 
 bugzilla.mozilla.org needinfos
 ├─ Bug 101 Fix crash when opening preference pane
@@ -202,9 +202,9 @@ Phabricator author: others
 
     expect(ctx.runCLI("")).toMatchInlineSnapshot(`
 "
-Checking
-├─ Bugzilla    greg@example.com (https://bugzilla.mozilla.org)
-└─ Phabricator https://phabricator.services.mozilla.com/ (gregtatum)
+Review Sources
+├─ Bugzilla    bugzilla.mozilla.org                      greg@example.com
+└─ Phabricator https://phabricator.services.mozilla.com/ gregtatum
 
 bugzilla.mozilla.org needinfos
 ├─ Bug 101 Fix crash when opening preference pane
