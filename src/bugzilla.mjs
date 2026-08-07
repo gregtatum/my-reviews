@@ -69,7 +69,7 @@ async function fetchNeedinfoBugs(email, baseUrl, apiKey) {
     );
   }
 
-  const bugs = await fetchNeedinfoBugsViaRpc(email, baseUrl, apiKey);
+  const bugs = await runFlagQuery(email, baseUrl, apiKey);
 
   const lowerEmail = email.toLowerCase();
   const bugsWithNeedinfo = bugs.filter((bug) =>
@@ -85,41 +85,28 @@ async function fetchNeedinfoBugs(email, baseUrl, apiKey) {
 /**
  * @param {string} email
  * @param {string} baseUrl
- */
-/**
- * @param {string} email
- * @param {string} baseUrl
  * @param {string} apiKey
  */
-async function fetchNeedinfoBugsViaRpc(email, baseUrl, apiKey) {
-  const body = {
-    method: "MyDashboard.run_flag_query",
-    params: {
-      Bugzilla_api_key: apiKey,
-      type: "requestee",
-      name: "needinfo",
-      statuses: ["?"],
-      requestees: [email],
-      include_fields: ["id", "summary", "flags"],
-    },
-    id: "my-reviews",
-    version: "1.1",
-  };
-  const response = await fetchBugzillaRpc(
-    "needinfo-rpc",
+async function runFlagQuery(email, baseUrl, apiKey) {
+  // The MyDashboard flag query is scoped to the API key's owner, so the
+  // requestee is implied. Bugs are still filtered by `email` downstream.
+  const response = await fetchBugzilla(
+    "needinfo",
     baseUrl,
-    body,
+    "/rest/mydashboard/run_flag_query",
+    { type: "requestee" },
     apiKey
   );
   const bugs = response?.result?.bugs;
   if (Array.isArray(bugs)) {
     return bugs;
   }
-  const requestee = response?.result?.result?.requestee;
+  const requestee =
+    response?.result?.requestee ?? response?.result?.result?.requestee;
   if (Array.isArray(requestee)) {
     return coerceNeedinfoFlagsToBugs(requestee);
   }
-  throw new Error("Bugzilla RPC response missing bug list.");
+  throw new Error("Bugzilla response missing bug list.");
 }
 
 /**
@@ -210,38 +197,42 @@ function coerceNeedinfoFlagsToBugs(items) {
 /**
  * @param {string} endpoint
  * @param {string} baseUrl
- * @param {unknown} body
+ * @param {string} pathname
+ * @param {Record<string, string>} query
  * @param {string} apiKey
  */
-async function fetchBugzillaRpc(endpoint, baseUrl, body, apiKey) {
-  const url = new URL("/jsonrpc.cgi", baseUrl);
-
+async function fetchBugzilla(endpoint, baseUrl, pathname, query, apiKey) {
   if (isSnapshotMode()) {
     return readSnapshot(endpoint);
   }
 
+  const url = new URL(pathname, baseUrl);
+  for (const [key, value] of Object.entries(query)) {
+    url.searchParams.set(key, value);
+  }
+
   const response = await fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "X-Bugzilla-API-Key": apiKey,
     },
-    body: JSON.stringify(body),
   });
   if (!response.ok) {
     const text = await response.text();
     throw new Error(
-      `Bugzilla RPC request failed (${response.status}): ${response.statusText}\n${text}`
+      `Bugzilla request failed (${response.status}): ${response.statusText}\n${text}`
     );
   }
 
   const json = await response.json();
   if (json.error) {
     const message =
+      json.message ||
       json.error?.message ||
       json.error?.messageText ||
       JSON.stringify(json.error, null, 2);
-    throw new Error(`Bugzilla RPC error: ${message}`);
+    throw new Error(`Bugzilla error: ${message}`);
   }
   logBugzillaResponse(endpoint, json);
   persistSnapshot(endpoint, json);
