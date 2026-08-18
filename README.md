@@ -14,10 +14,20 @@ Phabricator author: @gregtatum
    ├─ D271262 Review    Type check MLEngineChild.sys.mjs
    └─ D271261 Approved  Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-Phabricator author: others
+Phabricator reviewer: @gregtatum
 └─ Bug 2000885
    └─ D273122 Review @aosmond create an ai window singleton registered with BrowserComponents.manifest
+
+Phabricator reviewer: #ai-platform-reviewers
+└─ Bug 2001120
+   └─ D273450 Review @czhou add getTabGroups to TabManagementService
 ```
+
+Review requests where you are personally the reviewer are listed first (highest
+signal). Requests that reach you only through a review group you belong to are
+split into their own `reviewer: #group` sections, ordered alphabetically. When
+several of your groups are on the same revision, it is filed under the smallest
+(most specialized) group so it appears only once.
 
 ## Installation
 

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.0] - 2026-08-18
+
+### Changed
+- Phabricator review requests are now split by why they reached you: requests where you are personally the reviewer are listed first, and requests that reach you only through a review group appear in their own `reviewer: #group` sections (ordered alphabetically). When several of your groups are on the same revision, it is filed under the smallest (most specialized) group so it appears only once.
+
 ## [3.4.1] - 2026-08-07
 
 ### Fixed

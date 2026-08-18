@@ -138,23 +138,27 @@ Phabricator author: @gregtatum
    ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
    └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-Phabricator author: others
-├─ Bug 1940906
-│  ├─ D268411 Review @Unknown Allow getting a Blob of a model file in the HWInference process, cross-process, without copies.
-│  ├─ D268410 Review @Unknown Implement the backend for downloading a model file, using ModelHub.
-│  ├─ D268409 Review @Unknown Introduce PSPeechRecognition, implement SpeechRecognition.available().
-│  └─ D268403 Review @Unknown Introduce the HWInference utility process.
-├─ Bug 1992232
-│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
-│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
-│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
-│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
-│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
-│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+Phabricator reviewer: @gregtatum
 ├─ Bug 2003190
 │  └─ D274523 Review @Unknown Add policy engine to security layer
 └─ Bug 2003214
    └─ D274680 Review @Unknown Add security audit logger to AI Window security layer
+
+Phabricator reviewer: #ai-ondevice-reviewers
+└─ Bug 1940906
+   ├─ D268411 Review @Unknown Allow getting a Blob of a model file in the HWInference process, cross-process, without copies.
+   ├─ D268410 Review @Unknown Implement the backend for downloading a model file, using ModelHub.
+   ├─ D268409 Review @Unknown Introduce PSPeechRecognition, implement SpeechRecognition.available().
+   └─ D268403 Review @Unknown Introduce the HWInference utility process.
+
+Phabricator reviewer: #translations-reviewers
+└─ Bug 1992232
+   ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+   ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+   ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+   ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+   ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+   └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
 "
 `);
 
@@ -182,18 +186,20 @@ Phabricator author: @gregtatum
    ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
    └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-Phabricator author: others
-├─ Bug 1992232
-│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
-│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
-│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
-│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
-│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
-│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+Phabricator reviewer: @gregtatum
 ├─ Bug 2003190
 │  └─ D274523 Review @Unknown Add policy engine to security layer
 └─ Bug 2003214
    └─ D274680 Review @Unknown Add security audit logger to AI Window security layer
+
+Phabricator reviewer: #translations-reviewers
+└─ Bug 1992232
+   ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+   ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+   ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+   ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+   ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+   └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
 "
 `);
 
@@ -219,16 +225,18 @@ Phabricator author: @gregtatum
    ├─ D271262 Accepted       Type check MLEngineChild.sys.mjs
    └─ D271261 Accepted       Add toolkit/components/ml/tsconfig.json for some initial type checking
 
-Phabricator author: others
-├─ Bug 1992232
-│  ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
-│  ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
-│  ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
-│  ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
-│  ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
-│  └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
+Phabricator reviewer: @gregtatum
 └─ Bug 2003190
    └─ D274523 Review @Unknown Add policy engine to security layer
+
+Phabricator reviewer: #translations-reviewers
+└─ Bug 1992232
+   ├─ D276138 Review @author2 Part 6/6: Implement Copy Button Functionality
+   ├─ D276137 Review @author2 Part 5/6: Implement Copy Button Enabled States
+   ├─ D276113 Review @author2 Part 4/6: Add Target Section Copy Button
+   ├─ D276112 Review @author2 Part 3/6: Rework about:translations Resizing Logic
+   ├─ D276111 Review @author2 Part 2/6: Sort about:translations Elements
+   └─ D276110 Review @author2 Part 1/6: Refactor about:translations Event Handling
 "
 `);
   });

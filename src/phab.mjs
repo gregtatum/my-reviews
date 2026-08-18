@@ -296,8 +296,11 @@ export async function runPhabricatorReviews(conduitURI, userId) {
     return bugA - bugB;
   });
 
-  // Collect all unique author PHIDs to fetch usernames
-  const authorPHIDs = [...new Set(data.map((r) => r.fields.authorPHID))];
+  // Collect all unique author PHIDs to fetch usernames. Include our own PHID so
+  // the reviewer section headers can use our username.
+  const authorPHIDs = [
+    ...new Set([...data.map((r) => r.fields.authorPHID), userId]),
+  ];
   const authorNames = await getUsernames(conduitURI, authorPHIDs);
 
   // Get any reviews that aren't marked as WIP that are "mine".
@@ -318,14 +321,34 @@ export async function runPhabricatorReviews(conduitURI, userId) {
     printRevisionList(mine, baseURI, authorNames, false /* showAuthor */);
   }
 
-  const { groupPhids, groupMembers } = await getUserProjects(conduitURI, userId);
+  const { groupPhids, groupMembers, groupSlugs } = await getUserProjects(
+    conduitURI,
+    userId
+  );
 
-  const others = data.filter((revision) => {
+  // Classify each review request into exactly one bucket:
+  //   - the individual bucket, keyed by INDIVIDUAL, when we are personally a
+  //     requested reviewer (highest signal), or
+  //   - a group bucket, keyed by the winning group's PHID, when we are only on
+  //     the review via review group(s) we belong to.
+  const INDIVIDUAL = "__individual__";
+  /** @type {Map<string, Revision[]>} */
+  const buckets = new Map();
+  const pushToBucket = (/** @type {string} */ key, /** @type {Revision} */ revision) => {
+    let list = buckets.get(key);
+    if (!list) {
+      list = [];
+      buckets.set(key, list);
+    }
+    list.push(revision);
+  };
+
+  for (const revision of data) {
     if (userId === revision.fields.authorPHID) {
-      return false;
+      continue;
     }
     if (revision.fields.status.value !== "needs-review") {
-      return false;
+      continue;
     }
     const reviewers =
       /** @type {{ reviewerPHID: string; status: string }[]} */ (
@@ -336,8 +359,10 @@ export async function runPhabricatorReviews(conduitURI, userId) {
       actionableStatuses.has(reviewer.status)
     );
 
+    // Being personally requested always wins over any group.
     if (actionableReviewers.some((r) => r.reviewerPHID === userId)) {
-      return true;
+      pushToBucket(INDIVIDUAL, revision);
+      continue;
     }
 
     const matchingGroups = actionableReviewers
@@ -345,7 +370,7 @@ export async function runPhabricatorReviews(conduitURI, userId) {
       .map((r) => r.reviewerPHID);
 
     if (matchingGroups.length === 0) {
-      return false;
+      continue;
     }
 
     // If another group member is already individually assigned, skip this revision.
@@ -353,20 +378,55 @@ export async function runPhabricatorReviews(conduitURI, userId) {
       .filter((r) => r.reviewerPHID !== userId && !groupPhids.has(r.reviewerPHID))
       .map((r) => r.reviewerPHID);
 
-    for (const groupPhid of matchingGroups) {
+    const suppressed = matchingGroups.some((groupPhid) => {
       const members = groupMembers.get(groupPhid) ?? new Set();
-      if (individualPhids.some((phid) => members.has(phid))) {
-        return false;
-      }
+      return individualPhids.some((phid) => members.has(phid));
+    });
+    if (suppressed) {
+      continue;
     }
 
-    return true;
-  });
+    // Multiple of our groups can be on the same review. Pick a single winner so
+    // the revision only appears once: the smallest (most specialized) group,
+    // breaking ties alphabetically by slug.
+    const winner = matchingGroups.slice().sort((a, b) => {
+      const sizeA = (groupMembers.get(a) ?? new Set()).size;
+      const sizeB = (groupMembers.get(b) ?? new Set()).size;
+      if (sizeA !== sizeB) {
+        return sizeA - sizeB;
+      }
+      return (groupSlugs.get(a) ?? "").localeCompare(groupSlugs.get(b) ?? "");
+    })[0];
 
-  if (others.length > 0) {
-    printHeader("author: others");
-    printRevisionList(others, baseURI, authorNames, true /* showAuthor */);
+    pushToBucket(winner, revision);
   }
+
+  // Print the individual bucket first (highest signal), then group buckets
+  // ordered alphabetically by slug.
+  const individual = buckets.get(INDIVIDUAL) ?? [];
+  if (individual.length > 0) {
+    const meName = authorNames.get(userId) || "me";
+    printHeader(`reviewer: @${meName}`);
+    printRevisionList(individual, baseURI, authorNames, true /* showAuthor */);
+  }
+
+  const groupKeys = [...buckets.keys()]
+    .filter((key) => key !== INDIVIDUAL)
+    .sort((a, b) =>
+      (groupSlugs.get(a) ?? "").localeCompare(groupSlugs.get(b) ?? "")
+    );
+
+  for (const groupPhid of groupKeys) {
+    const revisions = buckets.get(groupPhid) ?? [];
+    printHeader(`reviewer: #${groupSlugs.get(groupPhid) ?? groupPhid}`);
+    printRevisionList(revisions, baseURI, authorNames, true /* showAuthor */);
+  }
+
+  // Preserve the previous return shape: every non-authored review request.
+  const others = [
+    ...individual,
+    ...groupKeys.flatMap((key) => buckets.get(key) ?? []),
+  ];
 
   return { mine, others };
 }
@@ -518,13 +578,14 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
 }
 
 /**
- * Look up project PHIDs the user belongs to, plus the member lists for each group.
+ * Look up project PHIDs the user belongs to, plus the member lists and slug
+ * (hashtag) for each group.
  * @param {string} conduitURI
  * @param {string} userId
- * @returns {Promise<{ groupPhids: Set<string>; groupMembers: Map<string, Set<string>> }>}
+ * @returns {Promise<{ groupPhids: Set<string>; groupMembers: Map<string, Set<string>>; groupSlugs: Map<string, string> }>}
  */
 async function getUserProjects(conduitURI, userId) {
-  const response = /** @type {Response<Cursor<{ phid: string; attachments: { members: { members: { phid: string }[] } } }>>} */ (
+  const response = /** @type {Response<Cursor<{ phid: string; fields: { slug: string; name: string }; attachments: { members: { members: { phid: string }[] } } }>>} */ (
     await callConduit(
       "project.search",
       {
@@ -548,12 +609,14 @@ async function getUserProjects(conduitURI, userId) {
 
   const groupPhids = new Set();
   const groupMembers = new Map();
+  const groupSlugs = new Map();
   for (const project of response.response.data) {
     groupPhids.add(project.phid);
     const members = project.attachments?.members?.members ?? [];
     groupMembers.set(project.phid, new Set(members.map((m) => m.phid)));
+    groupSlugs.set(project.phid, project.fields?.slug || project.fields?.name || project.phid);
   }
-  return { groupPhids, groupMembers };
+  return { groupPhids, groupMembers, groupSlugs };
 }
 
 /**
