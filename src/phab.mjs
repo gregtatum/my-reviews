@@ -1,5 +1,6 @@
 // @ts-check
 import * as fs from "fs";
+import * as https from "https";
 import * as path from "path";
 import color from "cli-color";
 import { inspect } from "util";
@@ -509,6 +510,50 @@ function normalizeBaseURI(value) {
 }
 
 /**
+ * POST a form-encoded body using `node:https` rather than `fetch`.
+ *
+ * Mozilla's Phabricator sits behind Fastly, which rejects requests whose TLS
+ * ClientHello advertises ALPN "http/1.1" as the only protocol with an empty
+ * `429` response. Node's `fetch` (undici) always sends exactly that ALPN list,
+ * so every Conduit call through `fetch` fails. The `https` module sends no ALPN
+ * extension at all, which Fastly accepts.
+ *
+ * @param {URL} url
+ * @param {string} body
+ * @returns {Promise<{ status: number; statusText: string; body: string }>}
+ */
+function postForm(url, body) {
+  return new Promise((resolve, reject) => {
+    const request = https.request(
+      url,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": Buffer.byteLength(body),
+        },
+      },
+      (response) => {
+        let text = "";
+        response.setEncoding("utf8");
+        response.on("data", (chunk) => {
+          text += chunk;
+        });
+        response.on("end", () => {
+          resolve({
+            status: response.statusCode ?? 0,
+            statusText: response.statusMessage || "",
+            body: text,
+          });
+        });
+      }
+    );
+    request.on("error", reject);
+    request.end(body);
+  });
+}
+
+/**
  * @param {{ conduitURI: string; token: string | null }} conduitConfig
  * @param {string} endpoint
  * @param {JsonValue} data
@@ -540,21 +585,15 @@ async function callConduitHTTP(conduitConfig, endpoint, data) {
   body.set("__conduit__", "true");
 
   const url = new URL(`/api/${endpoint}`, normalizeConduitURI(conduitURI));
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: body.toString(),
-  });
+  const { status, statusText, body: rawBody } = await postForm(
+    url,
+    body.toString()
+  );
 
-  if (!response.ok) {
-    throw new Error(
-      `Conduit request failed (${response.status} ${response.statusText})`
-    );
+  if (status < 200 || status >= 300) {
+    throw new Error(`Conduit request failed (${status} ${statusText})`);
   }
 
-  const rawBody = await response.text();
   const shield = "for(;;);";
   const jsonBody = rawBody.startsWith(shield)
     ? rawBody.slice(shield.length)

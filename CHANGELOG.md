@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.1] - 2026-09-08
+
+### Fixed
+- Phabricator requests failed with "Conduit request failed (429 Unknown Error)". Fastly rejects requests whose TLS handshake advertises `http/1.1` as the only ALPN protocol, which is exactly what Node's `fetch` sends; Conduit calls now go through the `https` module instead.
+
 ## [3.6.0] - 2026-08-18
 
 ### Changed
